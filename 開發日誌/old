@@ -1,0 +1,25 @@
+開發日誌old
+###### tags: `開發日誌`
+
+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
+
+6/24
+
+apt-get update時出現2錯誤
+
+* http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo bionic InRelease
+  403  Forbidden [IP: 52.218.110.42 80]
+  ->更換librealsense倉庫
+  
+`  sed 's/http:\/\/realsense-hw-public.s3.amazonaws.com/https:\/\/librealsense.intel.com/' /etc/apt/sources.list`
+
+
+* http://packages.ros.org/ros/ubuntu bionic InRelease
+  以下簽名無效： EXPKEYSIG F42ED6FBAB17C654 Open Robotics <<info@osrfoundation.org>>
+  ->key過期(5/29),重新下載
+  `curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -`
+  
+>  ref: https://discourse.ros.org/t/ros-gpg-key-expiration-incident/20669
+
+* 參考資料
+CVE® Program Mission : 安全漏洞報告

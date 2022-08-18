@@ -1,0 +1,8 @@
+開發日誌2208
+###### tags: `開發日誌`
+
+8/11
+整理檔案架構~/Experiments決定放回~/Projects之下(避免複雜)
+~/Tools和~/Projects怎麼放很猶豫
+~/TMP改為playground放到~/Projects之下(在TMP和playground工作也不是好習慣,想了解程式行為應該建檔和範例)
+~/Projects之下增加todo收集待處理的資料

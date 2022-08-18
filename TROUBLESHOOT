@@ -1,0 +1,5 @@
+
+* 無訊息終止(silent crash)
+可能原因
+matplotlib pause函數(3.4.0修正,Ubuntu20時是3.1.2) https://github.com/matplotlib/matplotlib/pull/19671
+    問題存於experiments待研究[220817plt當掉]
