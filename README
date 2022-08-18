@@ -1,0 +1,32 @@
+
+!!!!!!!!!
+!!!!從HackMD轉移中
+!!!!!!!!!
+
+TROUBLESHOOT:問題排解
+TROUBLESHOOT(待分類):早期收集未分類的
+開發日誌
+examples:範例參考
+
+-各項SOP參考SOP標籤下項目
+
+系統重設SOP
+專案SOP
+
+
+健康檢查-使系統維持良好狀況(記憶體空間管理etc)
+
+* 家目錄
+
+-Projects
+---playground 簡易實驗區(在playground工作也不是好習慣,想了解程式行為應該建檔和範例)
+---todo 收集待處理資料
+-Experiments
+-TMP
+-Apps
+
+三方建立
+-snap 沒研究,像是系統建立的
+-miniconda3 虛擬環境(完整版會取做anaconda3,基本上用最簡版就好)
+-Arduino 明明沒用,不知什麼情況下建立的
+-Documents/librealsense2 安裝librealsense時會產生的空目錄,可能是中文系統名稱差異導致的問題(中文系統Documents目錄會變[文件]),看到時可刪掉
