@@ -1,0 +1,50 @@
+出錯時->補強測試->修改直到測試通過
+
+* 添加測試
+ROS框架參考（還有rostest尚未研究）
+http://wiki.ros.org/gtest
+http://docs.ros.org/en/jade/api/catkin/html/howto/format2/run_tests.html
+建構和測試整合進行->`catkin_make all run_tests_MYPACK`
+
+* 日誌機制(需搭配清理以免塞爆磁碟空間)
+
+* 提交時附上
+-Changelog
+-troubleshoot
+-test/反省
+
+* 若程式要由系統執行(開機自啟動),應避免依賴USER或HOME目錄
+* 確認可執行檔（bin和tool）的可執行屬性
+
+* 安裝依賴
+執行腳本update_dependencies.bash,需檢查額外安裝的內容,特別是server版裝到桌面環境(gnome-shell)的問題
+
+* 架構(參考examples/new_project)
+
+bin
+lib
+src
+doc
+DEMOs
+tests
+ref
+reports/outputs
+
+.gitignore 
+update_dependencies.bash
+
+datasets
+models
+checkpoints
+
+* 架構(python)
+python project name vs lib name
+
+
+| project name | lib name | 
+| -------- | -------- | 
+| Pillow     | PIL     | 
+| pytorch | torch | 
+
+同名- tensorflow numpy keras
+ 

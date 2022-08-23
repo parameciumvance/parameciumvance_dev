@@ -3,6 +3,11 @@
 !!!!從HackMD轉移中
 !!!!!!!!!
 
+#上傳github
+git add *
+git commit -m "update"
+git push -u origin main
+
 TROUBLESHOOT:問題排解
 TROUBLESHOOT(待分類):早期收集未分類的
 開發日誌
