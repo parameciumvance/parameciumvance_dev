@@ -1,0 +1,60 @@
+sudo adduser [name] #useradd是低階指令,不要用錯
+sudo usermod -aG sudo [name]
+
+在/etc/hosts互相加入ip和hostname
+
+**nfs**
+
+簡介：在PC編輯,在機器編譯
+目的：源碼分離, PC上編輯方便(有互動界面)
+
+--
+nfs使用
+sudo apt install nfs-kernel-server nfs-common
+sudo chmod -R 777 /var/nfsshare/
+
+/etc/exports加入
+/var/nfsshare 192.168.0.11(insecure,rw,sync,no_root_squash,no_all_squash)
+sudo /etc/init.d/nfs-kernel-server restart
+
+sudo apt install nfs-common
+
+sudo mount -t nfs VivoBook:/home/vance/nfs_home VivoBook_nfs
+sudo umount VivoBook_nfs
+
+如果需要下次重新開機後就會自動掛載 , 現在開啟 /etc/fstab, 加入以下內容 :
+192.168.0.10:/var/nfsshare /mnt/nfs/var/nfsshare nfs defaults 0 0
+
+--
+
+注意事項
+跨機安裝的權限問題(參考git note
+
+--
+範例腳本
+maintain_setup.source
+```
+export DEVELOPER_HOME=~/vance_dev
+export DEVELOPER_NFSSHARE=$DEVELOPER_HOME/nfsshare
+export DEVELOPER_NFS_URL=VivoBook:/home/vance/nfs_home
+
+# mount Network File System
+if [ ! -d $DEVELOPER_NFSSHARE ]
+then
+    mkdir $DEVELOPER_NFSSHARE
+fi
+if [ ! -d $DEVELOPER_NFSSHARE/bbot_maintain ]
+then
+    sudo mount -t nfs -o nolock $DEVELOPER_NFS_URL $DEVELOPER_NFSSHARE
+fi
+rm $DEVELOPER_HOME/bbot_maintain
+ln -s $DEVELOPER_NFSSHARE/bbot_maintain $DEVELOPER_HOME/bbot_maintain
+
+source $DEVELOPER_HOME/bbot_maintain/setup.source
+```
+
+
+***
+**putty**
+
+不能右鍵複製到剪貼簿->Debian可用反白後再用滾輪貼上

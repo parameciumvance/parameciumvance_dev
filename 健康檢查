@@ -1,0 +1,17 @@
+### 磁碟空間清理參考
+
+* 回收桶(連結到.local/share/Trash/files)
+可直接從檔案系統進入並點選清空
+
+* .config/Code/User/workspaceStorage
+VScode的cpptools插件記憶體也用很大(一個工作區可能用到1G)
+工作區更換路徑時也會殘留舊組態
+直接清應該不會有什麼大問題
+如何改善還是開放問題
+https://github.com/microsoft/vscode/issues/32461
+
+* anaconda/envs/ENVNAME
+conda env remove -n ENVNAME
+
+* .cache/pip
+pip cache purge

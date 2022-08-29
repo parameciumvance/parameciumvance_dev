@@ -1,0 +1,21 @@
+### 系統目錄
+* /run/user/1000: user(with UID=1000)開機初次登入時才會建立的資料夾,若事先建立則登入時會砍掉重建,當使用者登出且沒有遺留行程時也會清掉
+參考https://unix.stackexchange.com/questions/162900/what-is-this-folder-run-user-1000
+
+* 在Debian平台,反白文字後,在其他地方按滑鼠滾輪即可貼上(且不會佔用剪貼簿)
+
+
+### Ubuntu20
+* 錯誤:桌面環境做為依賴被無意安裝
+
+參考[這篇](https://github.com/ros-perception/perception_pcl/issues/355) 自己的留言
+
+https://packages.ubuntu.com/focal/libnotify4
+From Ubuntu's package description, we can find that, gnome-shell has been added to libnotify4's Recommended dependency in focal (Ubuntu20.04), resulting that, when you install libnotify4 in some way, gnome-shell is also installed.
+
+Also notice that in jammy (Ubuntu22.04), gnome-shell in dependency has dropped from Recommended to Suggested. I think the package manager may have been aware of the problem and fixed it then.
+
+My suggestion is that, when using Ubuntu server (20.04<=version<22.04),
+always manually install the problematic libnotify4 in early setting
+sudo apt install libnotify4 --no-install-recommends
+This prevents unintentionally installing gnome-shell as dependency afterward.

@@ -1,0 +1,70 @@
+
+裝開機碟後用delete進入bios,setting設定開機裝置後F10儲存
+
+ubuntu-drivers devices(查看建議版本)
+#sudo ubuntu-drivers autoinstall
+sudo apt-get install nvidia-driver-*** （或在"軟體與更新"的"額外驅動程式"套用）
+nvidia-smi 確認驅動器是否成功,若否,檢查BIOS(UEFI)將secure boot設為disabled
+
+sudo apt install gcc-4.8 g++-4.8
+sudo apt install gcc-5 g++-5
+sudo apt install gcc-6 g++-6
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 48 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+48 50 60 70<優先等級> 是整數，在自動模式下，數字越高越優先。
+sudo update-alternatives --config gcc
+
+
+
+https://developer.nvidia.com/cuda-toolkit-archive
+https://developer.nvidia.com/rdp/cudnn-download
+
+sudo sh cuda_10.0.130_410.48_linux.run #driver已裝,詢問時避免重複裝
+
+echo 'export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}' >> ~/.bashrc #${A:+B}表示A有值的話才輸出B
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+
+source ~/.bashrc
+
+nvcc -V
+
+dpkg -l | grep the-name
+
+
+To uninstall the NVIDIA CUDA Samples, run the uninstall script in 
+'uninstall_cuda_10.0.pl' -> '/usr/local/cuda-10.0/bin/uninstall_cuda_10.0.pl'
+
+sudo apt remove libcudnn7
+
+Anaconda3.sh
+
+conda create -n XXX --clone ENVPATH #移植
+
+pip3 install matplotlib terminaltables pillow tqdm
+pip3 install scikit-image
+pip3 install opencv-python
+
+pip3 install torch torchvision
+
+pip3 install tensorflow-gpu tensorboard
+
+sudo apt install caffe-cuda
+
+
+磁碟掛載
+blfid看磁碟資訊
+/etc/fstab設定自動掛載
+
+安裝
+vscode git smartgit filezilla
+
+--------------------
+del進BIOS F10儲存
+esc進GRUB quite splash 後加nomodeset F10儲存 
+
+
+filezilla
+159 rd bioclav.com
+250 shared rdmember

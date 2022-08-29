@@ -35,3 +35,40 @@ examples:範例參考
 -miniconda3 虛擬環境(完整版會取做anaconda3,基本上用最簡版就好)
 -Arduino 明明沒用,不知什麼情況下建立的
 -Documents/librealsense2 安裝librealsense時會產生的空目錄,可能是中文系統名稱差異導致的問題(中文系統Documents目錄會變[文件]),看到時可刪掉
+
+* 開發工具
+
+### 作業系統
+Windows
+MacOS
+GNU/Linux
+-Debian
+-Ubuntu
+-RedHat
+-CentOS
+
+### Shell
+sh
+bash
+dash
+cmd.exe
+pwsh(powershell)
+
+### 程式語言
+C
+C++
+python
+bash
+
+### 編譯器
+
+
+|  | parser | optimizer |
+| -------- | -------- | -------- |
+| GCC     | GCC     | GCC  |
+| LLVM-GCC     | GCC     | LLVM  |
+| LLVM Compiler     | Clang     | LLVM |
+
+### 開發套件
+kendryte (sdk / Maixduino / Maixpy)
+ROS

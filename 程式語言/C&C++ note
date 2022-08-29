@@ -1,0 +1,12 @@
+函式
+參數為指標且在函式中不會改動其值時,盡量加上const前綴,以使const量的指標能傳入
+
+assert的使用
+build type為Release時(NDEBUG被定義)assert會被忽略
+不要在assert中呼叫函式（e.g. `assert(x.compute())`）,否則不會執行
+
+常用函式與標頭檔
+系統依賴<unistd.h>/<windows.h>
+usleep,
+
+在case中定義局部變數的話需要加括號限制作用域

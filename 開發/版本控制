@@ -1,0 +1,21 @@
+git note
+
+###### tags: `開發`
+
+git儲存的檔案權限為755(rwxr-xr-x)或644(rw-r--r--)
+也就是說區分為可否執行兩類,
+並預設他人沒有寫入權限,跨機開發時要注意(sudo chmod a+w ${INSTALL_DIR})
+
+### submodule
+解除
+
+
+### git LFS（Large File Storage）
+參考https://haway.30cm.gg/git-lfs/
+安裝
+```
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+```
+若倉庫檔案是用git lfs儲存,需用 `git lfs pull` 才能恢復

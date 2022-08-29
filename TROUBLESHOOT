@@ -1,5 +1,45 @@
+基本診斷
+-用which [cmd] 確認正在執行的程式和認知一致
+-執行所需的檔案是否存在且正常(包含權限)
 
-* 無訊息終止(silent crash)
+* 無訊息終止(silent crash) or 
+* 核心已傾印/程式記憶體區段錯誤
 可能原因
-matplotlib pause函數(3.4.0修正,Ubuntu20時是3.1.2) https://github.com/matplotlib/matplotlib/pull/19671
+--常是粗心使用了錯誤的addr,仔細檢查
+--matplotlib pause函數(3.4.0修正,Ubuntu20時是3.1.2) https://github.com/matplotlib/matplotlib/pull/19671
     問題存於experiments待研究[220817plt當掉]
+--std::array建構時輸入的元素數量和設定不符 
+--使用了未初始化的空指針 (待確認:智慧指針能避免無訊息嗎?)-盡量避免指針為空的時候,初始化也要盡早(在初始化列表中進行)
+
+時間
+* datetime跟現實不一致時 -> 檢查網路連線是否正常
+
+電源
+* 樹莓派關機後自動重開 -> 可能ROS沒結束就關機導致(211202) 
+
+* 系統會進入類休眠狀態(每隔一段時間電源燈熄掉無法操作,開機後會恢復先前狀態)
+->用top確認是否有xorg在執行或'sudo apt list --installed | grep gdm'確認gdm3是否被安裝
+->若是,表示裝套件依賴時把桌面環境也安裝了,參考套件管理"安裝套件時連帶不希望安裝的都作為依賴一起裝了"
+
+
+shell
+* source: not found -> bash才有,sh沒有
+判斷式的==前後要空格
+
+套件管理
+* 安裝套件時連帶不希望安裝的(例如桌面環境gnome-shell)都作為依賴一起裝了
+->用指令`apt-rdepends -f Depends,Recommends -s Depends,Recommends [wanted package]`
+來鎖定有問題的依賴設定
+-> 若不希望安裝的lib是某lib的recommends依賴->在安裝依賴前先執行`sudo apt install [某lib] --no-install-recommends`
+(已確認libnotify4在Ubuntu20的依賴設定有問題,參考linux note-Ubuntu20錯誤:桌面環境做為依賴被無意安裝)
+
+網路
+* 連線(nfs,ssh)連不上
+->ifconfig檢查ip是否有變
+->檢查防火牆(ufw)
+->server是否已安裝(sudo apt install ssh)
+
+* 連不到外網
+route -n 看有無多個default gateway
+將封閉的default gateway(含.0的) 移除
+sudo route delete default gw 192.168.0.XX

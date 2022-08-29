@@ -1,0 +1,171 @@
+# ROS note
+
+#### SOP
+
+====== 開發 ========
+在機器端開發參考share/rover_maintain_setup.source
+設置環境
+. setup.source
+./bbot_latest/tool/update_dependency.bash
+編譯並安裝到bbot_latest
+. install_pkgs.source
+
+update_dependency.bash
+```
+OS=`lsb_release -sc`
+
+#避免連桌面環境一起裝的錯誤(ubuntu20的bug)
+sudo apt install libnotify4 --no-install-recommends
+
+#讓python腳本在直接執行或未被標準安裝時也一致用python3,參考"python直譯器宣告問題"
+if [ "${OS}" != "bionic" ]; then
+    sudo apt install python-is-python3
+fi
+
+PACKAGES=""
+if [ "${OS}" = "trusty" ]; then
+    echo "14.04 selected\n"
+    PACKAGES=${PACKAGES_14_04};
+elif [ "${OS}" = "xenial" ]; then
+    echo "16.04 selected\n"
+    PACKAGES=${PACKAGES_16_04};
+elif [ "${OS}" = "bionic" ]; then
+    echo "18.04 selected\n"
+    PACKAGES=${PACKAGES_18_04};
+elif [ "${OS}" = "focal" ]; then
+    echo "20.04 selected\n"
+    PACKAGES=${PACKAGES_20_04};
+else
+    echo "unknown OS, aborting\n"
+    return 0
+fi;
+
+echo ${PACKAGES}
+
+# required libraries and packages
+echo "Installing ubuntu packages"
+sudo apt-get update
+sudo apt-get install ${PACKAGES} -y
+rosdep install --from-paths ${ROS_WS}/src --ignore-src -r -y
+
+# remove official version to avoid conflict to our version
+# navigation-stack
+sudo apt remove \
+ros-${ROS_DISTRO}-amcl \
+ros-${ROS_DISTRO}-base-local-planner \
+ros-${ROS_DISTRO}-carrot-planner \
+ros-${ROS_DISTRO}-clear-costmap-recovery \
+ros-${ROS_DISTRO}-costmap-2d \
+ros-${ROS_DISTRO}-dwa-local-planner \
+ros-${ROS_DISTRO}-fake-localization \
+ros-${ROS_DISTRO}-global-planner \
+ros-${ROS_DISTRO}-map-server \
+ros-${ROS_DISTRO}-move-base \
+ros-${ROS_DISTRO}-move-slow-and-clear \
+ros-${ROS_DISTRO}-nav-core \
+ros-${ROS_DISTRO}-navfn \
+ros-${ROS_DISTRO}-navigation \
+ros-${ROS_DISTRO}-rotate-recovery \
+ros-${ROS_DISTRO}-voxel-grid
+
+echo "done"
+```
+
+#### 準備
+(ROS Noetic)sudo apt-get install python3-rosdep
+(ROS Melodic and earlier)sudo apt-get install python-rosdep
+sudo rosdep init
+rosdep update
+
+#### 依賴
+更新依賴腳本:update_dependency.bash
+
+寫在package.xml中的依賴會從[rosdep目錄](https://github.com/ros/rosdistro/tree/master/rosdep)中尋找對應名稱
+
+目錄居然是個別貢獻新增的,要用的庫不一定在裡面(e.g. socketio_client)
+不在的庫就要另外在腳本中列出用apt直接安裝
+
+rosdep目錄介紹
+[Contributing rosdep rules](http://docs.ros.org/en/independent/api/rosdep/html/contributing_rules.html)
+
+#### key效期問題（到2025/6/1）
+
+#### 自編版和apt官方版衝突問題
+使用自改包時要移除官方包以免衝突
+同時編譯my_A和依賴A的B時,B可能會去找系統的official_A的include
+->因為catkin基本依賴會找/opt/melodic($catkin_INCLUDE_DIRS中依賴包的include會擺在melodic的include之後),也就導致/opt/melodic/include會被優先找,所以自行維護的包應安裝在另個位置(/opt/ros_pkgs),且不要和官方目錄有交集
+建構時才不會錯用到官方目錄的東西
+研究:由於依賴包是用find_package(catkin COMPONENTS xxx)的方式尋找,找到後各依賴的路徑會綑成catkin_INCLUDE_DIRS,導致就算找到真的路徑,也可能會被其他路徑影響,這是catkin系統把尋找機制簡化造成的限制,不過這也只是影響路徑順序(能不能讓明確指定的路徑靠前而間接依賴路徑靠後？),另一關鍵還是自編版和apt官方版衝突問題
+
+#### 動態調參dynamic_reconfigure
+* Client的C++API的setConfiguration使用要注意,是全部參數一起設,不像pythonAPI中的update_configuration可以指定個別參數做調整
+* 在cmake要把導出添加到依賴以免頭文件缺失
+    add_dependencies(rpi_rover_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
+
+#### 中斷處理
+* NodeHandle會註冊SIGINT處理來做ros::shutdown,切換為非ros::ok後繼續執行程序
+但SIGTERM不會處理而直接中斷程序
+若是使用roslaunch,則會處理SIGINT,SIGTERM,SIGHUP,來SIGINT node
+由於關機時可能會直接收到系統的SIGTERM,若有必要(特別是硬體驅動)可能要自行處理SIGTERM(參考rplidar_ros1001.0.1或rpi_rover0.2.2)
+
+#### 日誌
+* roslaunch可指定日誌輸出類型為screen或log,兩種類型都有缺點...,看情況來決定
+輸出為log有buffer機制使得資訊不即時的問題(參考 https://github.com/ros/rosconsole/issues/5)
+    解決方案 >>stdbuf -o L roslaunch <launchfile>
+輸出為screen則無法保留前次資訊造成追蹤困難
+
+* 要有清理機制,否則塞爆記憶體後系統會崩潰
+rm -rf /root/.ros/logBU
+mv /root/.ros/log /root/.ros/logBU
+mkdir /root/.ros/log
+
+#### 資料結構
+* 用cvBridge::cv2_to_imgmsg時encoding應明確指定(bgr8)而不是用預設的passthrough,否則不知道顏色順序無法自動轉換處理(參考sensor_msgs/image_encodings.h)
+cvBridge不強制讀取時指明色彩類型(我覺得應該強制讀取時指明),但很多lib處理image_msg時卻都假設可作色彩轉換,沒考慮沒指明色彩類型的情況
+
+棄用API
+error: expected constructor, destructor, or type conversion before ‘(’ token
+ PLUGINLIB_DECLARE_CLASS(navfn, NavfnROS, navfn::NavfnROS, nav_core::BaseGlobalPlanner)
+
+* 多機器用stamp資料要注意有不完全同步的問題(e.g. 220805 UWB無法設置站點的問題)
+
+#### 和conda共用
+在虛擬環境下python工具需另外下載(pip)
+pip install catkin_pkg empy nose setuptools numpy rospkg PyYAML defusedxml opencv-python
+catkin-> catkin_pkg empy nose setuptools
+rospy-> numpy rospkg PyYAML
+rosmaster-> defusedxml
+其他-> opencv-python
+
+#### 其他
+做多次launch時,可先單獨開啟roscore再讓其他launch用"--wait"等待,可避免core位置不明或多core衝突(衝突時會報錯"run_id on parameter server does not match declared run_id")
+
+參數盡量自己接管,也就是避免用非自己管理的launch檔,以免不知何時被改掉
+
+#### python執行檔
+python直譯器宣告問題
+如果腳本前直譯器宣告是"#!/usr/bin/env python"或"#!/usr/bin/python"直接執行會變成用python2
+但在使用catkin_install_python安裝後,直譯器宣告都會自動變成"#!/usr/bin/env python3"
+為了讓python腳本在直接執行或未被標準安裝時也一致用python3,應該要先apt install python-is-python3
+
+#### 
+
+#### TROUBLESHOOT
+* 動態調參的頭文件缺失 e.g.<rpi_rover/RpiRoverConfig.h>
+    ->要把導出添加到依賴
+    add_dependencies(rpi_rover_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
+    
+* rviz中有些東西無法顯示
+  訊息提示Failed to transform from frame [/map] -> noetic中用tf2取代tf,而tf2不允許座標前方有斜線
+
+* RLException: Roslaunch got a 'No such file or directory' error while attempting to run
+  可能跟系統升為Ubuntu20後找不到/usr/bin/python有關
+
+* 日誌無法顯示中文
+參考網上作法加入以下仍無法解決
+    #include <locale.h>
+    setlocale(LC_CTYPE,"zh_TW.utf8");
+改成 setlocale(LC_ALL, ""); 就成功了
+待研究
+http://wiki.ros.org/indigo/Installation/UbuntuARM
+https://docs.microsoft.com/zh-tw/cpp/c-runtime-library/reference/setlocale-wsetlocale?view=msvc-170

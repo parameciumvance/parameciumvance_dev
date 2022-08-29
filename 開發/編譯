@@ -1,0 +1,10 @@
+CMAKE note
+
+###### tags: `開發`
+
+FLAGS_RELEASE 預設 -O3 -DNDEBUG
+FLAGS_DEBUG 預設 -g
+
+準備組態
+"cmake -B build" 較簡潔,但Ubuntu20(cmake3.16)才支援
+否則要用"mkdir build && cd build;cmake .."

@@ -1,3 +1,6 @@
+
+
+* 錯誤修正
 出錯時->補強測試->修改直到測試通過
 
 * 添加測試
@@ -13,8 +16,9 @@ http://docs.ros.org/en/jade/api/catkin/html/howto/format2/run_tests.html
 -troubleshoot
 -test/反省
 
-* 若程式要由系統執行(開機自啟動),應避免依賴USER或HOME目錄
-* 確認可執行檔（bin和tool）的可執行屬性
+* 其他提醒
+- 若程式要由系統執行(開機自啟動),應避免依賴USER或HOME目錄
+- 確認可執行檔（bin和tool）的可執行屬性
 
 * 安裝依賴
 執行腳本update_dependencies.bash,需檢查額外安裝的內容,特別是server版裝到桌面環境(gnome-shell)的問題
