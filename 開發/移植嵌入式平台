@@ -1,0 +1,90 @@
+移植嵌入式平台注意點
+* 嵌入式平台:工業主機板,樹莓派,k210,參考"嵌入式平台"各分項
+* 跨機開發:用nfs同步環境開發(本機當nfs server還是client各有優缺,待比較)
+* 開機自啟動
+* 純server環境:避免桌面環境被安裝
+* 無網環境:避免浪費時間嘗試自動更新
+* 其他工具:putty
+
+#新增用戶
+sudo adduser [name] #useradd是低階指令,不要用錯
+#將user加入sudo群組
+sudo usermod -aG sudo [name]
+
+在/etc/hosts互相加入ip和hostname
+
+**nfs**
+
+簡介：在PC編輯,在機器編譯
+目的：源碼分離, PC上編輯方便(有互動界面)
+
+--
+nfs使用
+sudo apt install nfs-kernel-server nfs-common
+sudo chmod -R 777 /var/nfsshare/
+
+/etc/exports加入
+/var/nfsshare 192.168.0.11(insecure,rw,sync,no_root_squash,no_all_squash)
+sudo /etc/init.d/nfs-kernel-server restart
+
+sudo apt install nfs-common
+
+sudo mount -t nfs VivoBook:/home/vance/nfs_home VivoBook_nfs
+sudo umount VivoBook_nfs
+
+如果需要下次重新開機後就會自動掛載 , 現在開啟 /etc/fstab, 加入以下內容 :
+192.168.0.10:/var/nfsshare /mnt/nfs/var/nfsshare nfs defaults 0 0
+
+--
+
+注意事項
+跨機安裝的權限問題(參考git note
+
+--
+範例腳本
+maintain_setup.source
+```
+export DEVELOPER_HOME=~/vance_dev
+export DEVELOPER_NFSSHARE=$DEVELOPER_HOME/nfsshare
+export DEVELOPER_NFS_URL=VivoBook:/home/vance/nfs_home
+
+# mount Network File System
+if [ ! -d $DEVELOPER_NFSSHARE ]
+then
+    mkdir $DEVELOPER_NFSSHARE
+fi
+if [ ! -d $DEVELOPER_NFSSHARE/bbot_maintain ]
+then
+    sudo mount -t nfs -o nolock $DEVELOPER_NFS_URL $DEVELOPER_NFSSHARE
+fi
+rm $DEVELOPER_HOME/bbot_maintain
+ln -s $DEVELOPER_NFSSHARE/bbot_maintain $DEVELOPER_HOME/bbot_maintain
+
+source $DEVELOPER_HOME/bbot_maintain/setup.source
+```
+
+
+***
+**putty**
+登入其他主機的終端用,不過我習慣用一般的終端登入
+問題:
+不能右鍵複製到剪貼簿->Debian可用反白後再用滾輪貼上
+
+****避免浪費時間嘗試自動更新
+cat /etc/apt/apt.conf.d/20auto-upgrades可看到自動更新週期非0則表示會自動定期更新(50unattended-upgrades也有相關組態)
+->sudo dpkg-reconfigure unattended-upgrades將組態設定為不自動定期更新
+不知為何之前沒遇過這情況,可能和升ubuntu20有關
+
+發現我PC和筆電組態都是不自動更新,研究半天想起之前有用gui關閉,ubuntu18預設也是會自動更新
+用虛擬機實驗看起來U18或U20就算無網也不會嘗試自動更新卡這麼久啊
+可能是特殊情況觸發(例如嘗試更新過程中被關機)
+
+#本機當nfs-server vs 當nfs-client
+-當nfs-server
+e.g. bbot_maintain
+
+缺點:build目錄需蓋在專案外,流程和本機開發需做區別較囉唆
+
+-當nfs-client
+
+缺點:未unmount的堵塞問題,平台突然斷電的修改遺失問題

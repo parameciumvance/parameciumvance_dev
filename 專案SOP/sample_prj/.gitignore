@@ -1,0 +1,16 @@
+*datasets/
+*datasets
+checkpoints/
+*models/
+*outputs/
+*reports/
+*ref/
+tmp/
+*_tmp
+tmp.*
+*_tmp.*
+
+.vscode/
+*/.vscode/
+*.pyc
+

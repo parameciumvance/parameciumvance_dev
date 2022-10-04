@@ -1,7 +1,9 @@
 
 
 * 錯誤修正
-出錯時->補強測試->修改直到測試通過
+為什麼之前沒發現?->補強測試項目(單元測試或demo測試)->修改直到測試通過
+怎麼避免錯誤出現?->補強SOP
+怎麼追出錯誤源頭?->TROUBLESHOOT
 
 * 添加測試
 ROS框架參考（還有rostest尚未研究）
@@ -51,4 +53,20 @@ python project name vs lib name
 | pytorch | torch | 
 
 同名- tensorflow numpy keras
- 
+
+* 資料存取
+應重視可逆性(對稱)
+
+* 資料診斷
+遺失,同步,品質
+
+* 畫面提示系統
+e.g. BbotManager的setInfo
+在等待工作執行前和主要任務結束時提示,以利掌握停在何階段
+中途需顯示細節時,要有停留時間(2s)
+
+* 重構整併
+重構整併專案後,舊的版控資料做為legacy存參(在專案外另外保存,較不會造成搜尋到同檔案的混淆)
+
+* desktop
+可準備.desktop檔方便點擊使用(Ubuntu18可以在檔案系統直接點擊,Ubuntu20則不能,要放到桌面或applications)

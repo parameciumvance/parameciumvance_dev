@@ -1,0 +1,3 @@
+用 grep Foreign /var/log/dist-upgrade/main.log
+找出外來的套件是ros
+移除ros-melodic*就好

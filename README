@@ -24,15 +24,29 @@ examples:範例參考
 * 家目錄
 
 -Projects
+---ACTIVE 進行中專案連結
+---XXX_research 和XXX專案並列,存放研究工具和資料
+---parameciumvance_dev 本資料庫
+
 ---playground 簡易實驗區(在playground工作也不是好習慣,想了解程式行為應該建檔和範例)
----todo 收集待處理資料
--Experiments
--TMP
+---Experiments
+---tools
+
+-文件
+---source codes 參考用源碼
+---紫電 放開發日誌,文件
+
+-nfs_home
 -Apps
+-datasets
+
+-.bashrc
 
 三方建立
--snap 沒研究,像是系統建立的
+
 -miniconda3 虛擬環境(完整版會取做anaconda3,基本上用最簡版就好)
+-VirtualBox VMs
+-snap 沒研究,像是系統建立的
 -Arduino 明明沒用,不知什麼情況下建立的
 -Documents/librealsense2 安裝librealsense時會產生的空目錄,可能是中文系統名稱差異導致的問題(中文系統Documents目錄會變[文件]),看到時可刪掉
 
