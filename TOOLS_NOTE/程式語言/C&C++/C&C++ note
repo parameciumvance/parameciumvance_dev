@@ -1,0 +1,17 @@
+函式
+參數為指標且在函式中不會改動其值時,盡量加上const前綴,以使const量的指標能傳入
+
+assert的使用
+build type為Release時(NDEBUG被定義)assert會被忽略
+不要在assert中呼叫函式（e.g. `assert(x.compute())`）,否則不會執行
+
+常用函式與標頭檔
+系統依賴<unistd.h>/<windows.h>
+usleep,
+
+在case中定義局部變數的話需要加括號限制作用域
+
+類別建構成員物件時是按照宣告的順序(不是初始化列表的順序),若成員間有依賴關係,一定要注意宣告順序,否則會有基底沒初始化的錯誤
+
+注意uint和int的運算 -uint(1)和-1*uint(1)不會等於-1
+uint的好處是不用檢查非負和上限較大,缺點就是和int混合運算可能搞錯

@@ -1,0 +1,163 @@
+u_result RPlidarDriverImplCommon::_waitResponseHeader(rplidar_ans_header_t * header, _u32 timeout)
+{
+    int  recvPos = 0;
+    _u32 startTs = getms();
+    _u8  recvBuffer[sizeof(rplidar_ans_header_t)];
+    _u8  *headerBuffer = reinterpret_cast<_u8 *>(header);
+    _u32 waitTime;
+
+    while ((waitTime=getms() - startTs) <= timeout) {
+        size_t remainSize = sizeof(rplidar_ans_header_t) - recvPos;
+        size_t recvSize;
+        
+        bool ans = _chanDev->waitfordata(remainSize, timeout - waitTime, &recvSize);
+        if(!ans) return RESULT_OPERATION_TIMEOUT;
+        
+        if(recvSize > remainSize) recvSize = remainSize;
+        
+        recvSize = _chanDev->recvdata(recvBuffer, recvSize);
+
+        for (size_t pos = 0; pos < recvSize; ++pos) {
+            _u8 currentByte = recvBuffer[pos];
+            switch (recvPos) {
+            case 0:
+                if (currentByte != RPLIDAR_ANS_SYNC_BYTE1) {
+                   continue;
+                }
+                
+                break;
+            case 1:
+                if (currentByte != RPLIDAR_ANS_SYNC_BYTE2) {
+                    recvPos = 0;
+                    continue;
+                }
+                break;
+            }
+            headerBuffer[recvPos++] = currentByte;
+
+            if (recvPos == sizeof(rplidar_ans_header_t)) {
+                return RESULT_OK;
+            }
+        }
+        printf("=DEBUG:_waitResponseHeader consuming bad data(may be caused by previous program finishing is not clean)\n");
+    }
+
+    return RESULT_OPERATION_TIMEOUT;
+}
+
+
+int raw_serial::senddata(const unsigned char * data, size_t size)
+{
+// FIXME: non-block io should be used
+    if (!isOpened()) return 0;
+
+    if (data == NULL || size ==0) return 0;
+    
+    size_t tx_len = 0;
+    required_tx_cnt = 0;
+    do {
+        int ans = ::write(serial_fd, data + tx_len, size-tx_len);
+        
+        if (ans == -1) return tx_len;
+        
+        tx_len += ans;
+        required_tx_cnt = tx_len;
+    }while (tx_len<size);
+    
+    
+    return tx_len;
+}
+
+
+int raw_serial::recvdata(unsigned char * data, size_t size)
+{
+    if (!isOpened()) return 0;
+    
+    int ans = ::read(serial_fd, data, size);
+    
+    if (ans == -1) ans=0;
+    required_rx_cnt = ans;
+    return ans;
+}
+
+
+int raw_serial::waitfordata(size_t data_count, _u32 timeout, size_t * returned_size)
+{
+    size_t length = 0;
+    if (returned_size==NULL) returned_size=(size_t *)&length;
+    *returned_size = 0;
+
+    int max_fd;
+    fd_set input_set;
+    struct timeval timeout_val;
+
+    /* Initialize the input set */
+    FD_ZERO(&input_set);
+    FD_SET(serial_fd, &input_set);
+
+    if (_selfpipe[0] != -1)
+        FD_SET(_selfpipe[0], &input_set);
+
+    max_fd =  std::max<int>(serial_fd, _selfpipe[0]) + 1;
+
+    /* Initialize the timeout structure */
+    timeout_val.tv_sec = timeout / 1000;
+    timeout_val.tv_usec = (timeout % 1000) * 1000;
+
+    if ( isOpened() )
+    {
+        if ( ioctl(serial_fd, FIONREAD, returned_size) == -1) return ANS_DEV_ERR;
+        if (*returned_size >= data_count)
+        {
+            return 0;
+        }
+    }
+
+    if ( !isOpened() )
+    {
+        return ANS_DEV_ERR;
+    }
+
+    /* Do the select */
+    int n = ::select(max_fd, &input_set, NULL, NULL, &timeout_val);
+
+    if (n < 0)
+    {
+        // select error
+        *returned_size =  0;
+        return ANS_DEV_ERR;
+    }
+    else if (n == 0)
+    {
+        // time out
+        *returned_size =0;
+        return ANS_TIMEOUT;
+    }
+    else
+    {
+        if (FD_ISSET(_selfpipe[0], &input_set)) {   
+            // require aborting the current operation
+            int ch;
+            for (;;) {                    
+                if (::read(_selfpipe[0], &ch, 1) == -1) {
+                    break;
+                }
+                
+            }
+
+            // treat as  timeout
+            *returned_size = 0;
+            return ANS_TIMEOUT;
+        }
+
+        // data avaliable
+        assert (FD_ISSET(serial_fd, &input_set));
+
+
+        if ( ioctl(serial_fd, FIONREAD, returned_size) == -1) return ANS_DEV_ERR;
+
+        return 0;
+
+    }
+
+}

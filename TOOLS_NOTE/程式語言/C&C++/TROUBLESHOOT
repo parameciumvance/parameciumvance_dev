@@ -1,0 +1,15 @@
+# 編譯坑
+
+確定有抓完整倉庫（--recursive）
+中文路徑會有坑,空白和括號也是
+gcc/g++ version(6/7/8)
+c++讀c函式庫 （extern C）
+
+sudo (安裝到系統路徑時)
+
+-gcc
+nvcc(cuda compiler)會要求gcc版本(cuda10.0:gcc<=7)
+(參考 cuda-10.0/include/crt/host_config.h:129)
+
+* xxx not declared
+**可能原因:** 舊版GCC(4)可以不顯式宣告,更新後以前可以編譯的舊專案重新編譯時可能因此出錯

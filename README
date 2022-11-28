@@ -1,25 +1,17 @@
 
-!!!!!!!!!
-!!!!從HackMD轉移中
-!!!!!!!!!
-
-#上傳github
+#更新上傳github(登入設定未搞清楚,暫時要用vscode終端才能進行)
 git add *
 git commit -m "update"
 git push -u origin main
 
+開發:開發工作重點,含SOP
+範例:範例參考
+TOOLS_NOTE:各工具使用筆記
 TROUBLESHOOT:問題排解
-TROUBLESHOOT(待分類):早期收集未分類的
-開發日誌
-examples:範例參考
-
--各項SOP參考SOP標籤下項目
 
 系統重設SOP
-專案SOP
-
-
-健康檢查-使系統維持良好狀況(記憶體空間管理etc)
+history
+開發日誌:暫為空,公司的日誌存在"/文件/紫電"
 
 * 家目錄
 

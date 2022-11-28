@@ -1,0 +1,163 @@
+import
+    argparse, cfg_default
+    os, sys
+    time, datetime
+
+    torch     (optim, utils.data.DataLoader, backends.cudnn)
+    
+    The_model
+    The_criterion
+    The_dataset
+    The_collate_fn
+    
+
+    evaluate
+    logger (ref: Yolo)
+
+    apex.amp  (https://cloud.tencent.com/developer/news/254121)
+
+
+args:
+    #
+        parser = argparse.ArgumentParser(description='The_model trainnig')
+        parser.add_argument('-縮寫', '--參數名', default=預設值, type=類型, help=說明)
+        args = parser.parse_args()
+    savefolder
+    weight_path, modelcfg(img_dim, channel, num_class, prior_anchor)
+    optim_params
+        SGD: (initial_lr,weight_decay,momentum)
+    scheduler_params
+        gamma, steps, warmup
+
+    imgfolder, datacfg( augments, valpath, --class_names  )
+    batch_size, num_workers, --num_gpu, --gpu_train
+        #num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
+
+
+    max_epoch, eval_freq, checkpoint_freq, --accumulation_freq
+
+    
+    compute_map
+
+    trainpath2,valpath2,mixed_rate
+    round(mission_name)
+
+cfg merge (refer: maskrcnn)
+    cfg = cfg_default
+    cfg.merge_from_file(args.config_file)
+    cfg.merge_from_list(args.opts)
+    cfg.freeze()
+    save cfg
+
+make logdir
+make savefolder
+device = torch.device('cuda:0' if torch.cuda.is_available() & gpu_train  else 'cpu')
+log ngpu, env, cfg, (refer: maskrcnn)
+
+
+setmodel
+    model = The_model(phase,modelcfg)
+        若model綁criterion則不需phase
+    (#model.apply(weights_init_normal))
+        (FaceBoxes) 
+            if isinstance(m, nn.Conv2d):
+                if m.bias is not None:
+                    nn.init.xavier_normal_(m.weight.data)
+                    m.bias.data.fill_(0.02)
+                else:
+                    m.weight.data.normal_(0, 0.01)
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+        (Yolo)
+            if classname.find("Conv") != -1:
+                torch.nn.init.normal_(m.weight.data, 0.0, 0.02)
+            elif classname.find("BatchNorm2d") != -1:
+                torch.nn.init.normal_(m.weight.data, 1.0, 0.02)
+                torch.nn.init.constant_(m.bias.data, 0.0)
+
+    model.load_state_dict(torch.load(weight_path))  
+        # load_state_dict前先 remove prefix'module.' (若DataParallel處理會多出)
+                state_dict = torch.load(args.resume_net)
+                # create new OrderedDict that does not contain `module.`
+                from collections import OrderedDict
+                new_state_dict = OrderedDict()
+                for k, v in state_dict.items():
+                    head = k[:7]
+                    if head == 'module.':
+                        name = k[7:] # remove `module.`
+                    else:
+                        name = k
+                    new_state_dict[name] = v
+                net.load_state_dict(new_state_dict)
+    model = model.to(device)
+
+    加速
+        DataParallel處理(多gpu時)
+            if num_gpu > 1 and gpu_train:
+                model = torch.nn.DataParallel(model, device_ids=list(range(num_gpu)))
+        Distributed(多gpu或多機時)
+            torch.cuda.set_device(args.local_rank)
+            torch.distributed.init_process_group(
+                backend="nccl", init_method="env://"
+            )
+            synchronize()
+        cudnn.benchmark = True
+        apex.amp
+    
+
+
+criterion = The_criterion with encoder
+    truth = encode(anchors,targets)
+    loss = L1_loss(truth,prediction)
+
+optimizer = The_optimizer(model.parameters(), optim_params)
+    optim.Adam
+    optim.SGD
+        scheduler (scheduler_params)
+            (FaceBoxes)   for param_group in optimizer.param_groups:
+                                        param_group['lr'] = initial_lr*(gamma**step) 
+                                        step at 200*epochsize & 250*epochsize
+            (maskrcnn)      WarmupMultiStepLR
+setdata
+    dataset = The_dataset(imgfolder, datacfg, modelcfg.img_dim, modelcfg.channel)
+        VOCDetection(imgfolder, img_dim)
+    dataloader = DataLoader(dataset, batch_size, shuffle=True, num_workers=num_workers, collate_fn=The_collate_fn, pin_memory= )
+        collate_fn: 批量sample如何組合
+        pin_memory: 設為True時,若內存充足可加速
+
+
+
+
+for epoch in range(max_epoch):
+    for batchNo, (imgs_b,targets_b) in dataloader:
+        imgs_b.to(device)
+        targets_b.to(device)
+
+        訓練    
+            model.train()
+            out = model(images_b)
+            loss = criterion(out, targets_b)
+            loss.backward()
+            (# may step in accumulation_freq)
+            optimizer.step()                
+            optimizer.zero_grad()
+
+        log
+            epoch(epoch / max_epoch)
+            batch(batchNo/len(dataloader))
+            loss
+            batch_time
+            eta
+                eta = int(batch_time * (max_iter - iteration))
+                eta = str(datetime.timedelta(seconds=eta))
+            (lr)
+
+    
+    
+    evaluate(in eval_freq)
+
+
+    save checkpoint(in checkpoint_freq)
+        torch.save(model.state_dict(), os.path.join(savefolder, f'{epoch}.pth') )
+

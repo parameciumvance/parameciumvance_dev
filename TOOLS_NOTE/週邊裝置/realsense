@@ -1,0 +1,20 @@
+
+
+realsense_ros & librealsense源碼研究
+
+context
+
+backend
+參考librealsense/CMake/[OS]_config.cmake
+windows若是Win7(cmake=6.1)則是WINUSB_UVC_BACKEND(win7.win.winusb.rsusb-backend.hid.uvc) 否則是WMF_BACKEND(mf.win.winusb)
+unix若是APPLE則是LIBUVC_BACKEND(libuvc.libusb.rsusb-backend.hid.uvc) 否則是V4L2_BACKEND(linux.libusb) (但有人說apt安裝的是rsusb-backend,看訊息也確實是,參考https://github.com/IntelRealSense/realsense-ros/issues/1515)
+android是RS2_USE_ANDROID_BACKEND(android.usbhost.rsusb-backend.hid.uvc)
+
+devices[V4L2_BACKEND] 
+分為uvc,usb,hid
+從devices中再pick_ds5_devices(D400系列)
+uvc:搜尋/sys/class/video4linux
+hid:搜尋/sys/bus/iio/devices
+usb:透過libusb_get_device_list
+
+sensors

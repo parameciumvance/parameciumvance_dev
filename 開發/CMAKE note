@@ -1,6 +1,3 @@
-CMAKE note
-
-###### tags: `開發`
 
 FLAGS_RELEASE 預設 -O3 -DNDEBUG
 FLAGS_DEBUG 預設 -g

@@ -1,0 +1,16 @@
+過濾雜訊
+接收資料要確定超時機制正常運作(參考rplidar的除錯經驗)
+
+serial通訊,參考rplidar
+<unistd.h> //write,read
+<fcntl.h> //open
+<sys/select.h>
+<sys/ioctl.h>
+serial_fd = ::open(portname, O_RDWR | O_NOCTTY | O_NDELAY)
+先傳送指令
+::write(serial_fd, data + tx_len, size-tx_len)
+等待
+select(max_fd, &input_set, NULL, NULL, &timeout_val) 用來看時限內是否有input發生,(timeout_val有可能更新為剩餘時間,但此為未定義行為應避免使用)
+接收
+ioctl(serial_fd, FIONREAD, returned_size) 確認有多少內容可讀(=returned_size)
+::read(serial_fd, data, size) 讀取內容,要過濾雜訊,參考RPlidarDriverImplCommon::_waitResponseHeader

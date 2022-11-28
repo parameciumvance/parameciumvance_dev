@@ -1,18 +1,27 @@
 基本診斷
 -用which [cmd] 確認正在執行的程式和認知一致
 -執行所需的檔案是否存在且正常(包含權限)
+重開程式或重開機永遠是個方法,但想徹底把問題除根時最好保持錯誤能重現的狀態以利研究
 
-* 無訊息終止(silent crash) or 
+* 編譯錯誤
+參考編譯語言的筆記和錯誤提示套件的筆記
+
+* 無訊息崩潰(silent crash) or 
 * 核心已傾印/程式記憶體區段錯誤
+* bad_alloc異常
 可能原因
 --常是粗心使用了錯誤的addr,仔細檢查
 --matplotlib pause函數(3.4.0修正,Ubuntu20時是3.1.2) https://github.com/matplotlib/matplotlib/pull/19671
     問題存於experiments待研究[220817plt當掉]
 --std::array建構時輸入的元素數量和設定不符 
 --使用了未初始化的空指針 (待確認:智慧指針能避免無訊息嗎?)-盡量避免指針為空的時候,初始化也要盡早(在初始化列表中進行)
+--非void函式沒回傳值也可能有異常行為(e.g. bbot1.2.0修正的MapHandle::loadNavPtsFromYaml)
 
 * 程式阻塞
---無法取得資料,檢查資料提供/傳輸問題和超時機制
+用除錯訊息找出阻塞點
+阻塞點的工作是在等待資料?
+    非必要資料?->檢查超時機制是否設置並正常運作(時間計算,超時判斷):e.g.rplidar雜訊堵塞問題(*select未定義行為*,sleep時間未計算,超時判斷有錯)
+    資料提供/傳輸異常?->檢查資料提供/傳輸問題,並正確提示或報錯
 
 時間
 * datetime跟現實不一致時 -> 檢查網路連線是否正常
@@ -48,3 +57,48 @@ shell
 route -n 看有無多個default gateway
 將封閉的default gateway(含.0的) 移除
 sudo route delete default gw 192.168.0.XX
+
+資料流
+掉幀,延遲,不同部->是否受網路傳輸影響?尤其是大資料流(影像)應盡量避免網路傳輸(跨機開發時可利用nfs)
+
+=====待分類========================
+
+* ImportError: libcublas.so.9.0: cannot open shared object file
+**原因:** 套件(torch)版本和先前編譯C-file時不同
+**Sol:** C-file要重新編譯(移除build資料夾重新跑setup.py)
+
+* conda env下用pip裝包一直裝不到正確位置
+**原因:** conda的pip被bashrc裡alias pip=pip3覆蓋
+**Sol:** alias還是別亂用
+
+* undefined symbol: _ZN2cv8fastFreeEPv
+**原因:** 沒有連結到opencv的庫
+**Sol:** (2020.2.5)
+
+* cv namespace undefined reference
+**原因:** opencv版本問題
+**Sol:** include<cv.h>改include<cv.hpp> 
+         用imread時g++LIB參數要加入-lopencv_imgproc (2020.2.6)
+
+* VScode的移到定義選項消失
+**原因:** ？？？
+**Sol:** 把開啟的頁面全關掉後重開即可 （2020.2.13）
+
+* C++ with opencv編譯/連結失敗
+**原因:** 
+**Sol:** 注意opencv標頭檔路徑和lib路徑一致,還有確認版本 (2020.4.1) 另外虛擬環境的opencv lib有問題（謎）cmake時要退出環境
+
+* python腳本中還沒執行的部份確影響結果
+**原因:** 函數中只要偵測到指定變數的行為就會使變數從global變local（無法取得global值）
+**Sol:** 避免使用global變數吧
+
+* apt install失敗,出現"保留了損毀版本"
+**原因:** 關閉了ubuntu update,自動找的版本(舊)可能和既有的軟體(新)衝突
+**Sol:** 把update選項開回來（只是加上搜尋目標,跟是否自動更新是兩件事）
+
+* 重開機後變指令界面
+**原因:** 嘗試某些降版操作導致圖形界面異常
+**Sol:** 重裝即可 sudo apt-get install --reinstall ubuntu-desktop
+
+* 圖片或檔案無法開啟
+**可能原因:** 檔案是否都只有約130k?那可能是由於源碼庫是用git-lfs儲存,要用git lfs pull把檔案也復原

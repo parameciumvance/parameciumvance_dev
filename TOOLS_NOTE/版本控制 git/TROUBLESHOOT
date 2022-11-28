@@ -1,0 +1,4 @@
+* 檔案內容沒變但狀態是modified
+檢查git diff 出現old mode 100755 new mode 100644
+**原因:** unix 檔案類型權限 755=rwxr-xr-x, 644=rw-r--r--
+**Sol:** 修改git配置 (git config core.filemode false)

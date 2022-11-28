@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="pytuto" type="talker.py" name="talker" output="screen"/>
+  <node pkg="pytuto" type="listener.py" name="listener" output="screen"/>
+</launch>

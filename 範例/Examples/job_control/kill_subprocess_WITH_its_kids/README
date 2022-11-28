@@ -1,0 +1,33 @@
+ctrl-C可以把signal傳給所有前景的process
+kill pid則只對一個process作用(子程序不會死[即使在前景]而是會在後台繼續)
+
+關鍵要用setpgid和killpg
+
+killpg對後台的還是沒辦法
+
+看pgid 
+>>ps -ejf
+
+ps alx
+ps alxf
+
+execl("/usr/bin/python", "HAHAHA" ,"/opt/ros/melodic/bin/roslaunch", "--core", NULL);
+
+popen可以嗎?
+
+sh結束後,其子行程會被背景（systemd）接管
+而system會用"sh -c"來執行指令
+fork是取得sh的pid
+所以kill(pid,15)無法真正殺死子程序
+
+sol1
+用execl直接執行
+取代system的用sh來執行
+
+
+sol2
+設定pgid再用killpg
+
+在bash中
+kill --/-15 9487 是殺死pid=9487
+kill --/-15 -9487 則是殺pgid=9487

@@ -1,0 +1,40 @@
+a=b                   int& a=b
+a=b.copy()            int a=b
+
+if a>5:                if(a>5)
+  b=1                  {
+                        b=1;
+                       }
+elif a<0:             else if (a<0)
+  b=2                   b=2;
+else:                 else
+  b=3                   b=3;
+
+函數
+help
+
+print("msg")         cout<<"msg"
+a=input("msg")       cout<<"msg";cin>>a
+
+int                  static_cast<int>
+float                static_cast<float>
+
+
+模組
+
+sys
+builtings.input/print           iostream
+io                              fstream
+builtings.str                   cctype 字元 cstring/string
+          str.format            iomanip
+os.system/.execv                cstdlib  ::system()
+math,cmath                      cmath
+time                            ctime
+random (_random,os.urandom)     cstdlib
+
+posix/nt os統合                  direct.h
+
+_struct
+
+
+_datetime(time,math)

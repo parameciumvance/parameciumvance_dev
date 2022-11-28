@@ -1,0 +1,33 @@
+### 確認cpu,記憶體用量
+top
+m: 記憶體顯示模式切換
+t: cpu顯示模式切換
+1: 多核心分別顯示
+
+### 確認磁碟空間使用量
+目錄使用量
+du -shc /my_dir/*
+-s, --summarize 只顯示總計（等於 –max-depth=0）
+-c, --total 增列一行 "總計"
+-h, --human-readable 以 K, M, G 為計量單位
+
+圖形介面工具
+apt install baobab
+
+### 磁碟空間清理參考
+
+* 回收桶(連結到.local/share/Trash/files)
+可直接從檔案系統進入並點選清空
+
+* .config/Code/User/workspaceStorage
+VScode的cpptools插件記憶體也用很大(一個工作區可能用到1G)
+工作區更換路徑時也會殘留舊組態
+直接清應該不會有什麼大問題
+如何改善還是開放問題
+https://github.com/microsoft/vscode/issues/32461
+
+* anaconda/envs/ENVNAME
+conda env remove -n ENVNAME
+
+* .cache/pip
+pip cache purge
