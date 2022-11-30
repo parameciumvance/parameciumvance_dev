@@ -1,7 +1,0 @@
-numpy
-matplotlib
-pillow
-opencv-python
-tqdm
-torch<1.7
-torchvision<0.8 #(torch.ver minus 0.9)

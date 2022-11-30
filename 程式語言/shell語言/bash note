@@ -1,2 +1,0 @@
-
-在腳本中source .bashrc會被忽略,要把需要的變數獨立出source檔來source
