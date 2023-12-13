@@ -58,7 +58,9 @@ blfid看磁碟資訊
 /etc/fstab設定自動掛載
 
 安裝
-vscode git smartgit filezilla
+vscode git smartgit filezilla docker
+
+docker image儲存路徑設定
 
 --------------------
 del進BIOS F10儲存

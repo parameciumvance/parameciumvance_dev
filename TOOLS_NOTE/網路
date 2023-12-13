@@ -1,0 +1,8 @@
+測port
+telnet [ip] [port]
+
+
+離開telnet(Windows)
+alt+29 quit
+離開telnet(linux)
+ctrl+]

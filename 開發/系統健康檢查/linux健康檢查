@@ -5,6 +5,8 @@ t: cpu顯示模式切換
 1: 多核心分別顯示
 
 ### 確認磁碟空間使用量
+
+
 目錄使用量
 du -shc /my_dir/*
 -s, --summarize 只顯示總計（等於 –max-depth=0）
@@ -13,6 +15,7 @@ du -shc /my_dir/*
 
 圖形介面工具
 apt install baobab
+(windows)treesize free
 
 ### 磁碟空間清理參考
 
@@ -31,3 +34,5 @@ conda env remove -n ENVNAME
 
 * .cache/pip
 pip cache purge
+
+* docker image儲存路徑設定

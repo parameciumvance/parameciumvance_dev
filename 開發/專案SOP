@@ -35,6 +35,9 @@ http://docs.ros.org/en/jade/api/catkin/html/howto/format2/run_tests.html
 * 架構(參考examples/new_project)
 
 * 日誌機制(需搭配清理以免塞爆磁碟空間)
+用logging的話要自動建目錄
+日誌搜尋ELK
+狀態監控Prometheus.Grafana
 
 * 畫面提示系統
 e.g. BbotManager的setInfo

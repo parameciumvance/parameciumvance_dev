@@ -1,0 +1,3 @@
+filebeat 7.17.2
+小於7.17.2會和glibc2.35(Ubuntu22)衝突
+https://discuss.elastic.co/t/filebeat-and-glibc-errors-on-ubuntu-22-04/306653
