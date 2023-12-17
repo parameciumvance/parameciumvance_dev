@@ -46,6 +46,10 @@ shell
 來鎖定有問題的依賴設定
 -> 若不希望安裝的lib是某lib的recommends依賴->在安裝依賴前先執行`sudo apt install [某lib] --no-install-recommends`
 (已確認libnotify4在Ubuntu20的依賴設定有問題,參考linux note-Ubuntu20錯誤:桌面環境做為依賴被無意安裝)
+* Memory error while using pip
+->pip install時加參數 --no-cache-dir 
+參考https://stackoverflow.com/questions/29466663/memory-error-while-using-pip-install-matplotlib
+(TODO)有何缺點,為何不是預設選項?
 
 網路
 * 連線(nfs,ssh)連不上
