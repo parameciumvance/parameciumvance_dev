@@ -1,0 +1,33 @@
+
+*ubuntu
+**升18.04
+DockerFile要加 ARG DEBIAN_FRONTEND=noninteractive
+
+*python
+**升3.9
+建議Ubuntu20.04
+protobuff升4.25與caffe衝突
+numpy升1.26.1 numpy_stack問題
+
+**升3.8
+建議Ubuntu20.04
+tensorflow升2.X
+
+**降3.6
+建議Ubuntu18.04
+ubuntu16的pip8.1衝突,直接pip install會出錯,要先python -m pip install --upgrade pip
+
+*opencv==4.7.0.72
+4.8.0與cuda衝突
+File "setup.py" line 448 in _classify_installed_files_override
+Exception: Not found: 'python/cv2/py.typed'
+
+*pip
+一律先更新python -m pip install --upgrade pip
+(WHY)10.0.1會選到不相容py3.6.5的protobuf4.21.0
+
+*tensorflow
+**降1.X
+python要降3.7
+
+2.5.3綁numpy1.19

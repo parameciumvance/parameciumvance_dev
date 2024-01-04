@@ -1,0 +1,40 @@
+
+### 確認磁碟空間使用量
+
+
+目錄使用量
+du -shc /my_dir/*
+-s, --summarize 只顯示總計（等於 –max-depth=0）
+-c, --total 增列一行 "總計"
+-h, --human-readable 以 K, M, G 為計量單位
+
+圖形介面工具
+apt install baobab
+(windows)treesize free
+
+### 磁碟空間清理參考
+
+* 回收桶(連結到.local/share/Trash/files)
+可直接從檔案系統進入並點選清空
+
+* .config/Code/User/workspaceStorage
+VScode的cpptools插件記憶體也用很大(一個工作區可能用到1G)
+工作區更換路徑時也會殘留舊組態
+直接清應該不會有什麼大問題
+如何改善還是開放問題
+https://github.com/microsoft/vscode/issues/32461
+
+* anaconda/envs/ENVNAME
+conda env remove -n ENVNAME
+
+* .cache/pip
+pip cache purge
+
+* docker image儲存路徑設定
+
+* docker-scout暫存未清
+~\AppData\Local\Temp\docker-scout\sha256
+https://github.com/docker/scout-cli/issues/42
+可用docker scout cache prune
+可能和docker desktop版本有關?
+

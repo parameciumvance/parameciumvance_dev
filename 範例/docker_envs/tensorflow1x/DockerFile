@@ -1,0 +1,14 @@
+FROM nvcr.io/nvidia/cuda:11.2.0-cudnn8-devel-ubuntu18.04
+MAINTAINER Vance
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+
+RUN apt-get install -y python3.6 python3-pip
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+RUN pip install --upgrade pip
+
+WORKDIR /tmp
+COPY requirements.txt /tmp
+RUN pip install -r requirements.txt
