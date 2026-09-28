@@ -1,69 +1,69 @@
-# Specification Guide
+# 規格指南
 
-## 1. Purpose
+## 1. 目的
 
-This document defines how specifications and design knowledge are organized and maintained in this repository.
+本文件定義此專案中規格與設計知識的組織方式、維護原則與操作流程。
 
-The goals are to:
+目標如下：
 
-- Provide a clear source of truth for current system behavior.
-- Provide a clear description of the current system design.
-- Preserve currently relevant behavioral interpretations and rationale.
-- Support incremental specification of an existing brownfield system.
-- Preserve the rationale and history of individual changes.
-- Make specifications understandable and navigable for both engineers and AI agents.
-- Keep the specification structure independent from any specific SDD tool where practical.
+- 提供目前系統行為的明確事實來源。
+- 提供目前系統設計的明確描述。
+- 保存理解目前行為仍有價值的解讀與理由。
+- 支援既有 brownfield 系統逐步建立規格。
+- 保存個別變更的理由、設計與歷史。
+- 讓工程師與 AI Agent 都能理解並導航規格。
+- 在可行範圍內，使規格制度不綁定特定 SDD 工具。
 
-OpenSpec is currently used to support the change workflow.
+目前使用 OpenSpec 支援變更流程，但本文件定義的是專案的規格制度，而非 OpenSpec 本身的使用說明。
 
 ---
 
-## 2. Core Principles
+## 2. 核心概念
 
-The documentation model distinguishes between:
+本專案區分下列不同類型的知識：
 
-- **Current behavior** — what the system currently guarantees.
-- **Current design** — how the system is currently designed.
-- **Current rationale** — why a currently valid behavioral interpretation or design decision exists.
-- **Change intent and design** — what a particular change intends to modify and how.
-- **History** — why and how previous changes were made.
+- **目前行為（Current Behavior）**：系統目前保證什麼。
+- **目前設計（Current Design）**：系統目前如何設計。
+- **目前理由（Current Rationale）**：為什麼目前採用某個仍有效的行為解讀或設計決定。
+- **變更意圖與設計（Change Intent / Design）**：某次變更要修改什麼，以及預計如何修改。
+- **歷史（History）**：過去為什麼以及如何進行某次變更。
 
-These concerns MUST NOT be treated as interchangeable.
+這些資訊不得混為一談。
 
-| Artifact | Purpose |
+| Artifact | 用途 |
 |---|---|
-| `capability-map.md` | Navigate the system and its capabilities |
-| `spec.md` | Describe current observable and normative behavior |
-| capability `design.md` | Describe current established design and currently relevant rationale |
-| change `proposal.md` | Describe why a change is needed and its scope |
-| change `design.md` | Describe how a particular change will be implemented |
-| `tasks.md` | Track implementation and documentation work for a change |
-| archived change | Preserve historical change context and decisions |
+| `capability-map.md` | 導航系統及其 capabilities |
+| `spec.md` | 描述目前可觀察且具規範性的行為 |
+| capability `design.md` | 描述目前設計與目前仍有效的理由 |
+| change `proposal.md` | 描述某次變更的原因與範圍 |
+| change `design.md` | 描述某次變更預計如何實作 |
+| `tasks.md` | 追蹤變更的實作與文件工作 |
+| archived change | 保存歷史變更脈絡與決策 |
 
-Conceptually:
+概念上：
 
-```text
+```text id="tghz5n"
 spec.md
-    = current WHAT
+    = 現行 WHAT
 
 design.md
-    = current HOW
-    + currently relevant WHY
+    = 現行 HOW
+    + 目前仍有效的 WHY
 
 capability-map.md
-    = system map and cross-capability navigation
+    = 系統地圖與跨 capability 導航
 
 archived changes
-    = historical WHY / CHANGE HOW
+    = 歷史 WHY / CHANGE HOW
 ```
 
 ---
 
-## 3. Repository Structure
+## 3. 目錄結構
 
-The expected OpenSpec structure is:
+預期的 OpenSpec 結構如下：
 
-```text
+```text id="a14hm7"
 openspec/
 ├── capability-map.md
 ├── config.yaml
@@ -87,31 +87,29 @@ openspec/
     └── archive/
 ```
 
-Not every capability is required to have a `design.md`.
+並非每個 capability 都必須具有 `design.md`。
 
-A `design.md` SHOULD exist when documenting established architecture, implementation decisions, behavioral interpretations, or rationale materially improves understanding or maintenance of the capability.
+當記錄既有架構、實作決策、行為解讀或理由能實質提升理解與維護能力時，SHOULD 建立 `design.md`。
 
 ---
 
-## 4. Capabilities
+## 4. Capability
 
-A capability represents a coherent area of system behavior or responsibility.
+Capability 代表系統中一個具有一致責任的行為或功能領域。
 
-Capabilities SHOULD be organized around stable system responsibilities rather than individual implementation files or classes.
+Capability SHOULD 依穩定的系統責任劃分，而不是直接依個別程式檔案、class 或 function 劃分。
 
-Examples:
+例如：
 
-```text
+```text id="exsqcl"
 app2-command
 app2-communication
 app2-control
 ```
 
-Application names MAY be used as capability prefixes when multiple applications exist in the same repository.
+當同一 repository 包含多個應用程式時，MAY 使用應用程式名稱作為 capability prefix：
 
-For example:
-
-```text
+```text id="5aswpn"
 app1-command
 app1-network
 
@@ -119,294 +117,359 @@ app2-command
 app2-network
 ```
 
-Shared capabilities SHOULD use an appropriate shared namespace rather than being assigned arbitrarily to one application.
+共用能力 SHOULD 使用適當的共用 namespace，而不是任意歸屬於其中一個應用程式。
 
 ---
 
 ## 5. Capability Map
 
-`openspec/capability-map.md` is the primary navigation entry point for understanding the specification set.
+`openspec/capability-map.md` 是理解目前規格集合的主要導航入口。
 
-It answers:
+它回答：
 
-> What major capabilities exist, what are they responsible for, how are they related, and where should I start reading?
+> 系統有哪些主要 capability、各自負責什麼、彼此如何關聯，以及應該從哪裡開始閱讀？
 
-The capability map SHOULD contain:
+Capability Map SHOULD 包含：
 
-- A brief system overview.
-- A list of known applications or major subsystems.
-- Known capabilities and their purposes.
-- Important relationships between capabilities.
-- Important cross-capability flows or dependencies.
-- Suggested entry points or reading order where useful.
-- Specification coverage for brownfield areas where documentation is incomplete.
+- 簡短的系統概觀。
+- 已知應用程式或主要子系統。
+- 已知 capabilities 及其責任。
+- capability 間的重要關係。
+- 重要的跨 capability flow 或 dependency。
+- 必要時提供建議閱讀入口或順序。
+- brownfield 區域目前的規格與設計覆蓋程度。
 
-Example:
+例如：
 
-```markdown
+```markdown id="jfwowx"
 ## App2
 
-App2 receives commands from the host and controls the target device.
+App2 負責接收 Host 指令並控制目標裝置。
 
-| Capability | Purpose | Spec Coverage | Design Coverage |
+| Capability | 責任 | Spec 覆蓋 | Design 覆蓋 |
 |---|---|---|---|
-| app2-communication | Host/device communication | Partial | Partial |
-| app2-command | Command processing and dispatch | Partial | Documented |
-| app2-control | Device control behavior | Not documented | Not documented |
+| app2-communication | Host / Device 通訊 | Partial | Partial |
+| app2-command | 指令解析與分派 | Partial | Documented |
+| app2-control | 裝置控制行為 | Not documented | Not documented |
 ```
 
-The capability map is a **navigation and system-level overview document**.
+Capability Map 是**導航與系統層級概觀文件**。
 
-It MUST NOT duplicate detailed normative requirements from capability specifications.
+不得在其中重複 capability specification 的詳細 normative requirements。
 
-It SHOULD describe cross-capability relationships at a high level, but detailed behavior and design knowledge SHOULD remain owned by an appropriate capability.
+跨 capability 的關係 SHOULD 在此提供高層次描述，但詳細行為與設計知識 SHOULD 由適當的 capability 持有。
 
-The existence of the capability map MUST NOT be interpreted as proof that all system capabilities have been documented.
+Capability Map 中未列出的能力，不得因此被認定為不存在。
 
 ---
 
-## 6. Current Specifications
+## 6. Current Specification
 
-A capability's:
+Capability 的：
 
-```text
+```text id="8v9lxu"
 openspec/specs/<capability>/spec.md
 ```
 
-describes the **current expected observable behavior** of that capability.
+描述該 capability **目前預期的可觀察行為**。
 
-It answers:
+它回答：
 
-> What does the system currently guarantee?
+> 系統目前保證什麼？
 
-Specifications SHOULD focus on externally or behaviorally meaningful requirements rather than unnecessary implementation details.
+Specification SHOULD 著重於具有行為意義的 requirement，而不是不必要的實作細節。
 
-Examples include:
+例如：
 
-- inputs and outputs
-- externally observable behavior
+- input / output
+- 可觀察行為
 - state-dependent behavior
 - protocol behavior
 - failure behavior
 - compatibility requirements
-- important constraints and invariants
-- behavioral interpretations that affect observable results
+- 重要 constraint 與 invariant
+- 會影響可觀察結果的行為解讀
 
-If an interpretation results in observable behavior, the resulting behavior MUST be represented in the specification when that area is documented.
+如果某個解讀會產生可觀察的系統行為，則在該領域已納入規格管理時，其**行為結果 MUST 寫入 spec**。
 
-For example, if an effect cannot be used under a particular condition, that restriction belongs in the specification regardless of where the interpretation originated.
+例如：
 
-Implementation details that can change without changing the behavioral contract SHOULD generally not be specified here.
+> P-018 在第一頁不能使用。
+
+這個限制本身屬於 specification。
+
+至於：
+
+> 為什麼 P-018 被解讀成第一頁不能使用？
+
+則屬於 rationale，可記錄於 `design.md`。
+
+可以在不改變行為契約的情況下自由變更的實作細節，SHOULD NOT 寫入 specification。
 
 ---
 
-## 7. Current Design and Rationale
+## 7. Current Design 與 Rationale
 
-A capability's optional:
+Capability 可選擇具有：
 
-```text
+```text id="nyqix4"
 openspec/specs/<capability>/design.md
 ```
 
-describes the **current established design and currently relevant rationale** of that capability.
+它描述該 capability **目前已成立的設計，以及理解目前狀態仍有價值的理由**。
 
-It answers:
+它回答兩類問題：
 
-> How is this capability currently designed?
+> 這個 capability 現在是怎麼設計的？
 
-and, where necessary:
+以及必要時：
 
-> Why is the current behavior or design understood this way?
+> 為什麼目前的行為或設計被理解成這樣？
 
-Typical design content includes:
+### 7.1 Current Design
+
+典型內容包括：
 
 - architecture
-- component responsibilities
-- important data flows
+- component responsibility
+- 重要 data flow
 - state ownership
 - concurrency model
 - persistence model
 - protocol structure
-- important internal interfaces
-- established implementation patterns
-- important technical constraints
+- 重要 internal interface
+- established implementation pattern
+- 重要 technical constraint
 
-### Behavioral Decisions and Rationale
-
-`design.md` MAY contain a section such as:
-
-```markdown
-## Behavioral Decisions and Rationale
-```
-
-for currently relevant decisions that explain the interpretation of behavior defined in `spec.md`.
-
-This section MAY record:
-
-- why an ambiguous rule or effect is interpreted in a particular way;
-- evidence used to reach the interpretation;
-- whether the interpretation was explicitly confirmed;
-- whether it is based on an existing implementation, source material, domain interpretation, or project decision;
-- important assumptions required to understand the current behavior.
-
-The **resulting behavior itself** MUST be represented in `spec.md` when applicable.
-
-The rationale in `design.md` explains why that behavior is currently understood or specified that way.
-
-Where useful, rationale entries SHOULD reference the corresponding requirement or scenario.
-
-For example:
-
-```text
-spec.md
-REQ-P018-xxx:
-P-018 cannot be used on the first page.
-
-design.md
-Behavioral Decisions and Rationale:
-REQ-P018-xxx is interpreted this way because ...
-Confirmation status: Confirmed / Project decision / Inferred / Pending confirmation
-```
-
-Only rationale that remains relevant to understanding the **current system** SHOULD remain in the capability design.
-
-Superseded interpretations and obsolete rationale belong in archived changes or other historical records.
+Capability design 描述的是**現在的狀態**，而不是系統如何演變成現在的狀態。
 
 ---
 
-## 8. Cross-Capability Ownership
+### 7.2 行為決定與理由
 
-Behavior or design may involve more than one capability.
+`design.md` MAY 包含：
 
-Each piece of detailed knowledge SHOULD have one primary owning capability.
-
-The owning capability SHOULD be the capability whose responsibility most directly governs the behavior or design decision.
-
-Other affected capabilities SHOULD reference the owning capability rather than duplicate the same normative requirement or detailed rationale.
-
-For example:
-
-```text
-engine capability
-    owns:
-    "Only the active-turn player may attack."
-
-card-effect capability
-    relies on:
-    engine attack eligibility rules
+```markdown id="85gmc1"
+## 行為決定與理由
 ```
 
-The card-effect specification or design MAY link to the engine requirement rather than redefine the rule.
+用來記錄目前仍有效、且有助於理解 specification 的行為解讀與理由。
 
-For cross-capability design:
+可以記錄：
 
-- detailed design SHOULD be owned by the primary capability;
-- dependent capabilities SHOULD reference the owning capability where useful;
-- `capability-map.md` SHOULD describe important system-level relationships and flows.
+- 為什麼模糊規則或效果採用目前的解讀。
+- 解讀使用了哪些證據。
+- 解讀是否經過明確確認。
+- 解讀來自原始資料、既有實作、領域解讀或專案決策。
+- 理解目前行為所需的重要假設。
 
-If no single capability is a reasonable owner because the decision is genuinely system-wide, the system-level relationship SHOULD be summarized in `capability-map.md`, with detailed documentation placed in the most appropriate shared capability or dedicated system-level documentation.
+**行為結果本身 MUST 寫入 `spec.md`。**
 
-Duplication of normative requirements across capabilities SHOULD be avoided.
+`design.md` 中的 rationale 負責解釋為什麼目前如此規定。
+
+Rationale SHOULD 在可能的情況下引用對應 requirement 或 scenario。
+
+---
+
+### 7.3 Rationale 確認狀態
+
+為避免不同工程師或 Agent 使用不同描述，每一項需要記錄確認程度的 rationale SHOULD 使用下列固定狀態之一：
+
+| 狀態 | 意義 |
+|---|---|
+| `Confirmed` | 已由具有決定權的來源或人員明確確認 |
+| `Project Decision` | 原始規則不足以唯一決定，由本專案正式採用此解讀 |
+| `Inferred` | 根據現有證據推論，目前尚未獲得明確確認 |
+| `Pending Confirmation` | 已發現問題或候選解讀，但仍等待確認 |
+
+不得自行建立意義相近但不同名稱的狀態。
+
+---
+
+### 7.4 Rationale 建議格式
+
+建議使用以下格式：
+
+```markdown id="t92et7"
+### P-018 第一頁使用限制
+
+**相關需求：** `REQ-P018-001`
+
+**決定：**
+P-018 在第一頁不能使用。
+
+**理由：**
+效果文字需要引用前一頁形成的狀態，而第一頁不存在該前置狀態。
+
+**依據：**
+- 卡片效果文字
+- 現有遊戲流程規則
+
+**確認狀態：** `Inferred`
+```
+
+如果之後取得明確確認：
+
+```text id="n2drm5"
+Inferred
+    ↓
+Confirmed
+```
+
+只需更新 current rationale。
+
+如果原本的解讀被推翻，則：
+
+- 更新 `spec.md` 的目前行為；
+- 更新 `design.md` 的目前 rationale；
+- 舊解讀及變更原因保留在 archived change。
+
+Capability `design.md` 不應累積已失效的 rationale。
+
+---
+
+## 8. 跨 Capability Ownership
+
+一個行為或設計可能同時涉及多個 capability。
+
+每項詳細知識 SHOULD 有一個主要 owning capability。
+
+原則是：
+
+> 由最直接負責該行為或設計決策的 capability 持有。
+
+其他受影響 capability SHOULD 引用 owning capability，而不是複製相同的 normative requirement 或 rationale。
+
+例如：
+
+```text id="ttjzsh"
+engine capability
+
+    owns:
+    「只有目前回合玩家能攻擊」
+
+              ↑ dependency
+
+card-effect capability
+
+    「下一場戰鬥」效果依賴
+    engine 的攻擊資格規則
+```
+
+Card-effect specification/design 可以引用 engine requirement，而不是重新定義一次攻擊資格。
+
+跨 capability design：
+
+- 詳細設計 SHOULD 由主要 capability 持有。
+- 其他 capability SHOULD 在需要時建立 reference。
+- `capability-map.md` SHOULD 描述重要的系統層級關係與 flow。
+
+如果某個決策確實是 system-wide，無法合理指定單一 capability：
+
+1. 在 `capability-map.md` 提供高層次說明；
+2. 詳細內容放入適當的 shared capability 或獨立 system-level documentation。
+
+SHOULD 避免在多個 capability 重複 normative requirement。
 
 ---
 
 ## 9. Change-Level Design
 
-A change-specific:
+某次 change 的：
 
-```text
+```text id="d28cxk"
 openspec/changes/<change>/design.md
 ```
 
-has a different purpose from a capability-level `design.md`.
+與 capability `design.md` 的目的不同。
 
-It answers:
+它回答：
 
-> How should this particular change be implemented?
+> 這一次變更預計怎麼做？
 
-It may therefore contain information that should never appear in the current capability design, including:
+因此可以包含：
 
 - migration strategy
-- temporary compatibility mechanisms
+- temporary compatibility mechanism
 - implementation sequence
 - alternatives considered
 - rejected approaches
 - transition architecture
 - change-specific risks
 
-After completion, the change design becomes part of the historical record.
+變更完成後，change design 成為歷史的一部分。
 
-It MUST NOT automatically be treated as the current capability design.
-
----
-
-## 10. Brownfield Specification Policy
-
-This repository contains existing software whose behavior and design may not yet be fully documented.
-
-Specifications are therefore maintained **incrementally**.
-
-The absence of a specification does NOT imply:
-
-- that the capability does not exist;
-- that the behavior does not exist;
-- that existing behavior is accidental;
-- that undocumented behavior may safely be removed.
-
-A complete reverse specification of the entire repository is NOT required before development can proceed.
-
-Instead, missing specifications and design knowledge SHOULD be added or improved when they become relevant to a change.
-
-### Coverage Levels
-
-Specification coverage SHOULD use the following meanings:
-
-**Documented**
-
-The known behavior within the declared scope is represented by requirements and scenarios, and corresponding verification or tests exist where reasonably testable.
-
-"Documented" does not claim that unknown behavior cannot exist.
-
-**Partial**
-
-Only part of the known behavior within the capability or declared area has been specified, or important scenarios or verification coverage remain missing.
-
-**Not documented**
-
-No meaningful current specification has yet been established for the area.
-
-Design coverage MAY use the same terms, interpreted with respect to known architecture and design knowledge rather than behavioral requirements and tests.
-
-Coverage status is informational and MUST NOT be interpreted as proof of completeness.
+不得直接把 change design 視為目前 capability design。
 
 ---
 
-## 11. Required Reading Before a Change
+## 10. Brownfield 規格政策
 
-Before proposing or implementing a change, engineers and agents SHOULD:
+本 repository 包含尚未被完整文件化的既有軟體。
 
-1. Read this guide.
-2. Read `openspec/capability-map.md`.
-3. Identify potentially affected capabilities.
-4. Read their available `spec.md` files.
-5. Read their available capability `design.md` files when relevant.
-6. Inspect relevant existing code.
-7. Inspect relevant existing tests.
-8. Identify existing behavior and design affected by the proposed change.
-9. Identify cross-capability dependencies.
-10. Clarify material ambiguities or undocumented behavior when necessary.
+因此採用**漸進式規格化**。
 
-For brownfield code, undocumented behavior MUST NOT be assumed to be invalid or safe to change.
+沒有 specification 不代表：
 
-Other sections of this guide refer to this procedure as the **Required Reading procedure**.
+- capability 不存在；
+- 行為不存在；
+- 既有行為是偶然的；
+- 未記錄行為可以安全移除。
+
+不要求在開始開發前完整 reverse-spec 整個 repository。
+
+當某個區域與目前 change 相關時，SHOULD 補充或改善其 specification 與 design knowledge。
+
+### 10.1 覆蓋程度
+
+使用以下三種狀態。
+
+#### `Documented`
+
+在已宣告的 scope 中，目前**已知**的行為已有相應 requirements / scenarios，且在合理可測試的情況下具有對應 verification 或 tests。
+
+`Documented` 不表示未知行為不可能存在。
+
+#### `Partial`
+
+只記錄了 capability 或 scope 中一部分已知行為，或仍缺少重要 scenario、requirement 或 verification coverage。
+
+#### `Not documented`
+
+該領域尚未建立具有實質內容的 current specification。
+
+Design coverage MAY 使用相同狀態，但判斷對象改為目前已知 architecture、design decisions 與 rationale。
+
+Coverage 僅提供導航資訊，不得被解讀為絕對完整性證明。
+
+---
+
+## 11. Required Reading Procedure
+
+在提出或實作 change 前，工程師與 Agent SHOULD：
+
+1. 閱讀本指南。
+2. 閱讀 `openspec/capability-map.md`。
+3. 找出可能受到影響的 capabilities。
+4. 閱讀其現有 `spec.md`。
+5. 在相關時閱讀 capability `design.md`。
+6. 檢查相關既有程式碼。
+7. 檢查相關既有 tests。
+8. 找出 change 可能影響的既有行為與設計。
+9. 找出跨 capability dependencies。
+10. 必要時釐清重要的模糊或未文件化行為。
+
+對 brownfield code，不得假設未文件化的行為無效或可以安全修改。
+
+本指南其他章節提到 **Required Reading Procedure** 時，均指本節，不再另外定義另一套閱讀流程。
 
 ---
 
 ## 12. Change Workflow
 
-The normal development workflow is:
+正常開發流程：
 
-```text
+```text id="bwj5af"
 Required Reading
         ↓
 Propose
@@ -415,54 +478,62 @@ Specify / Clarify
         ↓
 Design
         ↓
-Plan tasks
+Plan Tasks
         ↓
 Implement
         ↓
 Verify
         ↓
-Reconcile current documentation
+Reconcile Current Documentation
         ↓
 Archive
 ```
 
-Not every change requires every artifact to contain substantial content.
+並非每個 change 都需要每個 artifact 有大量內容。
 
-The amount of specification and design work SHOULD be proportional to the scope and risk of the change.
+Specification 與 design 工作量 SHOULD 與 change 的範圍及風險相稱。
 
-Change tasks SHOULD include required current-documentation reconciliation when the change may affect capability specifications, capability designs, rationale, or the capability map.
+如果 change 可能影響 current spec、current design、rationale 或 capability map，`tasks.md` SHOULD 明確列出相應的 reconciliation 工作。
 
 ---
 
-## 13. Before Archiving a Change
+## 13. Archive 前的 Current-State Reconciliation
 
-A completed change MUST be reconciled with the current-state documentation before archival.
+完成的 change 在 archive 前 MUST 與 current-state documentation 完成 reconciliation。
 
-### 13.1 Current Specifications
+### 13.1 Current Specification
 
-Behavioral changes MUST be reflected in the affected capability `spec.md`.
+行為變更 MUST 反映至受影響 capability 的 `spec.md`。
 
-OpenSpec provides delta-spec synchronization for capability specifications.
+OpenSpec 對 specification 提供 delta-spec synchronization。
 
-After synchronization, the capability specification MUST describe the resulting current behavior rather than the history of the change.
+同步完成後的 specification 必須描述**目前行為**，而不是變更歷史。
 
-### 13.2 Current Designs and Rationale
+---
 
-OpenSpec's standard delta-spec synchronization does **not** automatically reconcile capability-level `design.md`.
+### 13.2 Current Design 與 Rationale
 
-Current design and rationale reconciliation is therefore an explicit project responsibility.
+OpenSpec 標準的 delta-spec synchronization **不會自動 reconciliation capability-level `design.md`**。
 
-Before archival:
+因此 current design 與 rationale 的 reconciliation 是本專案明確要求的額外流程。
 
-1. Review the change-level `design.md`.
-2. Review the implemented result.
-3. Identify affected capability-level `design.md` files.
-4. Update them when established design or currently relevant rationale has changed.
-5. Verify that they describe the resulting current state.
+Archive 前 MUST：
 
-This reconciliation SHOULD appear as an explicit task in `tasks.md` whenever a change may affect current design or rationale.
+1. 檢查 change-level `design.md`。
+2. 檢查實際 implementation。
+3. 找出受影響的 capability-level `design.md`。
+4. 若 established design 或目前仍有效的 rationale 發生改變，更新它們。
+5. 確認 capability design 描述的是變更完成後的目前狀態。
 
-A capability `design.md` SHOULD be updated when a change modifies an established:
+當 change 可能影響 current design 或 rationale 時，`tasks.md` SHOULD 明確包含此 reconciliation task。
+
+例如：
+
+```markdown id="awut5j"
+- [ ] Reconcile affected capability design and rationale
+```
+
+Capability `design.md` SHOULD 在以下項目發生持續性改變時更新：
 
 - architecture
 - component responsibility
@@ -473,12 +544,13 @@ A capability `design.md` SHOULD be updated when a change modifies an established
 - protocol structure
 - important internal interface
 - established implementation pattern
-- behavioral interpretation or rationale
-- other persistent design decision
+- behavioral interpretation
+- current rationale
+- 其他 persistent design decision
 
-The change-level design MUST NOT simply be copied into the capability design.
+不得直接把 change design 全文複製至 capability design。
 
-Do not carry transition-only information into the current design, including:
+下列 transition-only information 不應進入 current design：
 
 - migration steps
 - temporary compatibility mechanisms
@@ -487,161 +559,194 @@ Do not carry transition-only information into the current design, including:
 - obsolete architecture
 - temporary workarounds
 
-Such information remains in the archived change.
-
-### 13.3 Capability Map
-
-`openspec/capability-map.md` SHOULD be updated when the change:
-
-- introduces a new capability;
-- removes a capability;
-- materially changes a capability's responsibility;
-- materially changes relationships between capabilities; or
-- changes known specification/design coverage.
-
-Where applicable, capability-map reconciliation SHOULD also appear in `tasks.md`.
+這些資訊保留於 archived change。
 
 ---
 
-## 14. Archival Semantics
+### 13.3 Capability Map
 
-Archived OpenSpec changes are historical records.
+Change 發生以下情況時 SHOULD 更新 `openspec/capability-map.md`：
 
-They answer questions such as:
+- 新增 capability；
+- 移除 capability；
+- capability responsibility 發生實質改變；
+- capability relationship 發生實質改變；
+- 已知 specification/design coverage 改變。
 
-> Why was this change made?
+適用時，`tasks.md` SHOULD 明確包含：
 
-> What alternatives were considered?
-
-> How was the transition planned?
-
-> What constraints existed at the time?
-
-Archived change artifacts SHOULD NOT be used as the primary description of the current system when an applicable current specification or current design exists.
-
-Conceptually:
-
-```text
-Current spec.md
-    = current WHAT
-
-Current design.md
-    = current HOW
-    + currently relevant WHY
-
-Archived changes
-    = historical WHY / CHANGE HOW
+```markdown id="sr74q3"
+- [ ] Update capability map
 ```
 
 ---
 
-## 15. Documentation Navigation
+## 14. Archive 的語意
 
-For understanding the system, the recommended reading path is:
+Archived OpenSpec changes 是**歷史紀錄**。
 
-```text
+主要回答：
+
+> 當時為什麼進行這項變更？
+
+> 當時考慮過哪些方案？
+
+> 變更過程如何規劃？
+
+> 當時有哪些限制？
+
+如果已有 applicable current specification 或 current design，archive 不應作為理解目前系統的主要來源。
+
+```text id="1ivpqh"
+Current spec.md
+    = 現行 WHAT
+
+Current design.md
+    = 現行 HOW
+    + 目前仍有效的 WHY
+
+Archived changes
+    = 歷史 WHY
+    + CHANGE HOW
+```
+
+---
+
+## 15. 文件導航
+
+理解目前系統時，建議閱讀：
+
+```text id="d33p4z"
 capability-map.md
         ↓
 affected capability
         ↓
 spec.md
         ↓
-design.md (when relevant)
+design.md（相關時）
         ↓
 code / tests
 ```
 
-Archived changes SHOULD normally be consulted when historical rationale or system evolution is needed.
+只有需要了解歷史理由或演進時，才通常需要進一步閱讀 archived changes。
 
-When beginning a change, follow the full **Required Reading procedure** defined in §11.
+開始 change 時應遵循 §11 的完整 **Required Reading Procedure**。
 
 ---
 
-## 16. Agent and OpenSpec Integration
+## 16. Agent 與 OpenSpec 整合
 
-AI agents working in this repository MUST follow this guide.
+AI Agent 在此 repository 工作時 MUST 遵循本指南。
 
-Repository-level agent instructions such as `AGENTS.md` SHOULD point to this document rather than duplicate its rules.
+Repository-level `AGENTS.md` SHOULD 指向本文件，而不是複製完整規則。
 
-For example:
+例如：
 
-```text
-Before specification-driven work, read:
+```text id="fv5vwp"
+進行 specification-driven development 前，
+請先閱讀：
+
 docs/specification-guide.md
 ```
 
-`openspec/config.yaml` SHOULD also reference this guide in its project context so that OpenSpec-generated artifacts are created with awareness of the repository's specification policy.
+`openspec/config.yaml` 的 project context 也 SHOULD 指向本指南，使 OpenSpec 產生 artifact 時知道此 repository 有額外的 specification policy。
 
-Tool-specific configuration SHOULD avoid duplicating the full policy where a reference to this guide is sufficient.
+例如：
 
-The authoritative definition of this repository's specification workflow is this document, not the agent or OpenSpec configuration.
+```yaml id="xjd8w3"
+context: |
+  本專案的規格制度與 brownfield 開發規則定義於：
+  docs/specification-guide.md
+
+  進行 OpenSpec change 時必須遵循該指南。
+```
+
+Tool-specific configuration SHOULD 儘量引用本指南，而不是複製完整政策。
+
+本 repository specification workflow 的 authoritative definition 是**本文件**，而不是 `AGENTS.md` 或 OpenSpec configuration。
 
 ---
 
-## 17. Source-of-Truth Rules
+## 17. Source of Truth
 
-When interpreting project documentation:
+### Current Behavior
 
-### Current behavior
-
-```text
+```text id="ljk0fc"
 openspec/specs/<capability>/spec.md
 ```
 
-is the normative specification when that behavior is documented.
+在該行為已有文件化時，是 normative specification。
 
-### Current design and rationale
+### Current Design / Rationale
 
-```text
+```text id="j0wnqa"
 openspec/specs/<capability>/design.md
 ```
 
-is the maintained description of established design and currently relevant rationale where such documentation exists.
+在已有文件化時，是目前 established design 與仍有效 rationale 的維護位置。
 
-### System navigation
+### System Navigation
 
-```text
+```text id="qvt7rf"
 openspec/capability-map.md
 ```
 
-is the maintained map of known capabilities and important relationships.
+是已知 capability 與重要關係的導航地圖。
 
-It is not a substitute for capability specifications.
+它不能取代 capability specification。
 
-### Change history
+### Change History
 
-```text
+```text id="j74xra"
 openspec/changes/archive/
 ```
 
-preserves historical intent, alternatives, transition design, and change-specific decisions.
+保存歷史 intent、alternatives、transition design 與 change-specific decisions。
 
-Because this is a brownfield project with incremental specification coverage, existing code and tests MUST also be examined when relevant behavior or design is not yet documented.
-
----
-
-## 18. Documentation Language
-
-The specification set, capability map, and capability design documentation MAY use Traditional Chinese when that is the established language of the project.
-
-Terminology SHOULD remain consistent across capabilities.
-
-Code identifiers, protocol identifiers, card/effect identifiers, requirement IDs, and other stable technical identifiers SHOULD generally retain their canonical form rather than being translated.
-
-Consistency and unambiguous terminology are more important than requiring a particular natural language.
+由於本專案採 brownfield 漸進式規格化，當相關 behavior/design 尚未完整文件化時，既有 code 與 tests 仍 MUST 被檢查。
 
 ---
 
-## 19. Evolution of This Framework
+## 18. 文件語言與術語
 
-This specification framework may evolve as the project gains experience with SDD.
+以下 current-state 文件原則上使用**繁體中文**：
 
-OpenSpec is the current workflow tool, but the principles in this document are intentionally kept separate from tool-specific behavior where practical.
+- `capability-map.md`
+- capability `spec.md`
+- capability `design.md`
 
-Changes to this guide SHOULD preserve clear distinctions between:
+本指南亦使用繁體中文。
 
-- current behavior;
-- current design;
-- currently relevant rationale;
-- proposed changes; and
-- historical records.
+技術術語 MAY 保留英文，特別是在翻譯可能造成歧義時。
+
+以下內容 SHOULD 保留 canonical form，不任意翻譯：
+
+- code identifiers
+- protocol identifiers
+- card / effect identifiers
+- requirement IDs
+- API names
+- class / function names
+- stable domain identifiers
+
+同一概念在不同 capability 中 SHOULD 使用一致術語。
+
+必要時 MAY 建立專案 glossary。
+
+術語一致性與語意明確性優先於強制將所有內容翻譯成中文。
+
+---
+
+## 19. 本框架的演進
+
+此 specification framework MAY 隨專案實際使用經驗調整。
+
+OpenSpec 是目前使用的 workflow tool，但本指南中的核心原則應儘可能與特定工具解耦。
+
+修改本指南時 SHOULD 保持以下概念清楚分離：
+
+- current behavior；
+- current design；
+- currently relevant rationale；
+- proposed change；
+- historical record。
