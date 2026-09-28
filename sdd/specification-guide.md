@@ -273,7 +273,11 @@ Rationale SHOULD 在可能的情況下，以 OpenSpec 中既有的 requirement �
 
 本專案的行為解讀與專案規則，最終決定權屬於**專案負責人**。
 
-為避免不同工程師或 Agent 使用不同描述，每一項需要記錄確認程度的 rationale SHOULD 使用下列固定狀態之一：
+§7.2「行為決定與理由」中的**每一項行為決定 MUST 標註確認狀態**。
+
+純粹的設計理由，例如架構選擇、資料結構選擇或實作方式的理由，不需要使用此確認狀態。
+
+行為決定僅能使用下列四種狀態：
 
 | 狀態 | 意義 |
 |---|---|
@@ -311,6 +315,41 @@ Agent 或工程師不得自行將自己的解讀標記為 `Confirmed` 或 `Proje
 若尚未取得專案負責人的確認，應使用 `Inferred` 或 `Pending Confirmation`。
 
 不得自行建立意義相近但名稱不同的狀態。
+
+### 7.3.1 Pending Confirmation 與 Current Specification
+
+`Pending Confirmation` 表示**行為解讀尚待確認**，不表示 current specification 應保持空白。
+
+在等待確認期間，`spec.md` MUST 照常描述系統**目前實際採用或實作的行為**。
+
+例如：
+
+```text
+目前實作行為
+      │
+      ├── spec.md：照常記錄目前行為
+      │
+      └── design.md：
+            行為決定與理由
+            確認狀態：Pending Confirmation
+```
+
+確認後：
+
+- 若確認結果與目前行為一致，更新 rationale 的確認狀態即可；
+- 若確認結果要求改變目前行為，則應建立或使用適當的 change 修改 specification 與 implementation，而不是直接把尚未實作的新行為當成 current specification。
+
+因此：
+
+```text
+spec.md
+    = 現在系統做什麼
+
+確認狀態
+    = 我們對「為什麼應該這樣做」有多確定
+```
+
+兩者是不同維度。
 
 ### 7.4 Rationale 建議格式
 
@@ -457,17 +496,21 @@ openspec/changes/<change>/design.md
 
 ### 10.1 覆蓋程度
 
+每個 capability specification SHOULD 在其 `## Purpose` 中描述該 specification 的 scope。
+
+Coverage 狀態是相對於此 scope 判斷，而不是相對於整個系統或 capability 所有可能存在的行為判斷。
+
 使用以下三種狀態。
 
 #### `Documented`
 
-在已宣告的 scope 中，目前**已知**的行為已有相應 requirements / scenarios，且在合理可測試的情況下具有對應 verification 或 tests。
+在 `## Purpose` 所宣告的 scope 中，目前**已知**的行為已有相應 requirements / scenarios，且在合理可測試的情況下具有對應 verification 或 tests。
 
-`Documented` 不表示未知行為不可能存在。
+`Documented` 不表示未知行為不可能存在，也不表示該 capability 未來不會發現新的行為。
 
 #### `Partial`
 
-只記錄了 capability 或 scope 中一部分已知行為，或仍缺少重要 scenario、requirement 或 verification coverage。
+在 `## Purpose` 所宣告的 scope 中，只記錄了一部分已知行為，或仍缺少重要 scenario、requirement 或 verification coverage。
 
 #### `Not documented`
 
