@@ -42,7 +42,7 @@
 
 概念上：
 
-```text id="tghz5n"
+```text
 spec.md
     = 現行 WHAT
 
@@ -63,7 +63,7 @@ archived changes
 
 預期的 OpenSpec 結構如下：
 
-```text id="a14hm7"
+```text
 openspec/
 ├── capability-map.md
 ├── config.yaml
@@ -101,7 +101,7 @@ Capability SHOULD 依穩定的系統責任劃分，而不是直接依個別程�
 
 例如：
 
-```text id="exsqcl"
+```text
 app2-command
 app2-communication
 app2-control
@@ -109,7 +109,7 @@ app2-control
 
 當同一 repository 包含多個應用程式時，MAY 使用應用程式名稱作為 capability prefix：
 
-```text id="5aswpn"
+```text
 app1-command
 app1-network
 
@@ -141,7 +141,7 @@ Capability Map SHOULD 包含：
 
 例如：
 
-```markdown id="jfwowx"
+```markdown
 ## App2
 
 App2 負責接收 Host 指令並控制目標裝置。
@@ -167,7 +167,7 @@ Capability Map 中未列出的能力，不得因此被認定為不存在。
 
 Capability 的：
 
-```text id="8v9lxu"
+```text
 openspec/specs/<capability>/spec.md
 ```
 
@@ -194,13 +194,13 @@ Specification SHOULD 著重於具有行為意義的 requirement，而不是不�
 
 例如：
 
-> P-018 在第一頁不能使用。
+> 某個效果在特定遊戲狀態下不能使用。
 
 這個限制本身屬於 specification。
 
 至於：
 
-> 為什麼 P-018 被解讀成第一頁不能使用？
+> 為什麼這個效果被解讀為在該狀態下不能使用？
 
 則屬於 rationale，可記錄於 `design.md`。
 
@@ -212,7 +212,7 @@ Specification SHOULD 著重於具有行為意義的 requirement，而不是不�
 
 Capability 可選擇具有：
 
-```text id="nyqix4"
+```text
 openspec/specs/<capability>/design.md
 ```
 
@@ -243,13 +243,11 @@ openspec/specs/<capability>/design.md
 
 Capability design 描述的是**現在的狀態**，而不是系統如何演變成現在的狀態。
 
----
-
 ### 7.2 行為決定與理由
 
 `design.md` MAY 包含：
 
-```markdown id="85gmc1"
+```markdown
 ## 行為決定與理由
 ```
 
@@ -260,65 +258,102 @@ Capability design 描述的是**現在的狀態**，而不是系統如何演變�
 - 為什麼模糊規則或效果採用目前的解讀。
 - 解讀使用了哪些證據。
 - 解讀是否經過明確確認。
-- 解讀來自原始資料、既有實作、領域解讀或專案決策。
+- 解讀來自原始資料、既有實作、領域解讀或專案決定。
 - 理解目前行為所需的重要假設。
 
 **行為結果本身 MUST 寫入 `spec.md`。**
 
 `design.md` 中的 rationale 負責解釋為什麼目前如此規定。
 
-Rationale SHOULD 在可能的情況下引用對應 requirement 或 scenario。
+Rationale SHOULD 在可能的情況下，以 OpenSpec 中既有的 requirement 名稱、scenario 名稱或其他穩定名稱引用對應 specification。
 
----
+不要求為既有 requirements 額外建立人工編號。
 
-### 7.3 Rationale 確認狀態
+### 7.3 Rationale 確認狀態與決定權
+
+本專案的行為解讀與專案規則，最終決定權屬於**專案負責人**。
 
 為避免不同工程師或 Agent 使用不同描述，每一項需要記錄確認程度的 rationale SHOULD 使用下列固定狀態之一：
 
 | 狀態 | 意義 |
 |---|---|
-| `Confirmed` | 已由具有決定權的來源或人員明確確認 |
-| `Project Decision` | 原始規則不足以唯一決定，由本專案正式採用此解讀 |
-| `Inferred` | 根據現有證據推論，目前尚未獲得明確確認 |
-| `Pending Confirmation` | 已發現問題或候選解讀，但仍等待確認 |
+| `Confirmed` | 某個解讀已由專案負責人確認為效果文、規則或其他原始規範本身的正確意思 |
+| `Project Decision` | 原始規範存在多種合理解讀，或不足以唯一決定行為，由專案負責人明確選定本專案採用的行為 |
+| `Inferred` | 工程師或 Agent 根據現有證據所做的目前解讀，尚未經專案負責人確認 |
+| `Pending Confirmation` | 已發現解讀問題或候選方案，目前仍等待專案負責人確認或決定 |
 
-不得自行建立意義相近但不同名稱的狀態。
+其中：
 
----
+**`Confirmed` 與 `Project Decision` 的差別不在於「是否有人確認」，而在於規則本身是否具有唯一的正確解讀。**
+
+如果專案負責人確認：
+
+> 「這就是效果文原本的意思。」
+
+則為：
+
+```text
+Confirmed
+```
+
+如果專案負責人決定：
+
+> 「效果文可以有多種合理解讀，本專案採用這一種。」
+
+則為：
+
+```text
+Project Decision
+```
+
+Agent 或工程師不得自行將自己的解讀標記為 `Confirmed` 或 `Project Decision`。
+
+若尚未取得專案負責人的確認，應使用 `Inferred` 或 `Pending Confirmation`。
+
+不得自行建立意義相近但名稱不同的狀態。
 
 ### 7.4 Rationale 建議格式
 
 建議使用以下格式：
 
-```markdown id="t92et7"
-### P-018 第一頁使用限制
+```markdown
+### 某效果在特定狀態下的使用限制
 
-**相關需求：** `REQ-P018-001`
+**相關規格：**
+`card-effects` › 需求「某效果的使用條件」 › 情境「特定狀態下不能使用」
 
 **決定：**
-P-018 在第一頁不能使用。
+該效果在此狀態下不能使用。
 
 **理由：**
-效果文字需要引用前一頁形成的狀態，而第一頁不存在該前置狀態。
+依目前效果文與相關規則的解讀，此狀態不符合效果的使用條件。
 
 **依據：**
-- 卡片效果文字
-- 現有遊戲流程規則
+- 效果文字
+- 相關遊戲規則
 
 **確認狀態：** `Inferred`
 ```
 
-如果之後取得明確確認：
+此處使用明顯泛化的例子，避免指南中的示例被誤認為正式遊戲規格。
 
-```text id="n2drm5"
+如果之後由專案負責人確認該解讀確實是效果文的正確意思：
+
+```text
 Inferred
     ↓
 Confirmed
 ```
 
-只需更新 current rationale。
+如果效果文仍存在多種合理解讀，而專案負責人決定採用其中一種：
 
-如果原本的解讀被推翻，則：
+```text
+Inferred
+    ↓
+Project Decision
+```
+
+如果原本的解讀被推翻：
 
 - 更新 `spec.md` 的目前行為；
 - 更新 `design.md` 的目前 rationale；
@@ -342,21 +377,21 @@ Capability `design.md` 不應累積已失效的 rationale。
 
 例如：
 
-```text id="ttjzsh"
-engine capability
+```text
+game-engine
 
     owns:
     「只有目前回合玩家能攻擊」
 
               ↑ dependency
 
-card-effect capability
+card-effects
 
-    「下一場戰鬥」效果依賴
-    engine 的攻擊資格規則
+    「下一場戰鬥」相關效果依賴
+    game-engine 的攻擊資格規則
 ```
 
-Card-effect specification/design 可以引用 engine requirement，而不是重新定義一次攻擊資格。
+`card-effects` 的 specification 或 design 可以引用 `game-engine` 的 requirement，而不是重新定義一次攻擊資格。
 
 跨 capability design：
 
@@ -377,7 +412,7 @@ SHOULD 避免在多個 capability 重複 normative requirement。
 
 某次 change 的：
 
-```text id="d28cxk"
+```text
 openspec/changes/<change>/design.md
 ```
 
@@ -469,7 +504,7 @@ Coverage 僅提供導航資訊，不得被解讀為絕對完整性證明。
 
 正常開發流程：
 
-```text id="bwj5af"
+```text
 Required Reading
         ↓
 Propose
@@ -509,8 +544,6 @@ OpenSpec 對 specification 提供 delta-spec synchronization。
 
 同步完成後的 specification 必須描述**目前行為**，而不是變更歷史。
 
----
-
 ### 13.2 Current Design 與 Rationale
 
 OpenSpec 標準的 delta-spec synchronization **不會自動 reconciliation capability-level `design.md`**。
@@ -529,7 +562,7 @@ Archive 前 MUST：
 
 例如：
 
-```markdown id="awut5j"
+```markdown
 - [ ] Reconcile affected capability design and rationale
 ```
 
@@ -561,8 +594,6 @@ Capability `design.md` SHOULD 在以下項目發生持續性改變時更新：
 
 這些資訊保留於 archived change。
 
----
-
 ### 13.3 Capability Map
 
 Change 發生以下情況時 SHOULD 更新 `openspec/capability-map.md`：
@@ -575,7 +606,7 @@ Change 發生以下情況時 SHOULD 更新 `openspec/capability-map.md`：
 
 適用時，`tasks.md` SHOULD 明確包含：
 
-```markdown id="sr74q3"
+```markdown
 - [ ] Update capability map
 ```
 
@@ -597,7 +628,7 @@ Archived OpenSpec changes 是**歷史紀錄**。
 
 如果已有 applicable current specification 或 current design，archive 不應作為理解目前系統的主要來源。
 
-```text id="1ivpqh"
+```text
 Current spec.md
     = 現行 WHAT
 
@@ -616,7 +647,7 @@ Archived changes
 
 理解目前系統時，建議閱讀：
 
-```text id="d33p4z"
+```text
 capability-map.md
         ↓
 affected capability
@@ -642,7 +673,7 @@ Repository-level `AGENTS.md` SHOULD 指向本文件，而不是複製完整規�
 
 例如：
 
-```text id="fv5vwp"
+```text
 進行 specification-driven development 前，
 請先閱讀：
 
@@ -653,7 +684,7 @@ docs/specification-guide.md
 
 例如：
 
-```yaml id="xjd8w3"
+```yaml
 context: |
   本專案的規格制度與 brownfield 開發規則定義於：
   docs/specification-guide.md
@@ -671,7 +702,7 @@ Tool-specific configuration SHOULD 儘量引用本指南，而不是複製完整
 
 ### Current Behavior
 
-```text id="ljk0fc"
+```text
 openspec/specs/<capability>/spec.md
 ```
 
@@ -679,7 +710,7 @@ openspec/specs/<capability>/spec.md
 
 ### Current Design / Rationale
 
-```text id="j0wnqa"
+```text
 openspec/specs/<capability>/design.md
 ```
 
@@ -687,7 +718,7 @@ openspec/specs/<capability>/design.md
 
 ### System Navigation
 
-```text id="qvt7rf"
+```text
 openspec/capability-map.md
 ```
 
@@ -697,7 +728,7 @@ openspec/capability-map.md
 
 ### Change History
 
-```text id="j74xra"
+```text
 openspec/changes/archive/
 ```
 
@@ -724,7 +755,8 @@ openspec/changes/archive/
 - code identifiers
 - protocol identifiers
 - card / effect identifiers
-- requirement IDs
+- requirement 名稱
+- scenario 名稱
 - API names
 - class / function names
 - stable domain identifiers
