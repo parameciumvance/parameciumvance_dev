@@ -2,12 +2,13 @@
 
 ## 1. Purpose
 
-This document defines how specifications and design documentation are organized and maintained in this repository.
+This document defines how specifications and design knowledge are organized and maintained in this repository.
 
 The goals are to:
 
 - Provide a clear source of truth for current system behavior.
 - Provide a clear description of the current system design.
+- Preserve currently relevant behavioral interpretations and rationale.
 - Support incremental specification of an existing brownfield system.
 - Preserve the rationale and history of individual changes.
 - Make specifications understandable and navigable for both engineers and AI agents.
@@ -23,22 +24,38 @@ The documentation model distinguishes between:
 
 - **Current behavior** — what the system currently guarantees.
 - **Current design** — how the system is currently designed.
+- **Current rationale** — why a currently valid behavioral interpretation or design decision exists.
 - **Change intent and design** — what a particular change intends to modify and how.
 - **History** — why and how previous changes were made.
 
 These concerns MUST NOT be treated as interchangeable.
 
-In summary:
-
 | Artifact | Purpose |
 |---|---|
 | `capability-map.md` | Navigate the system and its capabilities |
-| `spec.md` | Describe current observable behavior |
-| capability `design.md` | Describe current established design |
+| `spec.md` | Describe current observable and normative behavior |
+| capability `design.md` | Describe current established design and currently relevant rationale |
 | change `proposal.md` | Describe why a change is needed and its scope |
 | change `design.md` | Describe how a particular change will be implemented |
-| `tasks.md` | Track implementation work for a change |
+| `tasks.md` | Track implementation and documentation work for a change |
 | archived change | Preserve historical change context and decisions |
+
+Conceptually:
+
+```text
+spec.md
+    = current WHAT
+
+design.md
+    = current HOW
+    + currently relevant WHY
+
+capability-map.md
+    = system map and cross-capability navigation
+
+archived changes
+    = historical WHY / CHANGE HOW
+```
 
 ---
 
@@ -72,11 +89,11 @@ openspec/
 
 Not every capability is required to have a `design.md`.
 
-A `design.md` SHOULD exist when documenting established architecture or implementation decisions materially improves understanding or maintenance of the capability.
+A `design.md` SHOULD exist when documenting established architecture, implementation decisions, behavioral interpretations, or rationale materially improves understanding or maintenance of the capability.
 
 ---
 
-# 4. Capabilities
+## 4. Capabilities
 
 A capability represents a coherent area of system behavior or responsibility.
 
@@ -106,7 +123,7 @@ Shared capabilities SHOULD use an appropriate shared namespace rather than being
 
 ---
 
-# 5. Capability Map
+## 5. Capability Map
 
 `openspec/capability-map.md` is the primary navigation entry point for understanding the specification set.
 
@@ -120,6 +137,7 @@ The capability map SHOULD contain:
 - A list of known applications or major subsystems.
 - Known capabilities and their purposes.
 - Important relationships between capabilities.
+- Important cross-capability flows or dependencies.
 - Suggested entry points or reading order where useful.
 - Specification coverage for brownfield areas where documentation is incomplete.
 
@@ -137,15 +155,17 @@ App2 receives commands from the host and controls the target device.
 | app2-control | Device control behavior | Not documented | Not documented |
 ```
 
-The capability map is a **navigation and discovery document**.
+The capability map is a **navigation and system-level overview document**.
 
 It MUST NOT duplicate detailed normative requirements from capability specifications.
+
+It SHOULD describe cross-capability relationships at a high level, but detailed behavior and design knowledge SHOULD remain owned by an appropriate capability.
 
 The existence of the capability map MUST NOT be interpreted as proof that all system capabilities have been documented.
 
 ---
 
-# 6. Current Specifications
+## 6. Current Specifications
 
 A capability's:
 
@@ -170,12 +190,17 @@ Examples include:
 - failure behavior
 - compatibility requirements
 - important constraints and invariants
+- behavioral interpretations that affect observable results
+
+If an interpretation results in observable behavior, the resulting behavior MUST be represented in the specification when that area is documented.
+
+For example, if an effect cannot be used under a particular condition, that restriction belongs in the specification regardless of where the interpretation originated.
 
 Implementation details that can change without changing the behavioral contract SHOULD generally not be specified here.
 
 ---
 
-# 7. Current Design
+## 7. Current Design and Rationale
 
 A capability's optional:
 
@@ -183,13 +208,17 @@ A capability's optional:
 openspec/specs/<capability>/design.md
 ```
 
-describes the **current established design** of that capability.
+describes the **current established design and currently relevant rationale** of that capability.
 
 It answers:
 
 > How is this capability currently designed?
 
-Typical content includes:
+and, where necessary:
+
+> Why is the current behavior or design understood this way?
+
+Typical design content includes:
 
 - architecture
 - component responsibilities
@@ -202,13 +231,86 @@ Typical content includes:
 - established implementation patterns
 - important technical constraints
 
-The capability design describes the **current state**, not the history of how that state was reached.
+### Behavioral Decisions and Rationale
 
-It SHOULD NOT contain obsolete architecture, temporary migration mechanisms, implementation progress, or historical alternatives that are no longer relevant.
+`design.md` MAY contain a section such as:
+
+```markdown
+## Behavioral Decisions and Rationale
+```
+
+for currently relevant decisions that explain the interpretation of behavior defined in `spec.md`.
+
+This section MAY record:
+
+- why an ambiguous rule or effect is interpreted in a particular way;
+- evidence used to reach the interpretation;
+- whether the interpretation was explicitly confirmed;
+- whether it is based on an existing implementation, source material, domain interpretation, or project decision;
+- important assumptions required to understand the current behavior.
+
+The **resulting behavior itself** MUST be represented in `spec.md` when applicable.
+
+The rationale in `design.md` explains why that behavior is currently understood or specified that way.
+
+Where useful, rationale entries SHOULD reference the corresponding requirement or scenario.
+
+For example:
+
+```text
+spec.md
+REQ-P018-xxx:
+P-018 cannot be used on the first page.
+
+design.md
+Behavioral Decisions and Rationale:
+REQ-P018-xxx is interpreted this way because ...
+Confirmation status: Confirmed / Project decision / Inferred / Pending confirmation
+```
+
+Only rationale that remains relevant to understanding the **current system** SHOULD remain in the capability design.
+
+Superseded interpretations and obsolete rationale belong in archived changes or other historical records.
 
 ---
 
-# 8. Change-Level Design
+## 8. Cross-Capability Ownership
+
+Behavior or design may involve more than one capability.
+
+Each piece of detailed knowledge SHOULD have one primary owning capability.
+
+The owning capability SHOULD be the capability whose responsibility most directly governs the behavior or design decision.
+
+Other affected capabilities SHOULD reference the owning capability rather than duplicate the same normative requirement or detailed rationale.
+
+For example:
+
+```text
+engine capability
+    owns:
+    "Only the active-turn player may attack."
+
+card-effect capability
+    relies on:
+    engine attack eligibility rules
+```
+
+The card-effect specification or design MAY link to the engine requirement rather than redefine the rule.
+
+For cross-capability design:
+
+- detailed design SHOULD be owned by the primary capability;
+- dependent capabilities SHOULD reference the owning capability where useful;
+- `capability-map.md` SHOULD describe important system-level relationships and flows.
+
+If no single capability is a reasonable owner because the decision is genuinely system-wide, the system-level relationship SHOULD be summarized in `capability-map.md`, with detailed documentation placed in the most appropriate shared capability or dedicated system-level documentation.
+
+Duplication of normative requirements across capabilities SHOULD be avoided.
+
+---
+
+## 9. Change-Level Design
 
 A change-specific:
 
@@ -238,7 +340,7 @@ It MUST NOT automatically be treated as the current capability design.
 
 ---
 
-# 9. Brownfield Specification Policy
+## 10. Brownfield Specification Policy
 
 This repository contains existing software whose behavior and design may not yet be fully documented.
 
@@ -251,47 +353,61 @@ The absence of a specification does NOT imply:
 - that existing behavior is accidental;
 - that undocumented behavior may safely be removed.
 
-Before modifying an existing area, engineers and agents SHOULD:
-
-1. Read the capability map.
-2. Identify potentially affected capabilities.
-3. Read available `spec.md` files.
-4. Read available capability `design.md` files when relevant.
-5. Inspect relevant existing code.
-6. Inspect relevant existing tests.
-7. Identify existing behavior affected by the proposed change.
-8. Clarify ambiguous or undocumented behavior when necessary.
-
 A complete reverse specification of the entire repository is NOT required before development can proceed.
 
-Instead, missing specifications SHOULD be added or improved when they become relevant to a change.
+Instead, missing specifications and design knowledge SHOULD be added or improved when they become relevant to a change.
+
+### Coverage Levels
+
+Specification coverage SHOULD use the following meanings:
+
+**Documented**
+
+The known behavior within the declared scope is represented by requirements and scenarios, and corresponding verification or tests exist where reasonably testable.
+
+"Documented" does not claim that unknown behavior cannot exist.
+
+**Partial**
+
+Only part of the known behavior within the capability or declared area has been specified, or important scenarios or verification coverage remain missing.
+
+**Not documented**
+
+No meaningful current specification has yet been established for the area.
+
+Design coverage MAY use the same terms, interpreted with respect to known architecture and design knowledge rather than behavioral requirements and tests.
+
+Coverage status is informational and MUST NOT be interpreted as proof of completeness.
 
 ---
 
-# 10. Specification Coverage
+## 11. Required Reading Before a Change
 
-Brownfield specifications may be incomplete.
+Before proposing or implementing a change, engineers and agents SHOULD:
 
-Where useful, documentation SHOULD distinguish between:
+1. Read this guide.
+2. Read `openspec/capability-map.md`.
+3. Identify potentially affected capabilities.
+4. Read their available `spec.md` files.
+5. Read their available capability `design.md` files when relevant.
+6. Inspect relevant existing code.
+7. Inspect relevant existing tests.
+8. Identify existing behavior and design affected by the proposed change.
+9. Identify cross-capability dependencies.
+10. Clarify material ambiguities or undocumented behavior when necessary.
 
-- **Documented**
-- **Partial**
-- **Not documented**
+For brownfield code, undocumented behavior MUST NOT be assumed to be invalid or safe to change.
 
-Partial coverage is acceptable and preferable to implying completeness where none exists.
-
-Agents MUST NOT infer that behaviors absent from the specification do not exist.
-
-Existing code and tests remain important evidence when working in incompletely specified areas.
+Other sections of this guide refer to this procedure as the **Required Reading procedure**.
 
 ---
 
-# 11. Change Workflow
+## 12. Change Workflow
 
 The normal development workflow is:
 
 ```text
-Understand existing context
+Required Reading
         ↓
 Propose
         ↓
@@ -314,38 +430,39 @@ Not every change requires every artifact to contain substantial content.
 
 The amount of specification and design work SHOULD be proportional to the scope and risk of the change.
 
----
-
-# 12. Before Implementing a Change
-
-Before implementation:
-
-1. Identify the affected capabilities.
-2. Review their current specifications.
-3. Review their current designs when relevant.
-4. Inspect relevant code and tests where specifications are incomplete.
-5. Identify compatibility requirements and important existing behavior.
-6. Resolve material ambiguities before relying on assumptions.
-
-For brownfield code, implementation MUST NOT assume that undocumented behavior is invalid.
+Change tasks SHOULD include required current-documentation reconciliation when the change may affect capability specifications, capability designs, rationale, or the capability map.
 
 ---
 
-# 13. Before Archiving a Change
+## 13. Before Archiving a Change
 
 A completed change MUST be reconciled with the current-state documentation before archival.
 
-## 13.1 Current Specifications
+### 13.1 Current Specifications
 
 Behavioral changes MUST be reflected in the affected capability `spec.md`.
 
-After reconciliation, the capability specification MUST describe the resulting current behavior rather than the history of the change.
+OpenSpec provides delta-spec synchronization for capability specifications.
 
-## 13.2 Current Designs
+After synchronization, the capability specification MUST describe the resulting current behavior rather than the history of the change.
 
-Review the change-level `design.md` and the implemented result.
+### 13.2 Current Designs and Rationale
 
-If the change modifies an established:
+OpenSpec's standard delta-spec synchronization does **not** automatically reconcile capability-level `design.md`.
+
+Current design and rationale reconciliation is therefore an explicit project responsibility.
+
+Before archival:
+
+1. Review the change-level `design.md`.
+2. Review the implemented result.
+3. Identify affected capability-level `design.md` files.
+4. Update them when established design or currently relevant rationale has changed.
+5. Verify that they describe the resulting current state.
+
+This reconciliation SHOULD appear as an explicit task in `tasks.md` whenever a change may affect current design or rationale.
+
+A capability `design.md` SHOULD be updated when a change modifies an established:
 
 - architecture
 - component responsibility
@@ -356,17 +473,12 @@ If the change modifies an established:
 - protocol structure
 - important internal interface
 - established implementation pattern
+- behavioral interpretation or rationale
 - other persistent design decision
-
-the affected capability `design.md` SHOULD be updated.
 
 The change-level design MUST NOT simply be copied into the capability design.
 
-The capability design describes the resulting current state.
-
-Information that is only relevant to the transition remains in the archived change.
-
-Examples include:
+Do not carry transition-only information into the current design, including:
 
 - migration steps
 - temporary compatibility mechanisms
@@ -375,7 +487,9 @@ Examples include:
 - obsolete architecture
 - temporary workarounds
 
-## 13.3 Capability Map
+Such information remains in the archived change.
+
+### 13.3 Capability Map
 
 `openspec/capability-map.md` SHOULD be updated when the change:
 
@@ -385,9 +499,11 @@ Examples include:
 - materially changes relationships between capabilities; or
 - changes known specification/design coverage.
 
+Where applicable, capability-map reconciliation SHOULD also appear in `tasks.md`.
+
 ---
 
-# 14. Archival Semantics
+## 14. Archival Semantics
 
 Archived OpenSpec changes are historical records.
 
@@ -411,6 +527,7 @@ Current spec.md
 
 Current design.md
     = current HOW
+    + currently relevant WHY
 
 Archived changes
     = historical WHY / CHANGE HOW
@@ -418,7 +535,7 @@ Archived changes
 
 ---
 
-# 15. Documentation Navigation
+## 15. Documentation Navigation
 
 For understanding the system, the recommended reading path is:
 
@@ -434,35 +551,38 @@ design.md (when relevant)
 code / tests
 ```
 
-Archived changes SHOULD normally be consulted only when historical rationale or evolution is needed.
+Archived changes SHOULD normally be consulted when historical rationale or system evolution is needed.
+
+When beginning a change, follow the full **Required Reading procedure** defined in §11.
 
 ---
 
-# 16. Agent Instructions
+## 16. Agent and OpenSpec Integration
 
 AI agents working in this repository MUST follow this guide.
 
-Before proposing or implementing a change, an agent SHOULD:
+Repository-level agent instructions such as `AGENTS.md` SHOULD point to this document rather than duplicate its rules.
 
-1. Read this guide.
-2. Read `openspec/capability-map.md`.
-3. Identify affected capabilities.
-4. Read their current specifications.
-5. Read their current designs when relevant.
-6. Inspect code and tests where current documentation is incomplete.
-7. Avoid assuming undocumented behavior may safely be changed.
+For example:
 
-Before archiving a change, an agent MUST perform the reconciliation procedure defined in **Before Archiving a Change**.
+```text
+Before specification-driven work, read:
+docs/specification-guide.md
+```
 
-Repository-level agent configuration such as `AGENTS.md` SHOULD point to this document rather than duplicating these rules.
+`openspec/config.yaml` SHOULD also reference this guide in its project context so that OpenSpec-generated artifacts are created with awareness of the repository's specification policy.
+
+Tool-specific configuration SHOULD avoid duplicating the full policy where a reference to this guide is sufficient.
+
+The authoritative definition of this repository's specification workflow is this document, not the agent or OpenSpec configuration.
 
 ---
 
-# 17. Source-of-Truth Rules
+## 17. Source-of-Truth Rules
 
 When interpreting project documentation:
 
-**Current behavior**
+### Current behavior
 
 ```text
 openspec/specs/<capability>/spec.md
@@ -470,27 +590,49 @@ openspec/specs/<capability>/spec.md
 
 is the normative specification when that behavior is documented.
 
-**Current design**
+### Current design and rationale
 
 ```text
 openspec/specs/<capability>/design.md
 ```
 
-is the maintained description of established design where such documentation exists.
+is the maintained description of established design and currently relevant rationale where such documentation exists.
 
-**Change history**
+### System navigation
+
+```text
+openspec/capability-map.md
+```
+
+is the maintained map of known capabilities and important relationships.
+
+It is not a substitute for capability specifications.
+
+### Change history
 
 ```text
 openspec/changes/archive/
 ```
 
-preserves historical intent and design decisions.
+preserves historical intent, alternatives, transition design, and change-specific decisions.
 
 Because this is a brownfield project with incremental specification coverage, existing code and tests MUST also be examined when relevant behavior or design is not yet documented.
 
 ---
 
-# 18. Evolution of This Framework
+## 18. Documentation Language
+
+The specification set, capability map, and capability design documentation MAY use Traditional Chinese when that is the established language of the project.
+
+Terminology SHOULD remain consistent across capabilities.
+
+Code identifiers, protocol identifiers, card/effect identifiers, requirement IDs, and other stable technical identifiers SHOULD generally retain their canonical form rather than being translated.
+
+Consistency and unambiguous terminology are more important than requiring a particular natural language.
+
+---
+
+## 19. Evolution of This Framework
 
 This specification framework may evolve as the project gains experience with SDD.
 
@@ -500,5 +642,6 @@ Changes to this guide SHOULD preserve clear distinctions between:
 
 - current behavior;
 - current design;
+- currently relevant rationale;
 - proposed changes; and
 - historical records.
