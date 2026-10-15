@@ -5,3 +5,5 @@
 ## 文件導覽
 
 - [歷史版本相容性](version-compatibility-history.md)：舊版 Ubuntu、Python、TensorFlow、OpenCV 等相容性經驗；**非現行安裝建議**。
+- [Git 技術筆記](git.md)：檔案模式、Git LFS 與舊版工具線索。
+- [Python 技術筆記](python.md)：常見語言行為、NumPy 與 PyTorch 對照。
