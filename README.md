@@ -2,7 +2,12 @@
 
 個人軟體工程知識庫：整理可重複使用的工程方法、技術筆記、問題排解與範例。
 
-## 快速入口
+## 領域導覽
+
+- [開發](development/README.md)：依任務／知識領域分層，深度不固定。
+- [工具與故障索引](indexes/README.md)：跨領域查詢入口。
+
+## 既有入口
 
 - [工程指南](guides/README.md)：目前採用的開發方法與原則
 - [規格指南](sdd/specification-guide.md)：目前正式的規格制度（原路徑保留）
@@ -14,7 +19,7 @@
 
 ## 知識生命週期
 
-收集至 inbox → 驗證與整理為 notes / troubleshooting → 成熟且可重複採用的做法提升至 guides。過時內容移入 archive，並保留必要背景。
+收集至 inbox → 按任務／知識領域整理、驗證與維護；文件類型（notes、guides、troubleshooting）是屬性，不強制決定目錄位置。過時內容移入 archive，並保留必要背景。
 
 ## 舊資料
 
@@ -22,4 +27,4 @@
 
 ## 維護方式
 
-詳見 [知識庫維護指南](guides/knowledge-base-maintenance.md)。本次僅建立入口與骨架，不搬動、刪除或改寫舊資料。
+詳見 [知識庫維護指南](guides/knowledge-base-maintenance.md)。既有文件持續增量整理；舊資料保留原位。
