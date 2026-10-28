@@ -5,3 +5,5 @@
 ## 文件導覽
 
 - [歷史版本相容性](version-compatibility-history.md)：舊版 Ubuntu、Python、TensorFlow、OpenCV 等相容性經驗；**非現行安裝建議**。
+- [版本控制／Git](../development/version-control/git.md)：依領域分類的新位置。
+- [程式設計／Python](../development/programming/python.md)：依領域分類的新位置。
