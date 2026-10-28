@@ -5,6 +5,7 @@
 ## 領域導覽
 
 - [開發](development/README.md)：依任務／知識領域分層，深度不固定。
+- [系統運作與維護](operations/README.md)：程序、日誌與運行環境。
 - [工具與故障索引](indexes/README.md)：跨領域查詢入口。
 
 ## 既有入口
