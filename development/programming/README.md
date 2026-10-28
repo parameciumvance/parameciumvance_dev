@@ -5,6 +5,7 @@
 ## 文件導覽
 
 - [Python 技術筆記](python.md)：語言特性、NumPy／PyTorch 操作對照。
+- [Python 與 C++ 語意比較](python-cpp-semantics.md)：名稱綁定、參考、複製及常用操作的差異。
 
 ## 相關索引
 
