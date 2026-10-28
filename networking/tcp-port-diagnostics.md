@@ -45,7 +45,14 @@ curl -I --connect-timeout 3 https://example.com
 telnet <host> <port>
 ```
 
-Telnet 可用於基本 TCP 連線測試，但不適合驗證 TLS、HTTP 等應用協定，也不應用於傳輸敏感憑證。舊筆記提及以 `Ctrl+]` 進入 Telnet 命令模式，再輸入 `quit`；不同用戶端的快捷鍵可能不同。
+Telnet 可用於基本 TCP 連線測試，但不適合驗證 TLS、HTTP 等應用協定，也不應用於傳輸敏感憑證。
+
+#### 如何離開 Telnet
+
+- **Linux／常見 Telnet 用戶端**：按 `Ctrl+]` 進入 `telnet>` 命令模式，再輸入 `quit` 並按 Enter。
+- **Windows（舊筆記）**：記錄為 `Alt+29`，再輸入 `quit`。此快捷鍵可能涉及鍵盤數字鍵輸入方式及特定 Telnet 用戶端，**尚未在現行 Windows 環境驗證**；若無法使用，可嘗試用戶端說明中提供的 escape key（常見為 `Ctrl+]`）。
+
+以上是**離開 Telnet 用戶端**的操作，不只是中止連線；不同實作可能有不同 escape 字元與命令。
 
 ## 排查順序
 
