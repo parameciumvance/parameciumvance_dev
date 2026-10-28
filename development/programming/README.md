@@ -10,3 +10,5 @@
 ## 相關索引
 
 - [工具索引](../../indexes/tools.md)
+- [C/C++ 語意與實作陷阱](c-cpp-pitfalls.md)：assert、const、初始化順序與整數轉換。
+- [Shell 腳本](shell-scripting.md)：環境初始化、Conda、getopt 與錯誤處理。
