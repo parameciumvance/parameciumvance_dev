@@ -14,3 +14,5 @@
 | CMake | [建置](../development/build/README.md)、[CMake 組態](../development/build/cmake-configuration.md) |
 | ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序與日誌](../operations/ros1-process-logging.md) |
 | Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux 執行環境](../operations/linux-runtime.md) |
+| Telnet、netcat、curl、PowerShell | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
+| C++ | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) |
