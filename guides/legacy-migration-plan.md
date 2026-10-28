@@ -10,6 +10,8 @@
 | [開發/CMAKE note](../開發/CMAKE%20note) | [CMake 組態](../development/build/cmake-configuration.md) | 已萃取初版 | 實際旗標依工具鏈而定 |
 | [TOOLS_NOTE](../TOOLS_NOTE/) | [Git](../development/version-control/git.md)、[Python](../development/programming/python.md)、[Git 權限排查](../development/version-control/git-filemode.md)、[APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | 部分已萃取 | 已增補 [Linux](../operations/linux-runtime.md)、[ROS1 建置](../development/build/ros1-catkin-legacy.md) 與 [ROS1 程序日誌](../operations/ros1-process-logging.md)；其他工具仍待盤點 |
 | [TROUBLESHOOT](../TROUBLESHOOT) | [診斷流程](../troubleshooting/diagnostic-workflow.md)、[案例索引](../troubleshooting/legacy-case-index.md) | 已萃取初版 | 各案例仍需逐一確認根因 |
+| [TOOLS_NOTE/網路](../TOOLS_NOTE/網路) | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) | 已萃取初版 | Telnet 僅用於基本連線測試 |
+| [TOOLS_NOTE/程式語言/PY vs C++](../TOOLS_NOTE/程式語言/PY%20vs%20C%2B%2B) | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) | 已萃取初版 | 舊版對照非嚴格等價，已註明差異 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
 
 ## 遷移準則
