@@ -1,6 +1,6 @@
 # Shell 腳本：環境初始化與參數解析
 
-> 來源：[舊 Bash 筆記](../../TOOLS_NOTE/程式語言/shell語言/bash%20note)及[原始腳本範例](../../TOOLS_NOTE/程式語言/shell語言/sample_sh.sh)。原始範例保留，以下整理用途與限制。
+> 來源：[舊 Bash 筆記](../../TOOLS_NOTE/程式語言/shell語言/bash%20note)及[完整歷史腳本範例](examples/getopt-conda-legacy.sh)。完整範例已搬入本領域，以下整理用途與限制。
 
 ## source 與執行環境
 
@@ -41,5 +41,5 @@ conda activate base
 
 ## 相關文件
 
-- [原始 Bash 範例](../../TOOLS_NOTE/程式語言/shell語言/sample_sh.sh)
+- [完整 Bash 範例（歷史版本，未修正）](examples/getopt-conda-legacy.sh)
 - [程式設計](README.md)
