@@ -1,6 +1,6 @@
 # 舊知識遷移盤點
 
-> 狀態：進行中。保留原始文件，採增量萃取，不以大量搬移作為整理目標。
+> 狀態：進行中。採逐項消耗式遷移：已完整搬移的舊內容於同一 PR 清除；剩餘舊內容即待處理工作。原始版本由 Git 歷史追溯。
 
 | 來源 | 目標 | 狀態 | 注意事項 |
 | --- | --- | --- | --- |
@@ -12,16 +12,17 @@
 | [TROUBLESHOOT](../TROUBLESHOOT) | [診斷流程](../troubleshooting/diagnostic-workflow.md)、[案例索引](../troubleshooting/legacy-case-index.md) | 已萃取初版 | 各案例仍需逐一確認根因 |
 | [TOOLS_NOTE/網路](../TOOLS_NOTE/網路) | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) | 已萃取初版 | Telnet 僅用於基本連線測試 |
 | [TOOLS_NOTE/程式語言/PY vs C++](../TOOLS_NOTE/程式語言/PY%20vs%20C%2B%2B) | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) | 已萃取初版 | 舊版對照非嚴格等價，已註明差異 |
-| [TOOLS_NOTE/程式語言/C&C++](../TOOLS_NOTE/程式語言/C%26C%2B%2B/) | [C/C++ 語意陷阱](../development/programming/c-cpp-pitfalls.md)、[編譯故障](../development/build/compiler-toolchain-diagnostics.md) | 已萃取初版 | CUDA／GCC 版本經驗僅適用舊工具鏈 |
-| [TOOLS_NOTE/程式語言/shell語言](../TOOLS_NOTE/程式語言/shell語言/) | [Shell 腳本](../development/programming/shell-scripting.md) | 已萃取初版 | 原始 getopt／Conda 範例保留 |
+| `TOOLS_NOTE/程式語言/C&C++/C&C++ note`（Git 歷史） | [C/C++ 語意陷阱](../development/programming/c-cpp-pitfalls.md) | **已清除** | 逐項補齊後刪除舊筆記 |
+| [TOOLS_NOTE/程式語言/C&C++/TROUBLESHOOT](../TOOLS_NOTE/程式語言/C%26C%2B%2B/TROUBLESHOOT) | [編譯故障](../development/build/compiler-toolchain-diagnostics.md) | **部分剩餘** | 仍待逐項核對原始編譯案例；CUDA／GCC 屬歷史限制 |
+| `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
 
 ## 遷移準則
 
-- **現行建議**：有可重用價值，整理到 guides。
-- **技術事實與研究**：整理到 notes，標註版本與限制。
-- **具體故障案例**：整理到 troubleshooting，保留症狀、根因與解法。
-- **過時但有參考價值**：保留原始紀錄，必要時歸檔。
+- **現行建議**：有可重用價值，整理到對應工程領域並標明推薦做法。
+- **技術事實與研究**：整理到對應工程領域，標註版本與限制。
+- **具體故障案例**：整理到對應工程領域，保留症狀、根因與解法，並加入故障索引。
+- **過時但有參考價值**：保留必要的歷史情境與操作細節，完成遷移後清除舊副本。
 - **尚未確認**：標記待驗證，不因整理而擅自提升為事實。
 
 每次遷移應檢查內部連結、來源追溯與是否含敏感資料。
