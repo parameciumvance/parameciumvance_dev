@@ -447,6 +447,32 @@ SHOULD 避免在多個 capability 重複 normative requirement。
 
 ---
 
+## 8.1 System／E2E 行為與邊界
+
+Capability SHOULD 依穩定的責任邊界描述規範，不必將每個 requirement 都寫成從操作員到最終裝置的完整路徑。跨 capability 的端到端要求仍屬於 current specification，SHOULD 由最直接負責該使用者目標或系統責任的 capability 持有，其他 capability 僅描述各自的介面契約，避免重複建立 normative requirements。
+
+例如：
+
+- `io-interface`：WHEN 系統收到有效的 Modbus 校正命令，THEN 提出平台校正要求。
+- `platform-calibration`：WHEN 系統接受校正要求，THEN 執行規定的校正流程。
+- 由 `platform-calibration` 持有端到端情境：WHEN 操作者透過 PLC 控制面板要求校正，THEN 系統完成適用的校正流程。
+
+描述能力邊界時，SHOULD 以被規範系統實際收到或觀察到的事件作為 WHEN，避免誤把「PLC 已發出」等同於「系統已收到」。端到端情境則 MAY 從使用者或外部 actor 的角度敘述。
+
+E2E requirement 與 E2E test 不相同：前者定義系統應有行為，後者驗證跨元件路徑是否成立。SHOULD 建立可追溯關係，而非將測試步驟當作規格。
+
+## 8.2 Specification、Interface Contract 與 Configuration
+
+是否為 specification 取決於該內容是否定義系統必須遵循的契約，不取決於檔案格式。
+
+- **Specification／Interface Contract**：定義功能、方向、資料語意、時序、例外、相容性等必須成立的要求。改變這些要求 SHOULD 經規格變更審查。
+- **Configuration**：在既有規格允許的範圍內，為特定設備或部署選擇可調整的值。僅更換這些值通常不需修改 capability spec，但 MUST 遵守組態驗證、版本及部署管控。
+- 同一份表格 MAY 同時包含契約與配置資訊；SHOULD 明確標示哪些欄位或版本具有 normative 效力。
+
+例如 Modbus 的 `Calibrate` 命令語意屬於介面契約；若 register address 是系統支援的可配置參數，特定部署使用的 address 屬於 configuration。反之，若雙方約定固定 address，改點位即可能是契約變更。程式是否讀取設定檔可作為判斷線索，但不能單獨決定其契約地位。
+
+Configuration 的實際保存位置應依部署及維護責任決定；SHOULD NOT 僅因它與規格相關就放入 `openspec/specs/`。
+
 ## 9. Change-Level Design
 
 某次 change 的：
@@ -476,6 +502,14 @@ openspec/changes/<change>/design.md
 不得直接把 change design 視為目前 capability design。
 
 ---
+
+## 9.1 Supporting Specification Artifacts
+
+當規格需要精確引用表格、JSON Schema、通訊協定定義或其他結構化資料時，MAY 使用 supporting artifact。若該檔案具 normative 效力，`spec.md` MUST 指明檔案位置、適用範圍、版本或版本控制方式，以及與文字規格衝突時的處理責任。不得無故將大量結構化內容重複抄寫到 `spec.md`。
+
+Supporting artifact MAY 與 owning capability 的規格存放在一起；也 MAY 放在共用契約目錄並由 spec 引用。實際部署 configuration SHOULD 與 normative contract 清楚區隔。
+
+OpenSpec 的 delta-spec sync 不保證自動合併 Excel 等 supporting artifact 的內容。變更完成時 MUST 對受影響的 normative supporting artifact 執行人工或受控自動 reconciliation，並納入相關驗證。
 
 ## 10. Brownfield 規格政策
 
@@ -521,6 +555,17 @@ Design coverage MAY 使用相同狀態，但判斷對象改為目前已知 archi
 Coverage 僅提供導航資訊，不得被解讀為絕對完整性證明。
 
 ---
+
+## 10.2 發現未定義行為或規格偏離
+
+對 brownfield 專案，SHOULD 使用 issue tracker 記錄尚未處置的 specification issue，並連結受影響 capability、requirement／scenario（若存在）、重現條件、觀察證據、風險、負責人與處置決定。若未使用 issue tracker，MAY 以版控文件追蹤。
+
+- **Undefined Behavior**：規格未定義某條件下應有的行為。應記錄目前觀察到的實作及待決策問題；不得僅因程式目前如此執行就自行認定是正確規格。
+- **Spec Deviation**：現有規格要求 A，但實作或測試顯示 B。未正式決定修改契約前，MUST 保留 A 作為 normative requirement，不得為了讓規格符合程式而逕自改寫。
+
+處置時應釐清是修正實作、補定規格、正式變更契約或確認誤報，並連結相應 change／PR／測試結果後結案。具安全或設備風險的偏離 MUST 依專案風險管理程序優先處理。
+
+這類 unresolved WHAT／conformance 問題與 §7.3 的 `Pending Confirmation` 不同：後者標示已記錄之行為解讀理由的確認狀態，不應取代缺漏或偏離 issue 的追蹤。
 
 ## 11. Required Reading Procedure
 
@@ -574,6 +619,18 @@ Specification 與 design 工作量 SHOULD 與 change 的範圍及風險相稱。
 如果 change 可能影響 current spec、current design、rationale 或 capability map，`tasks.md` SHOULD 明確列出相應的 reconciliation 工作。
 
 ---
+
+## 12.1 重構與 Specification Refinement
+
+OpenSpec change SHOULD 用於重要行為變更、架構或設計決策變更，以及需要審查的規格整理；不要求每次內部程式碼整理都建立 change。
+
+- 不改變行為且不改變持續性設計的小型重構，MAY 透過一般 Git／PR 與回歸測試管理。
+- 改變目前架構、責任或重要內部介面而保持外部行為不變的重構，SHOULD 記錄設計決策並更新 capability `design.md`，通常適合建立 change；不得製造虛假的行為 delta。
+- Specification refinement（去重、改善敘述或將實作細節改為可觀察行為）MAY 不改變實際行為，但 MUST 確認既有契約並未因此遺失。
+
+**刪除既有 Scenario** 時，MUST 檢查它保障的行為是否仍由其他 Scenario 或正式 requirement 涵蓋；若實際取消行為保證，屬於行為契約變更，不得稱為純重構。
+
+OpenSpec 的特定版本可能限制 `MODIFIED Requirements` 省略原有 Scenario。遇到工具無法表達的 Scenario 層級刪除，SHOULD 使用經審查的 current-spec 直接編輯及 Git diff 記錄刪除理由，且不得誤用整項 `REMOVED Requirements` 移除仍有效的需求。具體 CLI／validator 操作須依專案使用的 OpenSpec 版本核對。
 
 ## 13. Archive 前的 Current-State Reconciliation
 
@@ -637,7 +694,11 @@ Capability `design.md` SHOULD 在以下項目發生持續性改變時更新：
 
 這些資訊保留於 archived change。
 
-### 13.3 Capability Map
+### 13.3 Supporting Artifacts 與 Configuration
+
+若受影響的 normative supporting artifact 不會由 OpenSpec 自動同步，archive 前 MUST 確認其 current-state 版本已更新並經驗證。部署組態則依組態管理流程處理；只有契約或允許的組態規則改變時，才必須更新 specification。
+
+### 13.4 Capability Map
 
 Change 發生以下情況時 SHOULD 更新 `openspec/capability-map.md`：
 
@@ -710,7 +771,9 @@ code / tests
 
 ## 16. Agent 與 OpenSpec 整合
 
-AI Agent 在此 repository 工作時 MUST 遵循本指南。
+AI Agent 在採用本指南的專案工作時 MUST 遵循本指南。
+
+以下 `docs/specification-guide.md` 是**建議導入本制度的軟體專案使用的路徑**；本知識庫中的 `sdd/specification-guide.md` 則是指南範本的維護位置。兩者用途不同，不應將範例路徑改為知識庫路徑。
 
 Repository-level `AGENTS.md` SHOULD 指向本文件，而不是複製完整規則。
 
