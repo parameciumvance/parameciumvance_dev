@@ -771,7 +771,9 @@ code / tests
 
 ## 16. Agent 與 OpenSpec 整合
 
-AI Agent 在此 repository 工作時 MUST 遵循本指南。
+AI Agent 在採用本指南的專案工作時 MUST 遵循本指南。
+
+以下 `docs/specification-guide.md` 是**建議導入本制度的軟體專案使用的路徑**；本知識庫中的 `sdd/specification-guide.md` 則是指南範本的維護位置。兩者用途不同，不應將範例路徑改為知識庫路徑。
 
 Repository-level `AGENTS.md` SHOULD 指向本文件，而不是複製完整規則。
 
@@ -781,7 +783,7 @@ Repository-level `AGENTS.md` SHOULD 指向本文件，而不是複製完整規�
 進行 specification-driven development 前，
 請先閱讀：
 
-sdd/specification-guide.md
+docs/specification-guide.md
 ```
 
 `openspec/config.yaml` 的 project context 也 SHOULD 指向本指南，使 OpenSpec 產生 artifact 時知道此 repository 有額外的 specification policy。
@@ -791,7 +793,7 @@ sdd/specification-guide.md
 ```yaml
 context: |
   本專案的規格制度與 brownfield 開發規則定義於：
-  sdd/specification-guide.md
+  docs/specification-guide.md
 
   進行 OpenSpec change 時必須遵循該指南。
 ```
