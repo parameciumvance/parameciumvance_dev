@@ -13,3 +13,5 @@
 - [C/C++ 語意與實作陷阱](c-cpp-pitfalls.md)：assert、const、初始化順序與整數轉換。
 - [Shell 腳本](shell-scripting.md)：環境初始化、Conda、getopt 與錯誤處理。
 - [程式設計範例](examples/README.md)：包含保留原文的歷史 Shell 範例。
+- [Python 內建功能歷史盤點](python-builtins-legacy.md)：語言協定修正與原始清單。
+- [Python 版本相容性](python-version-compatibility.md)：Python 2/3、NumPy、TensorFlow、SciPy、PyTorch 歷史差異。
