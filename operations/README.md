@@ -8,7 +8,7 @@
 - [ROS1 程序中斷與日誌歷史經驗](ros1-process-logging.md)：SIGINT／SIGTERM、roslaunch 輸出及日誌清理。
 
 - [時間同步](time-synchronization.md)：NTP 主副板歷史設定。
-- [Filebeat 相容性](filebeat-compatibility.md)：Ubuntu 22.04／glibc 歷史案例。
+- [日誌管理](logging/README.md)：日誌收集、傳輸、保存與診斷。
 
 ## 相關領域
 
