@@ -15,3 +15,5 @@
 | Bash 腳本 source 環境未生效、getopt 解析異常 | [Shell 腳本](../development/programming/shell-scripting.md) |
 | Python／科學運算套件版本差異 | [Python 版本相容性](../development/programming/python-version-compatibility.md) |
 | PyTorch 擴充 undefined symbol、CUDA out of memory | [Python 歷史故障操作](../development/programming/python.md) |
+| Filebeat／glibc 不相容 | [Filebeat 相容性](../operations/filebeat-compatibility.md) |
+| Ubuntu 意外安裝桌面環境、ROS 升級衝突 | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) |
