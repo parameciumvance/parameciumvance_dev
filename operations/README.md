@@ -4,13 +4,14 @@
 
 ## 文件導覽
 
-- [Linux 執行環境與診斷](linux-runtime.md)：使用者執行期目錄、手冊、程序與二進位診斷工具。
 - [ROS1 程序中斷與日誌歷史經驗](ros1-process-logging.md)：SIGINT／SIGTERM、roslaunch 輸出及日誌清理。
 
 - [時間同步](time-synchronization.md)：NTP 主副板歷史設定。
 - [日誌管理](logging/README.md)：日誌收集、傳輸、保存與診斷。
 
 ## 相關領域
+
+- [作業系統／Linux](../operating-systems/linux/README.md)：系統目錄、使用者環境及命令。
 
 - [故障診斷流程](../troubleshooting/diagnostic-workflow.md)
 - [工具索引](../indexes/tools.md)
