@@ -35,3 +35,26 @@ ROS：`http://packages.ros.org/ros/ubuntu bionic InRelease`，`EXPKEYSIG F42ED6F
 curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 ```
 此為歷史命令，apt-key 已棄用。
+
+## 案例三：Ubuntu 20.04 意外安裝桌面環境
+
+原筆記指出 focal 的 libnotify4 將 gnome-shell 列為 Recommends，jammy（22.04）改為 Suggests；APT 預設可能安裝推薦依賴。舊建議在 Ubuntu Server 20.04 至未滿 22.04 的設備早期設定先執行：
+
+```bash
+sudo apt install libnotify4 --no-install-recommends
+```
+
+原作者留言：https://github.com/ros-perception/perception_pcl/issues/355 ；版本資料：https://packages.ubuntu.com/focal/libnotify4 。歷史依賴關係及修正動機未重新驗證；先用 apt 模擬安裝並確認依賴，不保證能避免所有後續桌面依賴。
+
+## 套件查詢與升級
+
+```bash
+dpkg -L package
+apt-cache madison package
+apt-cache policy package
+apt-rdepends -f Depends,Recommends -s Depends,Recommends package
+```
+
+依序查安裝檔案、版本、候選版本與依賴樹。apt-rdepends 可能須另行安裝。安全更新可參考 CVE Program Mission（https://www.cve.org/）及發行版安全公告；CVE 編號本身不代表本機必受影響。
+
+舊筆記記錄系統升級失敗可能與 ROS 綁定 Ubuntu 版本有關，可能須先移除不相容 ROS 套件；應先核對支援矩陣、備份並模擬變更，不直接移除整套 ROS。
