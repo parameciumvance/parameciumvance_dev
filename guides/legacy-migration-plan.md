@@ -19,6 +19,9 @@
 | `TOOLS_NOTE/程式語言/py note`（Git 歷史） | [Python 技術筆記](../development/programming/python.md) | **已清除** | 個人路徑泛化 |
 | `TOOLS_NOTE/程式語言/python/`（Git 歷史） | [內建功能盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) | **已清除** | 原始清單與修正說明分開 |
 | `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |
+| `TOOLS_NOTE/作業系統/Linux note`（Git 歷史） | [Linux](../operations/linux-runtime.md)、[時間同步](../operations/time-synchronization.md)、[APT](../development/package-management/apt-legacy-incidents.md)、[二進位診斷](../development/build/binary-diagnostics.md)、[媒體處理](../development/media-processing.md) | **已清除** | 依任務拆分，歷史命令未重驗 |
+| `TOOLS_NOTE/作業系統/比較`（Git 歷史） | [跨平台開發](../development/cross-platform.md) | **已清除** | 更新 GPU 容器限制說明 |
+| `TOOLS_NOTE/日誌/ELK`（Git 歷史） | [Filebeat 相容性](../operations/filebeat-compatibility.md) | **已清除** | 保留原版本線索 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
 
 ## 遷移準則
