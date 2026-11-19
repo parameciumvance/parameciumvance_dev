@@ -6,7 +6,7 @@
 | --- | --- |
 | Git | [版本控制](../development/version-control/README.md)、[Git 筆記](../development/version-control/git.md) |
 | Git LFS | [版本控制／Git](../development/version-control/git.md) |
-| Python | [程式設計](../development/programming/README.md) |
+| Python | [程式設計](../development/programming/README.md)、[內建功能歷史盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) |
 | NumPy、PyTorch | [Python 技術筆記](../development/programming/python.md) |
 | APT | [套件管理](../development/package-management/README.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
 
