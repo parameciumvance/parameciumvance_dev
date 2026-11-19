@@ -15,7 +15,9 @@
 | `TOOLS_NOTE/網路`（Git 歷史） | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) | **已清除** | Telnet 僅用於基本連線測試 |
 | `TOOLS_NOTE/程式語言/PY vs C++`（Git 歷史） | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) | **已清除** | 舊版對照非嚴格等價，已註明差異 |
 | `TOOLS_NOTE/程式語言/C&C++/C&C++ note`（Git 歷史） | [C/C++ 語意陷阱](../development/programming/c-cpp-pitfalls.md) | **已清除** | 逐項補齊後刪除舊筆記 |
-| [TOOLS_NOTE/程式語言/C&C++/TROUBLESHOOT](../TOOLS_NOTE/程式語言/C%26C%2B%2B/TROUBLESHOOT) | [編譯故障](../development/build/compiler-toolchain-diagnostics.md) | **部分剩餘** | 仍待逐項核對原始編譯案例；CUDA／GCC 屬歷史限制 |
+| `TOOLS_NOTE/程式語言/C&C++/TROUBLESHOOT`（Git 歷史） | [編譯故障](../development/build/compiler-toolchain-diagnostics.md) | **已清除** | 保留原版本線索 |
+| `TOOLS_NOTE/程式語言/py note`（Git 歷史） | [Python 技術筆記](../development/programming/python.md) | **已清除** | 個人路徑泛化 |
+| `TOOLS_NOTE/程式語言/python/`（Git 歷史） | [內建功能盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) | **已清除** | 原始清單與修正說明分開 |
 | `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
 
