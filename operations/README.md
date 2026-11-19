@@ -7,6 +7,9 @@
 - [Linux 執行環境與診斷](linux-runtime.md)：使用者執行期目錄、手冊、程序與二進位診斷工具。
 - [ROS1 程序中斷與日誌歷史經驗](ros1-process-logging.md)：SIGINT／SIGTERM、roslaunch 輸出及日誌清理。
 
+- [時間同步](time-synchronization.md)：NTP 主副板歷史設定。
+- [Filebeat 相容性](filebeat-compatibility.md)：Ubuntu 22.04／glibc 歷史案例。
+
 ## 相關領域
 
 - [故障診斷流程](../troubleshooting/diagnostic-workflow.md)
