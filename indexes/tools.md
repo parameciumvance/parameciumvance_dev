@@ -18,7 +18,7 @@
 | GCC／G++、nvcc、CUDA | [編譯與工具鏈故障](../development/build/compiler-toolchain-diagnostics.md) |
 | C/C++ | [語意與實作陷阱](../development/programming/c-cpp-pitfalls.md) |
 | FFmpeg | [媒體處理](../development/media-processing.md) |
-| Filebeat | [版本相容性](../operations/filebeat-compatibility.md) |
+| Filebeat | [版本相容性](../operations/logging/filebeat-compatibility.md) |
 | NTP、systemd-timesyncd | [時間同步](../operations/time-synchronization.md) |
 | readelf、ldd、objdump、nm | [二進位診斷](../development/build/binary-diagnostics.md) |
 
