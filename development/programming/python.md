@@ -4,11 +4,21 @@
 
 ## 常見語言與工具行為
 
-- `argparse`：選項名稱中的連字號通常轉為屬性名稱的底線，例如 `--output-dir` 對應 `args.output_dir`。
-- `__slots__`：可限制實例的屬性配置方式，但需留意繼承與 `__dict__` 的情況。
-- `pickle`：可透過 `__getstate__`／`__setstate__` 客製序列化；區域函式與類別通常無法直接以標準 pickle 序列化。
-- 影像色彩：OpenCV 常用 BGR 通道順序，Pillow／Matplotlib 常用 RGB，跨套件時應確認色彩通道。
-- `cv2.imwrite`：檔名副檔名通常用於選擇影像編碼器。
+- `argparse`：長選項推導預設 dest 時，連字號轉底線，例如 `--output-dir` 對應 `args.output_dir`；可用 dest 自訂，並非所有引數字串都轉換。
+- `__slots__`：限制實例可新增的屬性；需留意繼承及是否仍存在 `__dict__`。
+- `pickle`：可透過 `__getstate__`／`__setstate__` 客製序列化；區域函式與類別通常無法直接以標準 pickle 序列化。不可載入不可信資料。
+
+## Python 環境與偵錯
+
+- Linux 可用 `whereis python` 查找位置；確認實際執行的 interpreter 宜用 `command -v python` 或 `python -c 'import sys; print(sys.executable)'`。
+- 舊 VS Code debugger 曾將類別／模組方法顯示在 function variables；依偵錯器版本而異，尚未重新驗證。
+- 安裝名稱與 import 名稱：Pillow → PIL、PyTorch 官方 pip 套件 torch（舊筆記稱 pytorch，Conda 曾使用 pytorch）→ torch；tensorflow、numpy、keras 通常同名。
+
+## 影像處理
+
+- 常見影像副檔名：`.jpg`、`.jpeg`、`.png`。
+- OpenCV 常用 BGR 通道順序，Pillow／Matplotlib 的彩色影像常用 RGB；跨套件時確認通道順序。
+- `cv2.imwrite(filename, img)` 的 filename 須含支援的副檔名，例如 `cv2.imwrite("out.jpg", img)`，以選擇影像編碼器。
 
 ## NumPy 常用操作
 
@@ -39,14 +49,6 @@ row, col = np.unravel_index(np.argmax(matrix), matrix.shape)
 ## 舊環境故障線索
 
 原筆記記錄 PyTorch／CUDA 編譯擴充模組版本不一致，以及 GPU 記憶體不足等問題。這些情況需依實際版本、錯誤訊息與環境重現，不能直接套用舊解法。舊筆記中的個人絕對路徑不應複製到通用操作指南。
-
-## 操作與環境補充
-
-- 常見影像副檔名：.jpg、.jpeg、.png；`cv2.imwrite("out.jpg", img)` 必須選擇支援的編碼器。
-- Linux 可用 `whereis python` 查找位置；確認實際執行的 interpreter 宜用 `command -v python` 或 `python -c 'import sys; print(sys.executable)'`。
-- 舊 VS Code debugger 曾將類別／模組方法顯示在 function variables；依偵錯器版本而異。
-- 安裝名稱與 import 名稱：Pillow → PIL、PyTorch 官方 pip 套件 torch（舊筆記稱 pytorch，Conda 曾使用 pytorch）→ torch；tensorflow、numpy、keras 通常同名。
-- pickle 不可載入不可信資料。
 
 ## NumPy／PyTorch 進階對照
 
