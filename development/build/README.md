@@ -8,6 +8,8 @@
 - [ROS1／catkin 建置與依賴歷史案例](ros1-catkin-legacy.md)：自行編譯與系統套件衝突、產生檔案依賴等問題。
 - [編譯與工具鏈故障排查](compiler-toolchain-diagnostics.md)：子模組、C/C++ 連結與舊版 CUDA／GCC 相容性。
 
+- [二進位診斷與 CPU 指令集](binary-diagnostics.md)
+
 ## 相關領域
 
 - [套件管理](../package-management/README.md)
