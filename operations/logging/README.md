@@ -8,5 +8,6 @@
 
 ## 跨領域知識
 
-- [ROS1 程序中斷與日誌歷史經驗](../ros1-process-logging.md)：程序生命週期與日誌輸出、保存相關內容，待 ROS 筆記完整遷移時再按主題拆分。
+- [ROS1 日誌](ros1-logging.md)：輸出緩衝、保存與中文顯示。
+- [ROS1 程序中斷](../ros1-process.md)：跨領域連結。
 - [系統運作與維護](../README.md)
