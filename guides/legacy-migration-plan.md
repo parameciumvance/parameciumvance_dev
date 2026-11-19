@@ -23,7 +23,7 @@
 | `TOOLS_NOTE/作業系統/比較`（Git 歷史） | [作業系統比較](../operating-systems/comparison.md) | **已清除** | 更新 GPU 容器限制說明 |
 | `TOOLS_NOTE/日誌/ELK`（Git 歷史） | [Filebeat 相容性](../operations/logging/filebeat-compatibility.md) | **已清除** | 保留原版本線索 |
 | `TOOLS_NOTE/嵌入式平台/`（Git 歷史） | [嵌入式平台](../embedded-platforms/README.md) | **已清除** | K210、Raspberry Pi |
-| `TOOLS_NOTE/週邊裝置/realsense`（Git 歷史） | [深度相機](../peripherals/depth-cameras/realsense-backends.md) | **已清除** | 歷史源碼研究 |
+| `TOOLS_NOTE/週邊裝置/realsense`（Git 歷史） | [深度相機](../sensors/depth-cameras/realsense-backends.md) | **已清除** | 歷史源碼研究 |
 | `TOOLS_NOTE/開發套件/ROS note`（Git 歷史） | [ROS1](../robotics/ros1/README.md)、[建置](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md) | **已清除** | 原腳本及歷史版本線索，專案路徑泛化 |
 | `TOOLS_NOTE/常用工具`（Git 歷史） | [工具索引](../indexes/tools.md) | **已清除** | 依用途索引 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
