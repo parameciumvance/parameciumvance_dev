@@ -4,7 +4,7 @@
 
 ## 文件導覽
 
-- [ROS1 程序中斷與日誌歷史經驗](ros1-process-logging.md)：SIGINT／SIGTERM、roslaunch 輸出及日誌清理。
+- [ROS1 程序中斷](ros1-process.md)：SIGINT／SIGTERM 與安全關閉。
 
 - [時間同步](time-synchronization.md)：NTP 主副板歷史設定。
 - [日誌管理](logging/README.md)：日誌收集、傳輸、保存與診斷。
