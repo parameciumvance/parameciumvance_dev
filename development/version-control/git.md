@@ -1,6 +1,6 @@
 # Git 技術筆記
 
-> 來源：[舊版 Git 筆記](../../TOOLS_NOTE/版本控制%20git/版本控制note)。本頁整理可重用的概念；舊版工具與安裝指令仍以原文保存。
+> 來源：`TOOLS_NOTE/版本控制 git/版本控制note`（Git 歷史）。本頁整理可重用的概念；舊版工具與安裝指令見下方歷史操作補充。
 
 ## 檔案模式與權限
 
@@ -33,3 +33,19 @@ git lfs pull
 ## 延伸閱讀
 
 - [Git 檔案模式排查](git-filemode.md)
+
+## 歷史操作補充
+
+舊筆記曾觀察工作樹權限 775（rwxrwxr-x）、664（rw-rw-r--），更早為 755、644；這不是 Git 版本改變的充分證據，亦可能與 umask、檔案系統及部署設定有關。舊跨機部署解法 `sudo chmod a+w ${INSTALL_DIR}` 會開放所有人寫入，不建議直接採用，應優先設定正確群組與最小權限。
+
+舊 Git LFS 安裝紀錄（未重新驗證，不建議盲目執行遠端腳本）：
+```bash
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+```
+原參考：https://haway.30cm.gg/git-lfs/ 。現行安裝應依可信套件來源及官方指引。
+
+SmartGit Save As 權限問題於 22.1 Preview 15（2022-09-05）修正：舊暫存檔權限為 400，修正後嘗試保留被覆寫檔案權限或使用 644。此為原筆記回報紀錄，未重新驗證。
+
+原筆記另有「submodule 解除」標題，但沒有操作內容，仍待研究。
