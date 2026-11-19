@@ -23,7 +23,7 @@
 | readelf、ldd、objdump、nm | [二進位診斷](../development/build/binary-diagnostics.md) |
 | Maixduino、Kendryte SDK | [K210 移植](../embedded-platforms/k210.md) |
 | PuTTY、udev | [Raspberry Pi](../embedded-platforms/raspberry-pi.md) |
-| librealsense、realsense_ros | [深度相機](../peripherals/depth-cameras/realsense-backends.md) |
+| librealsense、realsense_ros | [深度相機](../sensors/depth-cameras/realsense-backends.md) |
 
 ## 常用工具（歷史清單，非現行推薦排名）
 
