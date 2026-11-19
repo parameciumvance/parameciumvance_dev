@@ -13,3 +13,5 @@
 | 主機或服務的 TCP 連接埠無法連線 | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
 | C/C++ 編譯失敗、缺少宣告、C 函式庫連結、CUDA/GCC 不相容 | [編譯與工具鏈故障](../development/build/compiler-toolchain-diagnostics.md) |
 | Bash 腳本 source 環境未生效、getopt 解析異常 | [Shell 腳本](../development/programming/shell-scripting.md) |
+| Python／科學運算套件版本差異 | [Python 版本相容性](../development/programming/python-version-compatibility.md) |
+| PyTorch 擴充 undefined symbol、CUDA out of memory | [Python 歷史故障操作](../development/programming/python.md) |
