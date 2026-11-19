@@ -16,3 +16,6 @@
 | Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux 執行環境](../operations/linux-runtime.md) |
 | Telnet、netcat、curl、PowerShell | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
 | C++ | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) |
+| Bash、GNU getopt、Conda | [Shell 腳本](../development/programming/shell-scripting.md) |
+| GCC／G++、nvcc、CUDA | [編譯與工具鏈故障](../development/build/compiler-toolchain-diagnostics.md) |
+| C/C++ | [語意與實作陷阱](../development/programming/c-cpp-pitfalls.md) |

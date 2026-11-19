@@ -11,3 +11,5 @@
 | ROS1 自編套件與系統套件衝突、產生標頭缺失 | [catkin 建置歷史案例](../development/build/ros1-catkin-legacy.md) |
 | ROS1 程序無法正常結束、日誌延遲 | [程序與日誌歷史經驗](../operations/ros1-process-logging.md) |
 | 主機或服務的 TCP 連接埠無法連線 | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
+| C/C++ 編譯失敗、缺少宣告、C 函式庫連結、CUDA/GCC 不相容 | [編譯與工具鏈故障](../development/build/compiler-toolchain-diagnostics.md) |
+| Bash 腳本 source 環境未生效、getopt 解析異常 | [Shell 腳本](../development/programming/shell-scripting.md) |
