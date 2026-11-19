@@ -11,7 +11,7 @@
 | APT | [套件管理](../development/package-management/README.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
 | CMake | [建置](../development/build/README.md)、[CMake 組態](../development/build/cmake-configuration.md) |
 | ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序與日誌](../operations/ros1-process-logging.md) |
-| Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux 執行環境](../operations/linux-runtime.md) |
+| Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux](../operating-systems/linux/README.md) |
 | Telnet、netcat、curl、PowerShell | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
 | C++ | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) |
 | Bash、GNU getopt、Conda | [Shell 腳本](../development/programming/shell-scripting.md) |
