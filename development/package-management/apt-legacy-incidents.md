@@ -1,6 +1,6 @@
 # APT 舊版套件來源故障紀錄
 
-> **歷史案例，尚未重新驗證。** 來源：[舊 APT 筆記](../../TOOLS_NOTE/套件管理/apt%20note)。案例與 Ubuntu bionic（18.04）、舊 ROS 軟體來源相關。
+> **歷史案例，尚未重新驗證。** 來源：`TOOLS_NOTE/套件管理/apt note`（Git 歷史）。案例與 Ubuntu bionic（18.04）、舊 ROS 軟體來源相關。
 
 ## 案例一：RealSense 套件來源回傳 HTTP 403
 
@@ -21,3 +21,17 @@
 - 出錯的套件來源、完整錯誤訊息
 - 是否已停用或停止支援
 - 依官方文件調整後的驗證結果
+
+## 原始錯誤與歷史修復操作（不是現行安裝指引）
+
+RealSense：`http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo bionic InRelease`，`403 Forbidden [IP: 52.218.110.42 80]`。
+```bash
+sed 's/http:\/\/realsense-hw-public.s3.amazonaws.com/https:\/\/librealsense.intel.com/' /etc/apt/sources.list
+```
+此 sed 命令只輸出替換結果，不會直接修改檔案；舊網域是否仍有效未驗證。
+
+ROS：`http://packages.ros.org/ros/ubuntu bionic InRelease`，`EXPKEYSIG F42ED6FBAB17C654 Open Robotics <info@osrfoundation.org>`。原筆記記錄金鑰於 5/29 過期，當時重新下載：
+```bash
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+```
+此為歷史命令，apt-key 已棄用。

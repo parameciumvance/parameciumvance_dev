@@ -9,9 +9,11 @@
 | [開發/版本更新](../開發/版本更新) | [歷史版本相容性](../notes/version-compatibility-history.md) | 已萃取初版 | 待驗證，不作現行建議 |
 | [開發/CMAKE note](../開發/CMAKE%20note) | [CMake 組態](../development/build/cmake-configuration.md) | 已萃取初版 | 實際旗標依工具鏈而定 |
 | [TOOLS_NOTE](../TOOLS_NOTE/) | [Git](../development/version-control/git.md)、[Python](../development/programming/python.md)、[Git 權限排查](../development/version-control/git-filemode.md)、[APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | 部分已萃取 | 已增補 [Linux](../operations/linux-runtime.md)、[ROS1 建置](../development/build/ros1-catkin-legacy.md) 與 [ROS1 程序日誌](../operations/ros1-process-logging.md)；其他工具仍待盤點 |
+| `TOOLS_NOTE/版本控制 git/`（Git 歷史） | [Git](../development/version-control/git.md)、[權限排查](../development/version-control/git-filemode.md) | **已清除** | 兩份原始筆記已逐項補齊 |
+| `TOOLS_NOTE/套件管理/apt note`（Git 歷史） | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | **已清除** | 保留原始錯誤與歷史指令 |
 | [TROUBLESHOOT](../TROUBLESHOOT) | [診斷流程](../troubleshooting/diagnostic-workflow.md)、[案例索引](../troubleshooting/legacy-case-index.md) | 已萃取初版 | 各案例仍需逐一確認根因 |
-| [TOOLS_NOTE/網路](../TOOLS_NOTE/網路) | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) | 已萃取初版 | Telnet 僅用於基本連線測試 |
-| [TOOLS_NOTE/程式語言/PY vs C++](../TOOLS_NOTE/程式語言/PY%20vs%20C%2B%2B) | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) | 已萃取初版 | 舊版對照非嚴格等價，已註明差異 |
+| `TOOLS_NOTE/網路`（Git 歷史） | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) | **已清除** | Telnet 僅用於基本連線測試 |
+| `TOOLS_NOTE/程式語言/PY vs C++`（Git 歷史） | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) | **已清除** | 舊版對照非嚴格等價，已註明差異 |
 | `TOOLS_NOTE/程式語言/C&C++/C&C++ note`（Git 歷史） | [C/C++ 語意陷阱](../development/programming/c-cpp-pitfalls.md) | **已清除** | 逐項補齊後刪除舊筆記 |
 | [TOOLS_NOTE/程式語言/C&C++/TROUBLESHOOT](../TOOLS_NOTE/程式語言/C%26C%2B%2B/TROUBLESHOOT) | [編譯故障](../development/build/compiler-toolchain-diagnostics.md) | **部分剩餘** | 仍待逐項核對原始編譯案例；CUDA／GCC 屬歷史限制 |
 | `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |

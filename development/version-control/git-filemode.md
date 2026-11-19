@@ -1,6 +1,6 @@
 # Git 顯示檔案已修改，但內容沒有差異
 
-> 來源：[舊版 Git TROUBLESHOOT](../../../TOOLS_NOTE/版本控制%20git/TROUBLESHOOT)。
+> 來源：`TOOLS_NOTE/版本控制 git/TROUBLESHOOT`（Git 歷史）。
 
 ## 症狀
 
@@ -27,3 +27,5 @@ git config --get core.filemode
 ## Issue 回饋
 
 若在專案中反覆發生，依[Issue 三問制度](../../guides/development/project-development.md#issue錯誤修正的三個必答問題)檢查測試、SOP 與本故障紀錄是否需要更新。
+
+原筆記的 Unix 權限對照：`755 = rwxr-xr-x`，`644 = rw-r--r--`。Git 的 mode 100755／100644 不代表完整工作樹權限。
