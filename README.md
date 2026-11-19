@@ -25,8 +25,8 @@
 
 ## 舊資料
 
-舊目錄 `TOOLS_NOTE/`、`開發/`、`範例/`、`開發日誌/`、`history/` 與根目錄的 `TROUBLESHOOT`、`系統重設SOP`、`README` 暫時保留原樣，後續按需逐步遷移。舊資料不代表現行建議，使用前請確認適用版本。
+舊目錄 `TOOLS_NOTE/`、`開發/`、`範例/`、`開發日誌/`、`history/` 與根目錄的 `TROUBLESHOOT`、`系統重設SOP`、`README` 保留尚未完整遷移的部分，已完整轉移的內容在同一 PR 清除。舊資料不代表現行建議，使用前請確認適用版本。
 
 ## 維護方式
 
-詳見 [知識庫維護指南](guides/knowledge-base-maintenance.md)。既有文件持續增量整理；舊資料保留原位。
+詳見 [知識庫維護指南](guides/knowledge-base-maintenance.md)。既有文件採消耗式遷移；剩餘舊資料即待核對清單。
