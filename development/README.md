@@ -9,5 +9,8 @@
 - [程式設計](programming/README.md)：程式語言與實作概念。
 - [建置](build/README.md)：CMake、建置依賴與產物。
 
-- [跨平台開發差異](cross-platform.md)
 - [媒體處理](media-processing.md)
+
+## 相關領域
+
+- [作業系統比較](../operating-systems/comparison.md)
