@@ -1,3 +1,22 @@
+# Python 語言與內建功能：歷史盤點
+
+原始盤點未標明 Python 版本；內部模組相依關係不是公共 API 契約。下方原文為歷史快照，不是現行完整清單。
+
+## 使用前的修正
+
+- 三引號是字串常值，不是多行註解；特定位置才是 docstring。Python 3 仍接受 `u` 字串前綴（3.3 起重新支援）。
+- `>`／`>=` 對應 `__gt__`／`__ge__`，原文誤寫為 `<`／`<=`。二元與比較運算還涉及反向方法、子類優先及 NotImplemented；`+=` 可 fallback 到普通二元運算。
+- `__getitem__`、`__setitem__`、`__delitem__` 接收索引物件本身；並非一律呼叫 `__index__`，例如 dict 的字串鍵與 slice。
+- 一般屬性查找使用 `__getattribute__`，`__getattr__` 是找不到屬性時的 fallback。屬性名稱參數是字串。
+- `with` 的 `__exit__` 也處理例外；可抑制例外。`print` 使用字串表示但並非單純等價於原文所有情境的呼叫。
+- `__all__` 主要控制 `from mod import *`，不限制一般明確 import。
+- 單底線是慣例，雙前綴底線可能 name mangling，不是安全存取限制；dunder 方法有特殊協定。
+- 原文 `global(os,re,fnmatch)` 疑為 `glob`；global 是關鍵字。標準庫模組可能隨版本移除，例如 parser、audioop；以目標 Python 版本官方文件為準。
+- `__name__` 等通常是模組屬性，不應一律視為 builtins；quit、exit、help 等可由 site 提供，非所有執行環境可用。
+
+## 原始盤點全文（未驗證）
+
+```text
 關鍵字
 and or not is in
 True False None
@@ -362,3 +381,4 @@ copyright
 credits
 license
 help
+```

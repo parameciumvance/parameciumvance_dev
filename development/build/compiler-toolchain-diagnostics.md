@@ -1,6 +1,6 @@
 # 編譯與工具鏈故障排查
 
-> 來源：[舊 C/C++ 編譯故障筆記](../../TOOLS_NOTE/程式語言/C%26C%2B%2B/TROUBLESHOOT)。部分內容屬舊版 GCC／CUDA 經驗，需按實際版本驗證。
+> 來源：`TOOLS_NOTE/程式語言/C&C++/TROUBLESHOOT`（Git 歷史）。部分內容屬舊版 GCC／CUDA 經驗，需按實際版本驗證。
 
 ## 排查順序
 
@@ -51,3 +51,7 @@ extern "C" {
 
 - [建置](README.md)
 - [版本控制](../version-control/README.md)
+
+## 原始版本線索
+
+舊筆記列 GCC/G++ 6/7/8 版本差異，CUDA 10.0 參考 `cuda-10.0/include/crt/host_config.h:129`，並記錄 GCC 4 時代未顯式宣告的舊程式可能在新版出現 `xxx not declared`。此為待驗證的歷史觀察，不能推論 GCC 4 的 C++ 允許任意未宣告名稱；應區分 C 的舊式隱含函式宣告、編譯旗標與 C++ 名稱查找。
