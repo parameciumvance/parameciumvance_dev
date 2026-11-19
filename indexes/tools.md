@@ -10,7 +10,6 @@
 | NumPy、PyTorch | [Python 技術筆記](../development/programming/python.md) |
 | APT | [套件管理](../development/package-management/README.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
 
-未整理的其他工具仍可從[舊工具筆記](../TOOLS_NOTE/)查閱。
 | CMake | [建置](../development/build/README.md)、[CMake 組態](../development/build/cmake-configuration.md) |
 | ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序與日誌](../operations/ros1-process-logging.md) |
 | Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux 執行環境](../operations/linux-runtime.md) |
@@ -19,3 +18,5 @@
 | Bash、GNU getopt、Conda | [Shell 腳本](../development/programming/shell-scripting.md) |
 | GCC／G++、nvcc、CUDA | [編譯與工具鏈故障](../development/build/compiler-toolchain-diagnostics.md) |
 | C/C++ | [語意與實作陷阱](../development/programming/c-cpp-pitfalls.md) |
+
+未整理的其他工具仍可從[舊工具筆記](../TOOLS_NOTE/)查閱。
