@@ -1,6 +1,6 @@
 # Python 與 C++：語意與常見操作比較
 
-> 來源：[舊 Python／C++ 對照筆記](../../TOOLS_NOTE/程式語言/PY%20vs%20C%2B%2B)。原筆記主要是語法速查，這裡優先釐清容易造成錯誤類比的語意。
+> 來源：`TOOLS_NOTE/程式語言/PY vs C++`（Git 歷史）。原筆記主要是語法速查，這裡優先釐清容易造成錯誤類比的語意。
 
 ## 名稱、物件與複製
 
@@ -49,3 +49,23 @@ Python 使用縮排界定區塊；C++ 常用大括號，語句通常以分號結
 
 - [Python 技術筆記](python.md)
 - [程式設計領域](README.md)
+
+## 型別轉換與函式庫速查補充
+
+Python `int(x)`、`float(x)` 可解析字串或轉換數值；C++ `static_cast<int>(x)`、`static_cast<float>(x)` 主要用於允許的型別轉換，字串解析另用 `std::stoi`、`std::stof` 等。Python `help()` 提供執行期說明，C++ 無直接對等內建函式。
+
+| Python | C++ 功能查找線索（非等價） |
+| --- | --- |
+| `sys` | 依需求使用標準函式庫或平台 API |
+| `input`、`print` | `<iostream>` |
+| `io` | `<fstream>`、`<sstream>` |
+| `str` | `<string>`、`<cstring>`、`<cctype>`（字元分類） |
+| `str.format` | `<iomanip>`、C++20 `<format>` |
+| `os.system`、`os.execv` | `<cstdlib>` 的 `std::system`；execv 是 POSIX API，非等價操作 |
+| `math`、`cmath` | `<cmath>`、`<complex>` |
+| `time`、`datetime` | `<ctime>`、`<chrono>` |
+| `random`、`os.urandom` | `<random>`、平台安全亂數 API；不能以普通 PRNG 取代安全亂數 |
+| `os`（posix/nt） | `<filesystem>`、平台 API；舊筆記的 `<direct.h>` 為 Windows 特定標頭 |
+| `struct` | 明確處理二進位序列化、大小與位元組序 |
+
+舊筆記另列 `_random`、`_struct`、`_datetime`，屬實作相關模組線索，不宜作為可攜公共 API。
