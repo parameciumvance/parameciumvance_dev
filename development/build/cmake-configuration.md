@@ -1,6 +1,6 @@
 # CMake 建置組態
 
-> 來源：[舊 CMake 筆記](../../開發/CMAKE%20note)。原始內容簡短，以下補充語意及適用限制。
+> 來源：舊 CMake 筆記（Git 歷史）。原始內容簡短，以下補充語意及適用限制。
 
 ## 組態與編譯旗標
 
@@ -15,7 +15,7 @@ cmake -S . -B build
 cmake --build build
 ```
 
-`-S` 與 `-B` 為較新版本 CMake 的明確來源／建置目錄選項。舊版 CMake 可改為：
+`-S` 與 `-B` 自 CMake 3.13 起提供正式命令列介面。原筆記的 `cmake -B build` 在來源目錄執行時可簡寫；明確指定 `-S .` 更易讀。舊版 CMake 可改為：
 
 ```bash
 mkdir -p build
