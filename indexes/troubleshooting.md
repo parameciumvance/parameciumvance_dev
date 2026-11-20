@@ -16,6 +16,7 @@
 | Python／科學運算套件版本差異 | [Python 版本相容性](../development/programming/python-version-compatibility.md) |
 | PyTorch 擴充 undefined symbol、CUDA out of memory | [Python 歷史故障操作](../development/programming/python.md) |
 | Filebeat／glibc 不相容 | [Filebeat 相容性](../operations/logging/filebeat-compatibility.md) |
-| Ubuntu 意外安裝桌面環境、ROS 升級衝突 | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) |
+| Ubuntu 意外安裝桌面環境 | [Ubuntu 安裝注意事項](../operating-systems/installation/ubuntu.md) |
+| ROS 升級衝突 | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) |
 | Raspberry Pi 關機重開、開機失敗 | [歷史故障](../embedded-platforms/raspberry-pi.md) |
 | ROS1 TF、run_id、RLException | [節點整合](../robotics/ros1/node-integration.md) |
