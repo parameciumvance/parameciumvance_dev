@@ -14,6 +14,16 @@
 - SciPy：舊 misc.imread／imresize 在 1.2 移除的紀錄，替代為 imageio.imread、skimage.transform.resize；注意 dtype、值域與插值差異。
 - PyTorch：舊筆記記錄 1.7 tensor 迭代 grad_fn 從 selectBackward 變 unbindBackward，並遇到 inplace 限制；可能涉及多 view 輸出與 autograd，不視為已確認退化。1.6 的 torch.onnx.utils._model_to_graph node repr 改變影響 mmdnn；私有 API 非穩定契約。2021-02-18 記錄 torch<1.6 QAT 訓練與偵測異常，缺重現條件，待驗證。
 
+## Python 環境升降版歷史案例
+
+以下來自開發/版本更新（Git 歷史），缺少重現條件，不是支援矩陣。
+
+- Python 3.9：舊建議 Ubuntu 20.04；protobuf 4.25 與 Caffe 衝突、NumPy 1.26.1 的 `numpy_stack` 問題（原文名稱，未確認實際 API 或錯誤）。
+- Python 3.8：舊建議 Ubuntu 20.04、TensorFlow 2.x；Python 3.6 則曾建議 Ubuntu 18.04。
+- Ubuntu 16.04 pip 8.1 曾安裝失敗，舊解法 `python -m pip install --upgrade pip`；pip 10.0.1 曾為 Python 3.6.5 選到不相容 protobuf 4.21.0。原建議一律升級 pip 不宜套用，須選擇仍支援目標 Python 的 pip 版本並隔離環境。
+- TensorFlow 1.x 舊降版建議 Python 3.7；TensorFlow 2.5.3 曾記錄 NumPy 1.19 限制。應查具體版本的套件 metadata，不代表整個系列均相容。
+- OpenCV：舊建議 opencv==4.7.0.72，4.8.0 曾與 CUDA 相關環境衝突，錯誤 `File "setup.py" line 448 in _classify_installed_files_override`、`Exception: Not found: 'python/cv2/py.typed'`。實際 pip 套件名可能為 opencv-python，需區分 wheel、source build 與 CUDA 版本，根因未確認。
+
 ## 原始版本筆記（歷史快照，未重新驗證）
 
 ```text

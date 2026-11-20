@@ -9,6 +9,9 @@
 - [時間同步](time-synchronization.md)：NTP 主副板歷史設定。
 - [日誌管理](logging/README.md)：日誌收集、傳輸、保存與診斷。
 
+- [背景服務執行環境](service-runtime.md)
+- [系統監控](monitoring/README.md)
+
 ## 相關領域
 
 - [作業系統／Linux](../operating-systems/linux/README.md)：系統目錄、使用者環境及命令。

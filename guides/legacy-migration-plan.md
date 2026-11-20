@@ -4,10 +4,10 @@
 
 | 來源 | 目標 | 狀態 | 注意事項 |
 | --- | --- | --- | --- |
-| [開發/專案SOP](../開發/專案SOP) | [專案開發流程](development/project-development.md) | 已萃取初版 | ROS1、Ubuntu 舊版細節仍待分類 |
-| [開發/測試](../開發/測試) | [測試策略](development/testing.md) | 已萃取初版 | 重啟與設備恢復需補實際案例 |
-| [開發/版本更新](../開發/版本更新) | [歷史版本相容性](../notes/version-compatibility-history.md) | 已萃取初版 | 待驗證，不作現行建議 |
-| [開發/CMAKE note](../開發/CMAKE%20note) | [CMake 組態](../development/build/cmake-configuration.md) | 已萃取初版 | 實際旗標依工具鏈而定 |
+| `開發/專案SOP`（Git 歷史） | [專案開發流程](development/project-development.md) | **已清除** | 專案流程及組態、介面、維運等領域 |
+| `開發/測試`（Git 歷史） | [測試策略](development/testing.md) | **已清除** | 重啟及 ROS 測試歷史案例已整合 |
+| `開發/版本更新`（Git 歷史） | [Python 相容性](../development/programming/python-version-compatibility.md)、[容器建置](../development/build/container-build.md) | **已清除** | 歷史線索，未實測 |
+| `開發/CMAKE note`（Git 歷史） | [CMake 組態](../development/build/cmake-configuration.md) | **已清除** | 實際旗標依工具鏈而定 |
 | `TOOLS_NOTE/`（Git 歷史） | 各正式知識領域 | **已清除** | 20 份舊檔全數遷移 |
 | `TOOLS_NOTE/版本控制 git/`（Git 歷史） | [Git](../development/version-control/git.md)、[權限排查](../development/version-control/git-filemode.md) | **已清除** | 兩份原始筆記已逐項補齊 |
 | `TOOLS_NOTE/套件管理/apt note`（Git 歷史） | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | **已清除** | 保留原始錯誤與歷史指令 |
