@@ -8,7 +8,7 @@
 | Git LFS | [版本控制／Git](../development/version-control/git.md) |
 | Python | [程式設計](../development/programming/README.md)、[內建功能歷史盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) |
 | NumPy、PyTorch | [Python 技術筆記](../development/programming/python.md) |
-| APT | [套件管理](../development/package-management/README.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
+| APT | [套件管理](../development/package-management/README.md)、[APT 查詢與升級](../development/package-management/apt.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
 | CMake | [建置](../development/build/README.md)、[CMake 組態](../development/build/cmake-configuration.md) |
 | ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md)、[ROS1](../robotics/ros1/README.md) |
 | Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux](../operating-systems/linux/README.md) |

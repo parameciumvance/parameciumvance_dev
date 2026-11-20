@@ -1,8 +1,12 @@
 # ROS1 開發環境與依賴
 
-以下為歷史案例，未重新驗證；ROS1 已終止官方維護，不應直接執行舊部署腳本。專案專屬路徑以描述代替。舊流程為 source 環境、更新依賴、編譯安裝至專案前綴、source 安裝環境。
+以下為歷史案例，未重新驗證；ROS1 已終止官方維護，不應直接執行舊部署腳本。專案專屬路徑僅作歷史追溯。舊流程為 source 環境、更新依賴、編譯安裝至專案前綴、source 安裝環境。
 
 Ubuntu 20.04 的 libnotify4 預防對策，見 [Ubuntu 安裝注意事項](../../operating-systems/installation/ubuntu.md)。
+
+## 機器端開發歷史流程
+
+原專案使用 `share/rover_maintain_setup.source` 作為參考，依序 `. setup.source`、`./bbot_latest/tool/update_dependency.bash`、編譯並安裝到 `bbot_latest`、`. install_pkgs.source`。這些名稱僅為原始案例的追溯線索，不是 ROS 標準路徑或通用命令。
 
 ## 歷史依賴腳本
 
@@ -69,13 +73,11 @@ ros-${ROS_DISTRO}-voxel-grid
 echo "done"
 ```
 
-#### 準備
-(ROS Noetic)sudo apt-get install python3-rosdep
-(ROS Melodic and earlier)sudo apt-get install python-rosdep
-sudo rosdep init
-rosdep update
+## rosdep 準備
 
-#### 依賴
+歷史安裝命令：Noetic 使用 `sudo apt-get install python3-rosdep`，Melodic 及更早版本使用 `sudo apt-get install python-rosdep`。初始化 `sudo rosdep init`（已初始化時無須重複），再以一般使用者執行 `rosdep update`。依發行版與套件來源確認。
+
+## 依賴
 更新依賴腳本:update_dependency.bash
 
 寫在package.xml中的依賴會從[rosdep目錄](https://github.com/ros/rosdistro/tree/master/rosdep)中尋找對應名稱
@@ -86,21 +88,19 @@ rosdep update
 rosdep目錄介紹
 [Contributing rosdep rules](http://docs.ros.org/en/independent/api/rosdep/html/contributing_rules.html)
 
-#### 金鑰歷史線索
+## 金鑰歷史線索
 原筆記記錄效期至 2025/6/1，未標明金鑰 ID；不可作為目前有效性依據。
 
-#### 和conda共用
-在虛擬環境下python工具需另外下載(pip)
+## Conda 共用
+舊 Conda 環境需額外安裝 Python 工具。以下為歷史套件清單，非完整鎖定環境；須核對 ROS 發行版、Python 版本、ABI 與套件相容性。
 pip install catkin_pkg empy nose setuptools numpy rospkg PyYAML defusedxml opencv-python
 catkin-> catkin_pkg empy nose setuptools
 rospy-> numpy rospkg PyYAML
 rosmaster-> defusedxml
 其他-> opencv-python
 
-#### python執行檔
-python直譯器宣告問題
-如果腳本前直譯器宣告是"#!/usr/bin/env python"或"#!/usr/bin/python"直接執行會變成用python2
-但在使用catkin_install_python安裝後,直譯器宣告都會自動變成"#!/usr/bin/env python3"
-為了讓python腳本在直接執行或未被標準安裝時也一致用python3,應該要先apt install python-is-python3
+## Python 直譯器宣告
 
-直譯器補充：catkin_install_python 依配置的 Python interpreter 重寫 shebang，並非總是 python3；直接執行時 python 可能不存在或指向不同版本。Conda 套件版本須與 ROS 發行版及 ABI 配合；舊 pip 清單不是完整鎖定環境。
+原案例使用 `#!/usr/bin/env python` 或 `#!/usr/bin/python`，直接執行時曾選到 Python 2，而經 catkin_install_python 安裝後選到 Python 3。實際上前者依 PATH 查找、後者指定絕對路徑；catkin_install_python 依配置的 Python interpreter 重寫 shebang，並非總是 Python 3。
+
+舊 Ubuntu 20.04 對策為 `sudo apt install python-is-python3`，使系統的 python 命令指向 Python 3；不保證所有環境的 PATH 一致，也可能影響舊程式。新腳本應明確指定所需直譯器並確認 ROS 發行版相容性。

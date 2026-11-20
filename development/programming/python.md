@@ -34,32 +34,17 @@ matrix = np.array([[1, 2, 3], [4, 9, 6]])
 row, col = np.unravel_index(np.argmax(matrix), matrix.shape)
 ```
 
-## NumPy 與 PyTorch 對照
-
-| 目的 | NumPy | PyTorch |
-| --- | --- | --- |
-| 增加維度 | `np.expand_dims(x, axis=1)` | `x.unsqueeze(1)` |
-| 調整軸順序 | `x.transpose(2, 0, 1)` | `x.permute(2, 0, 1)` |
-| 沿既有軸串接 | `np.concatenate(items, axis=1)` | `torch.cat(items, dim=1)` |
-| 建立新軸堆疊 | `np.stack(items, axis=1)` | `torch.stack(items, dim=1)` |
-| 限制值域 | `np.clip(x, low, high)` | `torch.clamp(x, low, high)` |
-
-注意 NumPy 使用 `axis`，PyTorch 許多對應 API 使用 `dim`；`reshape` 與 `view` 的記憶體布局限制也可能不同。
-
-## 舊環境故障線索
-
-原筆記記錄 PyTorch／CUDA 編譯擴充模組版本不一致，以及 GPU 記憶體不足等問題。這些情況需依實際版本、錯誤訊息與環境重現，不能直接套用舊解法。舊筆記中的個人絕對路徑不應複製到通用操作指南。
-
-## NumPy／PyTorch 進階對照
+## NumPy／PyTorch 對照
 
 | 任務 | NumPy | PyTorch |
 | --- | --- | --- |
-| 資料轉換 | `np.asarray(t)`／`t.numpy()` | `torch.as_tensor(a)`／`torch.from_numpy(a)` |
-| 插入軸 | `x[:, np.newaxis, :]` | `x[:, None, :]` |
-| HWC → CHW | `x.transpose(2,0,1)` | `x.permute(2,0,1)` 或 `x.transpose(1,2).transpose(0,1)` |
+| Tensor → ndarray／ndarray → Tensor | `t.detach().cpu().numpy()`（亦可對符合條件的 CPU tensor 使用 `np.asarray(t)`） | `torch.from_numpy(a)`／`torch.as_tensor(a)` |
+| 插入軸（例如 CHW → C1HW） | `np.expand_dims(x, axis=1)`／`x[:, np.newaxis, :]` | `x.unsqueeze(1)`／`x[:, None, :]` |
+| HWC → CHW（原筆記誤將 H/W 對調） | `x.transpose(2,0,1)` | `x.permute(2,0,1)` 或 `x.transpose(1,2).transpose(0,1)` |
 | 五個 (2,3) 沿軸 1 串接 → (2,15) | `np.concatenate(items, axis=1)`／`np.hstack(items)` | `torch.cat(items, dim=1)` |
 | 五個 (2,3) 新軸 1 → (2,5,3) | `np.stack(items, axis=1)` | `torch.stack(items, dim=1)` |
 | 改形 | `x.reshape(2,3)` | `x.reshape(2,3)`／符合 stride 條件時 `x.view(2,3)` |
+| 限制值域 | `np.clip(x, low, high)` | `torch.clamp(x, low, high)` |
 | float32 | `x.astype(np.float32)` | `x.float()` |
 
 `np.vstack` 沿垂直方向堆疊；不是 axis=1 的通用別名。轉換 tensor 到 NumPy 須注意 CPU、梯度、dtype 與共享記憶體，例如 `t.detach().cpu().numpy()`；from_numpy 僅接收 ndarray。max 預設 axis=None，不是 axis=0；maximum 是逐元素比較並支援 broadcasting。
@@ -68,9 +53,32 @@ row, col = np.unravel_index(np.argmax(matrix), matrix.shape)
 
 ## 歷史故障操作
 
+依實際版本、錯誤訊息與環境重現，不直接套用舊解法。
+
 - maskrcnn-benchmark 的 `_C.cpython-37m-x86_64-linux-gnu.so: undefined symbol: _ZN2at18SparseCUDATensorIdEv`：舊筆記判斷 PyTorch 版本與編譯擴充時不同，當時移除該專案 build 產物，重新執行 setup.py 建置。應先確認 ABI、版本與建置流程，不盲目刪除目錄。
 - CUDA out of memory：先嘗試降低 batch size，並檢查顯存占用。
 
 ## Conda 初始化歷史結構
 
-舊 Bash 設定定義 conda_setup 函式：先執行安裝目錄 bin/conda shell.bash hook（stderr 重導至 /dev/null），成功時 eval 其輸出；失敗則 source etc/profile.d/conda.sh，若不存在便將 bin 加入 PATH，最後 unset __conda_setup。原片段只定義函式，未顯示呼叫；不應直接當成完整初始化腳本。個人絕對路徑已泛化。建議使用 conda init bash 產生對應安裝版本的配置，腳本用法見 [Shell 腳本](shell-scripting.md)。
+舊 Bash 設定（原始片段，僅將個人安裝路徑替換為 `/opt/miniconda3` 供示意）：
+
+```bash
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+function conda_setup () {
+  __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/opt/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/opt/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+}
+# <<< conda initialize <<<
+```
+
+此設定定義 conda_setup 函式：先執行安裝目錄 bin/conda shell.bash hook（stderr 重導至 /dev/null），成功時 eval 其輸出；失敗則 source etc/profile.d/conda.sh，若不存在便將 bin 加入 PATH，最後 unset __conda_setup。原片段只定義函式，未顯示呼叫；不應直接當成完整初始化腳本。個人絕對路徑已泛化。建議使用 conda init bash 產生對應安裝版本的配置，腳本用法見 [Shell 腳本](shell-scripting.md)。
