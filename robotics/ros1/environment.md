@@ -2,6 +2,8 @@
 
 以下為歷史案例，未重新驗證；ROS1 已終止官方維護，不應直接執行舊部署腳本。專案專屬路徑以描述代替。舊流程為 source 環境、更新依賴、編譯安裝至專案前綴、source 安裝環境。
 
+Ubuntu 20.04 的 libnotify4 預防對策，見 [Ubuntu 安裝注意事項](../../operating-systems/installation/ubuntu.md)。
+
 ## 歷史依賴腳本
 
 原腳本保留供研究，變數須由環境設定，不是可直接執行的通用 SOP。return 只適用被 source 或函式內；未知 OS 分支不應以成功表示失敗。移除套件前須模擬並檢查反向依賴；不可直接照做。python-is-python3 不是所有非 bionic 發行版均提供。
