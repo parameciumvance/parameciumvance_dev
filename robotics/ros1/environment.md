@@ -1,8 +1,12 @@
 # ROS1 開發環境與依賴
 
-以下為歷史案例，未重新驗證；ROS1 已終止官方維護，不應直接執行舊部署腳本。專案專屬路徑以描述代替。舊流程為 source 環境、更新依賴、編譯安裝至專案前綴、source 安裝環境。
+以下為歷史案例，未重新驗證；ROS1 已終止官方維護，不應直接執行舊部署腳本。專案專屬路徑僅作歷史追溯。舊流程為 source 環境、更新依賴、編譯安裝至專案前綴、source 安裝環境。
 
 Ubuntu 20.04 的 libnotify4 預防對策，見 [Ubuntu 安裝注意事項](../../operating-systems/installation/ubuntu.md)。
+
+## 機器端開發歷史流程
+
+原專案使用 `share/rover_maintain_setup.source` 作為參考，依序 `. setup.source`、`./bbot_latest/tool/update_dependency.bash`、編譯並安裝到 `bbot_latest`、`. install_pkgs.source`。這些名稱僅為原始案例的追溯線索，不是 ROS 標準路徑或通用命令。
 
 ## 歷史依賴腳本
 
