@@ -19,7 +19,7 @@
 | `TOOLS_NOTE/程式語言/py note`（Git 歷史） | [Python 技術筆記](../development/programming/python.md) | **已清除** | 個人路徑泛化 |
 | `TOOLS_NOTE/程式語言/python/`（Git 歷史） | [內建功能盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) | **已清除** | 原始清單與修正說明分開 |
 | `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |
-| `TOOLS_NOTE/作業系統/Linux note`（Git 歷史） | [Linux](../operating-systems/linux/README.md)、[時間同步](../operations/time-synchronization.md)、[APT](../development/package-management/apt-legacy-incidents.md)、[二進位診斷](../development/build/binary-diagnostics.md)、[媒體處理](../development/media-processing.md) | **已清除** | 依任務拆分，歷史命令未重驗 |
+| `TOOLS_NOTE/作業系統/Linux note`（Git 歷史） | [Linux](../operating-systems/linux/README.md)、[Ubuntu 安裝注意事項](../operating-systems/installation/ubuntu.md)、[時間同步](../operations/time-synchronization.md)、[APT](../development/package-management/apt-legacy-incidents.md)、[二進位診斷](../development/build/binary-diagnostics.md)、[媒體處理](../development/media-processing.md) | **已清除** | 依任務拆分，歷史命令未重驗 |
 | `TOOLS_NOTE/作業系統/比較`（Git 歷史） | [作業系統比較](../operating-systems/comparison.md) | **已清除** | 更新 GPU 容器限制說明 |
 | `TOOLS_NOTE/日誌/ELK`（Git 歷史） | [Filebeat 相容性](../operations/logging/filebeat-compatibility.md) | **已清除** | 保留原版本線索 |
 | `TOOLS_NOTE/嵌入式平台/`（Git 歷史） | [嵌入式平台](../embedded-platforms/README.md) | **已清除** | K210、Raspberry Pi |
