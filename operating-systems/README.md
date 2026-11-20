@@ -4,6 +4,7 @@
 
 ## 文件導覽
 
+- [作業系統安裝](installation/README.md)
 - [Linux](linux/README.md)
 - [作業系統比較](comparison.md)
 
