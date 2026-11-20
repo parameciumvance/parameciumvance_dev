@@ -11,6 +11,9 @@
 
 - [媒體處理](media-processing.md)
 
+- [組態管理](configuration.md)
+- [使用者介面](user-interface.md)
+
 ## 相關領域
 
 - [作業系統比較](../operating-systems/comparison.md)
