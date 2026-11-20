@@ -8,7 +8,7 @@
 | [開發/測試](../開發/測試) | [測試策略](development/testing.md) | 已萃取初版 | 重啟與設備恢復需補實際案例 |
 | [開發/版本更新](../開發/版本更新) | [歷史版本相容性](../notes/version-compatibility-history.md) | 已萃取初版 | 待驗證，不作現行建議 |
 | [開發/CMAKE note](../開發/CMAKE%20note) | [CMake 組態](../development/build/cmake-configuration.md) | 已萃取初版 | 實際旗標依工具鏈而定 |
-| [TOOLS_NOTE](../TOOLS_NOTE/) | [Git](../development/version-control/git.md)、[Python](../development/programming/python.md)、[Git 權限排查](../development/version-control/git-filemode.md)、[APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | 部分已萃取 | 已增補 [Linux](../operating-systems/linux/README.md)、[ROS1 建置](../development/build/ros1-catkin-legacy.md) 與 [ROS1 程序日誌](../operations/ros1-process-logging.md)；其他工具仍待盤點 |
+| `TOOLS_NOTE/`（Git 歷史） | 各正式知識領域 | **已清除** | 20 份舊檔全數遷移 |
 | `TOOLS_NOTE/版本控制 git/`（Git 歷史） | [Git](../development/version-control/git.md)、[權限排查](../development/version-control/git-filemode.md) | **已清除** | 兩份原始筆記已逐項補齊 |
 | `TOOLS_NOTE/套件管理/apt note`（Git 歷史） | [APT 歷史案例](../development/package-management/apt-legacy-incidents.md) | **已清除** | 保留原始錯誤與歷史指令 |
 | [TROUBLESHOOT](../TROUBLESHOOT) | [診斷流程](../troubleshooting/diagnostic-workflow.md)、[案例索引](../troubleshooting/legacy-case-index.md) | 已萃取初版 | 各案例仍需逐一確認根因 |
@@ -19,9 +19,13 @@
 | `TOOLS_NOTE/程式語言/py note`（Git 歷史） | [Python 技術筆記](../development/programming/python.md) | **已清除** | 個人路徑泛化 |
 | `TOOLS_NOTE/程式語言/python/`（Git 歷史） | [內建功能盤點](../development/programming/python-builtins-legacy.md)、[版本相容性](../development/programming/python-version-compatibility.md) | **已清除** | 原始清單與修正說明分開 |
 | `TOOLS_NOTE/程式語言/shell語言/`（Git 歷史） | [Shell 腳本](../development/programming/shell-scripting.md)、[完整原始腳本](../development/programming/examples/getopt-conda-legacy.sh) | **已清除** | 原始 Bash 筆記已整理，腳本原文搬入正式領域 |
-| `TOOLS_NOTE/作業系統/Linux note`（Git 歷史） | [Linux](../operating-systems/linux/README.md)、[時間同步](../operations/time-synchronization.md)、[APT](../development/package-management/apt-legacy-incidents.md)、[二進位診斷](../development/build/binary-diagnostics.md)、[媒體處理](../development/media-processing.md) | **已清除** | 依任務拆分，歷史命令未重驗 |
+| `TOOLS_NOTE/作業系統/Linux note`（Git 歷史） | [Linux](../operating-systems/linux/README.md)、[Ubuntu 安裝注意事項](../operating-systems/installation/ubuntu.md)、[時間同步](../operations/time-synchronization.md)、[APT](../development/package-management/apt-legacy-incidents.md)、[二進位診斷](../development/build/binary-diagnostics.md)、[媒體處理](../development/media-processing.md) | **已清除** | 依任務拆分，歷史命令未重驗 |
 | `TOOLS_NOTE/作業系統/比較`（Git 歷史） | [作業系統比較](../operating-systems/comparison.md) | **已清除** | 更新 GPU 容器限制說明 |
 | `TOOLS_NOTE/日誌/ELK`（Git 歷史） | [Filebeat 相容性](../operations/logging/filebeat-compatibility.md) | **已清除** | 保留原版本線索 |
+| `TOOLS_NOTE/嵌入式平台/`（Git 歷史） | [嵌入式平台](../embedded-platforms/README.md) | **已清除** | K210、Raspberry Pi |
+| `TOOLS_NOTE/週邊裝置/realsense`（Git 歷史） | [深度相機](../sensors/depth-cameras/realsense-backends.md) | **已清除** | 歷史源碼研究 |
+| `TOOLS_NOTE/開發套件/ROS note`（Git 歷史） | [ROS1](../robotics/ros1/README.md)、[建置](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md) | **已清除** | 原腳本及歷史版本線索，專案路徑泛化 |
+| `TOOLS_NOTE/常用工具`（Git 歷史） | [工具索引](../indexes/tools.md) | **已清除** | 依用途索引 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
 
 ## 遷移準則

@@ -8,6 +8,9 @@
 - [作業系統](operating-systems/README.md)：系統原理、介面、使用方式與平台差異。
 - [系統運作與維護](operations/README.md)：程序、日誌與運行環境。
 - [網路通訊](networking/README.md)：連線診斷與通訊相關工程任務。
+- [嵌入式平台](embedded-platforms/README.md)
+- [感測器](sensors/README.md)
+- [機器人軟體開發](robotics/README.md)
 - [工具與故障索引](indexes/README.md)：跨領域查詢入口。
 
 ## 既有入口

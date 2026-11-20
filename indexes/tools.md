@@ -10,7 +10,7 @@
 | NumPy、PyTorch | [Python 技術筆記](../development/programming/python.md) |
 | APT | [套件管理](../development/package-management/README.md)、[歷史來源故障](../development/package-management/apt-legacy-incidents.md) |
 | CMake | [建置](../development/build/README.md)、[CMake 組態](../development/build/cmake-configuration.md) |
-| ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序與日誌](../operations/ros1-process-logging.md) |
+| ROS1／catkin | [建置歷史案例](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md)、[ROS1](../robotics/ros1/README.md) |
 | Linux／systemd | [系統運作與維護](../operations/README.md)、[Linux](../operating-systems/linux/README.md) |
 | Telnet、netcat、curl、PowerShell | [TCP 連接埠診斷](../networking/tcp-port-diagnostics.md) |
 | C++ | [Python／C++ 語意比較](../development/programming/python-cpp-semantics.md) |
@@ -21,5 +21,19 @@
 | Filebeat | [版本相容性](../operations/logging/filebeat-compatibility.md) |
 | NTP、systemd-timesyncd | [時間同步](../operations/time-synchronization.md) |
 | readelf、ldd、objdump、nm | [二進位診斷](../development/build/binary-diagnostics.md) |
+| Maixduino、Kendryte SDK | [K210 移植](../embedded-platforms/k210.md) |
+| PuTTY、udev | [Raspberry Pi](../embedded-platforms/raspberry-pi.md) |
+| librealsense、realsense_ros | [深度相機](../sensors/depth-cameras/realsense-backends.md) |
 
-未整理的其他工具仍可從[舊工具筆記](../TOOLS_NOTE/)查閱。
+## 常用工具（歷史清單，非現行推薦排名）
+
+| 用途 | 工具 |
+| --- | --- |
+| 文字編輯 | nano（終端）、gedit |
+| 圖片編輯 | 小畫家、kolourpaint4（Linux 舊名稱） |
+| 影片播放 | VLC |
+| 檔案傳送 | FileZilla（FTP；優先安全協定） |
+| 版本控制 | SmartGit |
+| 遠端桌面 | VNC |
+| IDE／編輯器 | VS Code |
+| 瀏覽器 | 原筆記未列具體工具 |

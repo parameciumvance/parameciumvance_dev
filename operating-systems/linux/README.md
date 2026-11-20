@@ -10,6 +10,8 @@ Linux 系統目錄、檔案操作、使用者環境、桌面行為與系統命�
 
 ## 相關領域
 
+- [Ubuntu 安裝注意事項](../installation/ubuntu.md)
+
 - [作業系統](../README.md)
 - [二進位診斷與 CPU 指令集](../../development/build/binary-diagnostics.md)
 - [時間同步](../../operations/time-synchronization.md)
