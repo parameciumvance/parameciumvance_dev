@@ -36,15 +36,9 @@ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo ap
 ```
 此為歷史命令，apt-key 已棄用。
 
-## 案例三：Ubuntu 20.04 意外安裝桌面環境
+## 相關安裝注意事項
 
-原筆記指出 focal 的 libnotify4 將 gnome-shell 列為 Recommends，jammy（22.04）改為 Suggests；APT 預設可能安裝推薦依賴。舊建議在 Ubuntu Server 20.04 至未滿 22.04 的設備早期設定先執行：
-
-```bash
-sudo apt install libnotify4 --no-install-recommends
-```
-
-原作者留言：https://github.com/ros-perception/perception_pcl/issues/355 ；版本資料：https://packages.ubuntu.com/focal/libnotify4 。歷史依賴關係及修正動機未重新驗證；先用 apt 模擬安裝並確認依賴，不保證能避免所有後續桌面依賴。
+Ubuntu Server 20.04 避免意外帶入桌面環境的預防對策，見 [Ubuntu 安裝注意事項](../../operating-systems/installation/ubuntu.md)。
 
 ## 套件查詢與升級
 
