@@ -4,6 +4,8 @@
 
 ## 文件導覽
 
+- [APT 套件查詢與升級](apt.md)
+
 - [APT 歷史來源故障](apt-legacy-incidents.md)：Ubuntu 18.04 與舊 ROS 軟體來源問題，非現行安裝指南。
 
 ## 相關索引
