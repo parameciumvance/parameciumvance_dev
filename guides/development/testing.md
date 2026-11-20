@@ -1,6 +1,6 @@
 # 測試策略
 
-> 狀態：初版整理。來源：[舊專案 SOP](../../開發/專案SOP)、[舊測試筆記](../../開發/測試)。
+> 狀態：初版整理。來源：舊專案 SOP、舊測試筆記（Git 歷史）。
 
 ## 測試層級
 
@@ -28,6 +28,10 @@
 - 系統：完整流程收到 stop 後，外部可觀察到符合需求的停止結果。
 - 例外：在明確禁止停止訊號的狀態下，驗證系統遵循已定義規則。
 
-## 待驗證
+## Demo 與系統恢復測試
 
-舊筆記提到 ROS1 的 gtest、catkin 測試命令與 RPLIDAR 重啟案例；這些是歷史技術線索，需在指定版本與設備上重新驗證，不直接視為現行通用指令。
+重啟可能使程式未正常關閉；舊案例 RPLIDAR 疑因雜訊卡住，應測試設備斷線、非正常關閉與重啟後恢復，記錄硬體、重現條件及恢復結果。Demo 測試可輔助人工驗證，不取代自動化回歸。原案例因果尚未驗證。
+
+## ROS1 測試歷史線索
+
+建置與測試整合的舊命令 `catkin_make all run_tests_MYPACK`（MYPACK 為套件名示意），依實際 workspace 與 target 確認。參考 http://wiki.ros.org/gtest 及 http://docs.ros.org/en/jade/api/catkin/html/howto/format2/run_tests.html 。rostest 為原筆記待研究項目。
