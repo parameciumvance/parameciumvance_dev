@@ -24,9 +24,17 @@
 | `TOOLS_NOTE/日誌/ELK`（Git 歷史） | [Filebeat 相容性](../operations/logging/filebeat-compatibility.md) | **已清除** | 保留原版本線索 |
 | `TOOLS_NOTE/嵌入式平台/`（Git 歷史） | [嵌入式平台](../embedded-platforms/README.md) | **已清除** | K210、Raspberry Pi |
 | `TOOLS_NOTE/週邊裝置/realsense`（Git 歷史） | [深度相機](../sensors/depth-cameras/realsense-backends.md) | **已清除** | 歷史源碼研究 |
-| `TOOLS_NOTE/開發套件/ROS note`（Git 歷史） | [ROS1](../robotics/ros1/README.md)、[建置](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md) | **已清除** | 原腳本及歷史版本線索，專案路徑泛化 |
+| `TOOLS_NOTE/開發套件/ROS note`（Git 歷史） | [ROS1](../robotics/ros1/README.md)、[建置](../development/build/ros1-catkin-legacy.md)、[程序](../operations/ros1-process.md)、[日誌](../operations/logging/ros1-logging.md) | **已清除** | 原腳本及歷史版本線索，專案路徑僅供追溯 |
 | `TOOLS_NOTE/常用工具`（Git 歷史） | [工具索引](../indexes/tools.md) | **已清除** | 依用途索引 |
 | [開發日誌](../開發日誌/) | archive 或原位 | 待盤點 | 歷史紀錄不應改寫為現行規範 |
+
+## TOOLS_NOTE 稽核紀錄
+
+- 原始基準：[遷移前完整目錄](https://github.com/parameciumvance/parameciumvance_dev/tree/ebd91a8cb804609385b75955d3e4c712e39ab905/TOOLS_NOTE)，共 20 份檔案。
+- 已重新讀取全部原始筆記，對照主要知識與歷史操作；補回 unsigned 說明、Shell PATH、Conda 初始化範例、NumPy 操作與 ROS 開發流程等細節。
+- Python 內建盤點與 Shell 範例已確認包含完整原文。
+- 第十二階段工作分支的 64 份非封存 Markdown 已掃描標準相對路徑目標，未發現不存在的目標；不包含外部連結、章節錨點或完整 Markdown 語法驗證。
+- 尚未完成逐條驗收矩陣、外部來源查證及歷史環境實測；檔案遷移不等同技術驗證。
 
 ## 遷移準則
 
