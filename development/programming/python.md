@@ -38,9 +38,9 @@ row, col = np.unravel_index(np.argmax(matrix), matrix.shape)
 
 | 任務 | NumPy | PyTorch |
 | --- | --- | --- |
-| Tensor → ndarray／ndarray → Tensor | `t.detach().cpu().numpy()` | `torch.from_numpy(a)`／`torch.as_tensor(a)` |
-| 插入軸 | `np.expand_dims(x, axis=1)`／`x[:, np.newaxis, :]` | `x.unsqueeze(1)`／`x[:, None, :]` |
-| HWC → CHW | `x.transpose(2,0,1)` | `x.permute(2,0,1)` 或 `x.transpose(1,2).transpose(0,1)` |
+| Tensor → ndarray／ndarray → Tensor | `t.detach().cpu().numpy()`（亦可對符合條件的 CPU tensor 使用 `np.asarray(t)`） | `torch.from_numpy(a)`／`torch.as_tensor(a)` |
+| 插入軸（例如 CHW → C1HW） | `np.expand_dims(x, axis=1)`／`x[:, np.newaxis, :]` | `x.unsqueeze(1)`／`x[:, None, :]` |
+| HWC → CHW（原筆記誤將 H/W 對調） | `x.transpose(2,0,1)` | `x.permute(2,0,1)` 或 `x.transpose(1,2).transpose(0,1)` |
 | 五個 (2,3) 沿軸 1 串接 → (2,15) | `np.concatenate(items, axis=1)`／`np.hstack(items)` | `torch.cat(items, dim=1)` |
 | 五個 (2,3) 新軸 1 → (2,5,3) | `np.stack(items, axis=1)` | `torch.stack(items, dim=1)` |
 | 改形 | `x.reshape(2,3)` | `x.reshape(2,3)`／符合 stride 條件時 `x.view(2,3)` |
@@ -60,4 +60,25 @@ row, col = np.unravel_index(np.argmax(matrix), matrix.shape)
 
 ## Conda 初始化歷史結構
 
-舊 Bash 設定定義 conda_setup 函式：先執行安裝目錄 bin/conda shell.bash hook（stderr 重導至 /dev/null），成功時 eval 其輸出；失敗則 source etc/profile.d/conda.sh，若不存在便將 bin 加入 PATH，最後 unset __conda_setup。原片段只定義函式，未顯示呼叫；不應直接當成完整初始化腳本。個人絕對路徑已泛化。建議使用 conda init bash 產生對應安裝版本的配置，腳本用法見 [Shell 腳本](shell-scripting.md)。
+舊 Bash 設定（原始片段，僅將個人安裝路徑替換為 `/opt/miniconda3` 供示意）：
+
+```bash
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+function conda_setup () {
+  __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/opt/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/opt/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+}
+# <<< conda initialize <<<
+```
+
+此設定定義 conda_setup 函式：先執行安裝目錄 bin/conda shell.bash hook（stderr 重導至 /dev/null），成功時 eval 其輸出；失敗則 source etc/profile.d/conda.sh，若不存在便將 bin 加入 PATH，最後 unset __conda_setup。原片段只定義函式，未顯示呼叫；不應直接當成完整初始化腳本。個人絕對路徑已泛化。建議使用 conda init bash 產生對應安裝版本的配置，腳本用法見 [Shell 腳本](shell-scripting.md)。
