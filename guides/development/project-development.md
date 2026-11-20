@@ -1,9 +1,10 @@
 # 專案開發流程
 
-> 狀態：初版整理。來源：[舊專案 SOP](../../開發/專案SOP)。這份指南提取跨專案原則，並非對所有專案強制適用。
+> 狀態：初版整理。來源：舊專案 SOP（Git 歷史）。這份指南提取跨專案原則，並非對所有專案強制適用。
 
 ## 建立專案
 
+0. 視語言與部署需求建立隔離的虛擬環境，記錄依賴版本。
 1. 明確記錄目的、預期行為、執行環境與依賴。
 2. 設定版本控制，確保建置與執行步驟可重現。
 3. 將環境差異放在組態中，避免寫死個人帳號、家目錄或機器路徑。
@@ -16,7 +17,7 @@
 
 ### Issue／錯誤修正的三個必答問題
 
-每次處理缺陷 Issue，除描述症狀、重現方式、根因及修正內容外，**必須回答以下三個問題**，並記錄對應文件或工程資產是否需要調整。這個規則承襲[舊專案 SOP](../../開發/專案SOP) 的「TEST／SOP／TROUBLESHOOT」改善循環。
+每次處理缺陷 Issue，除描述症狀、重現方式、根因及修正內容外，**必須回答以下三個問題**，並記錄對應文件或工程資產是否需要調整。這個規則承襲舊專案 SOP（Git 歷史） 的「TEST／SOP／TROUBLESHOOT」改善循環。
 
 | 必答問題 | 對應文件／資產 | 應執行的檢查與調整 |
 | --- | --- | --- |
@@ -49,6 +50,14 @@
 - [測試策略](testing.md)
 - [規格指南](../../sdd/specification-guide.md)
 
-## 待整理
+## 提交與學習
 
-舊 SOP 中的 ROS1 catkin、Ubuntu 18/20 桌面捷徑、特定專案 GUI 提示、rosparam 與套件安裝腳本屬於特定技術／版本知識，暫不提升為通用規範；原文仍保留。
+提交變更時記錄 Changelog、troubleshoot、test／反省（可透過 Issue 或 PR 連結），依變更性質填寫。重構整併後，舊版控資料可另存唯讀 legacy repo 或封存位置，保留歷史並避免搜尋混淆。關注其他專案的更新紀錄以學習工程做法。
+
+## 專案檢查入口
+
+- [背景服務](../../operations/service-runtime.md)
+- [日誌](../../operations/logging/README.md)、[監控](../../operations/monitoring/README.md)
+- [組態管理](../../development/configuration.md)、[介面提示](../../development/user-interface.md)
+- [ROS1 依賴腳本](../../robotics/ros1/environment.md)：舊 SOP 稱 update_dependencies.bash，執行時應檢查新增套件，尤其避免 Server 帶入 gnome-shell。
+- 原架構範例：`examples/new_project`（原筆記路徑，實際舊範例待盤點）。
